@@ -1,5 +1,6 @@
 var gulp    = require('gulp'),
     flatten = require('gulp-flatten'),
+    concat  = require('gulp-concat'),
     less    = require('gulp-less'),
     coffee  = require('gulp-coffee'),
     watch   = require('gulp-watch'),
@@ -28,7 +29,7 @@ gulp.task('app-scripts', function() {
   gulp
     .src(sources)
     .pipe(concat('app.js'))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./release/js/'));
 
   // gulp
   //  .src('./public/js/app.js')
