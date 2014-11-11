@@ -1,0 +1,7 @@
+bower_components/*
+node_modules/*
+.nfs.*
+release/css/*
+release/js/*
+release/fonts/*
+release/templates/*

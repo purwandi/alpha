@@ -1,0 +1,98 @@
+/* http://bootsnipp.com/snippets/featured/sexy-sidebar-navigation */
+.nav-sidebar {
+  width: 100%;
+  padding: 10px 0 30px 0;
+  border-right: 1px solid #ddd;
+
+  a {
+    font-size: 13px;
+    color: #333;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+  }
+
+  .nav > li > a {
+
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 35px;
+    .icon {
+      -webkit-transition: all 0.08s linear;
+      -moz-transition: all 0.08s linear;
+      -o-transition: all 0.08s linear;
+      transition: all 0.08s linear;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      font-size: 20px;
+      top: 3px;
+      left: 10px;
+      text-align: center;
+      position: absolute;
+      color: #999999;
+    }
+
+    &:hover {
+      background-color: transparent;
+      .icon {
+        color: #000;
+      }
+    }
+    // padding-left: 0px;
+  }
+
+  .nav > li.active > a {
+    .icon {
+      color: #000;
+    }
+  }
+
+  .active .icon,
+  .active a {
+    color: #000;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .nav {
+    li.active > a {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      border-right: 2px solid #fff;
+      margin-right: -2px;
+
+    }
+  }
+
+  .text-overflow a,
+  .text-overflow .media-body {
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  }
+
+
+}
+
+/* Right-aligned sidebar */
+.nav-sidebar.pull-right {
+  border-right: 0;
+  border-left: 1px solid #ddd;
+
+  .active a {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-right: 4px solid #ddd;
+    border-left: 2px solid #fff;
+    margin-left: -2px;
+  }
+}
+.nav-sidebar.pull-right a {
+  // -webkit-border-radius: 0 4px 4px 0;
+  // -moz-border-radius: 0 4px 4px 0;
+  // border-radius: 0 4px 4px 0;
+}

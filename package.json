@@ -1,0 +1,17 @@
+{
+  "name": "Alpha",
+  "version": "0.0.2",
+  "homepage": "http://studentjob.co.id",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-concat": "latest",
+    "gulp-coffee": "latest",
+    "gulp-flatten": "latest",
+    "gulp-less": "latest",
+    "gulp-watch": "latest",
+    "gulp-uglify": "latest",
+    "gulp-extend": "latest",
+    "gulp-wrap": "latest",
+    "gulp-ng-annotate": "latest"
+  }
+}
