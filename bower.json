@@ -3,13 +3,13 @@
   "version":    "0.0.1",
   "devDependencies": {
     "angular":              "latest",
+    "angular-sanitize":     "latest",
     "angular-animate":      "latest",
     "angular-ui-router":    "latest",
     "bootstrap":            "latest",
     "ionicons":             "latest",
     "jquery":               "latest",
     "taffydb":              "https://github.com/typicaljoe/taffydb/archive/master.zip",
-    "angular-validation":   "https://github.com/ghiscoding/angular-validation/archive/master.zip",
-    "store.js":             "latest"
+    "angular-validation":   "https://github.com/ghiscoding/angular-validation/archive/master.zip"
   }
 }

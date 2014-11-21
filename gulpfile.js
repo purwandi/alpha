@@ -15,15 +15,17 @@ gulp.task('templates', function() {
   gulp
     .src(['./src/js/**/*.html', './src/js/_common/**/*.html'])
     .pipe(flatten())
-    .pipe(gulp.dest('./public/templates'));
+    .pipe(gulp.dest('./release/templates'));
 });
 
 gulp.task('app-scripts', function() {
   var sources = [
+    './src/js/config/*.js',
+    './src/js/plugins/*.js',
     './src/js/app.js',
-    './src/js/_common/**/*.js',
-    './src/js/profile/**/*.js',
-    './src/js/pengisian/**/*.js',
+    './src/js/base/**/*.js',
+    './src/js/asesor/**/*.js',
+    './src/js/sekolah/**/*.js'
   ];
 
   gulp
@@ -52,6 +54,7 @@ gulp.task('framework-copy', function() {
 
   gulp.src([
     path + '/**/*.min.js',
+    path + '/**/*-min.js',
     path + '/**/*.min.js.map'
   ])
   .pipe(gulp.dest('./release/js/'));
@@ -63,6 +66,10 @@ gulp.task('framework-copy', function() {
   gulp
     .src([path + 'ionicons/fonts/*'])
     .pipe(gulp.dest('./release/fonts/'));
+
+   gulp
+    .src(['./src/js/meta/**/*.js'])
+    .pipe(gulp.dest('./release/js/meta'));
 
   gulp
     .src([path + 'ionicons/css/ionicons.min.css'])
@@ -89,7 +96,13 @@ gulp.task('frameworks-less', function() {
     .pipe(gulp.dest('release/css'));
 });
 
-gulp.task('framework', ['framework-concat', 'framework-copy', 'frameworks-less']);
+gulp.task('watch', function() {
+  gulp.watch('./src/less/*.less', ["app-less"]);
+  gulp.watch('./src/js/**/*.html', ["templates"]);
+  gulp.watch('./src/js/**/*.js', ["app-scripts"]);
+});
+
+gulp.task('framework', ['framework-copy', 'frameworks-less']);
 gulp.task('app', ['app-scripts', 'app-less']);
 gulp.task('build', ['framework', 'default']);
 gulp.task('default', ['templates', 'app']);

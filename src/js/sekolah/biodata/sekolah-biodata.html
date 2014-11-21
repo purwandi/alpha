@@ -1,0 +1,285 @@
+<!-- <section id="step-0" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">BIODATA TERISI</p>
+    <a href="/#/sekolah/biodata?step=1" class="btn btn-primary">Update</a>
+</section> -->
+
+<section id="step-1" class="step"> 
+    
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">1 OF 7 : BIODATA</p>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">NPSN *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.npsn" placeholder="NPSN"/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">NIS *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.nss" placeholder="NSS"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Nama Sekolah/Madrasah *</label>
+        <input class="form-control input-sm" type="text" ng-model="sekolah.nama" placeholder="Nama sekolah/madrasah"/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Jenjang *</label>
+                <select class="form-control input-sm" ng-model="sekolah.jenjang_id">
+                    <option ng-repeat="jenjang in config.jenjang">
+                        {{ jenjang.nama }}
+                        </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Status *</label>
+                <select class="form-control input-sm" ng-model="sekolah.status">
+                    <option ng-repeat="status in config.status">
+                        {{ status.nama }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                <label class="form-label">Alamat *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat" placeholder="Alamat"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Dusun</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat" placeholder="Alamat"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="form-label">No *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_no" placeholder="No"/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="form-label">RT</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rt" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="form-label">RW</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rw" placeholder=""/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Provinsi *</label>
+                <select class="form-control input-sm" ng-model="sekolah.provinsi_id" ng-change="pickKota()">
+                    <option ng-repeat="provinsi in config.wilayah.provinsi" value="{{ provinsi.id }}">
+                        {{ provinsi.nama }} [ {{ provinsi.id }} ]
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Kabupaten / Kota *</label>
+                <select class="form-control input-sm" ng-model="sekolah.kota_id" ng-change="pickKecamatan()">
+                    <option ng-repeat="kota in config.wilayah.kota" value="{{ kota.id }}">
+                        {{ kota.nama }} [ {{ kota.id }} ]
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Kecamatan *</label>
+                <select class="form-control input-sm" ng-model="sekolah.kecamatan_id" ng-change="pickDesa()">
+                    <option ng-repeat="kecamatan in config.wilayah.kecamatan" value="{{ kecamatan.id }}">
+                        {{ kecamatan.nama }} [ {{ kecamatan.id }} ]
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Kelurahan / Desa *</label>
+                <select class="form-control input-sm" ng-model="sekolah.desa_id">
+                    <option ng-repeat="desa in config.wilayah.desa" value="{{ desa.id }}">
+                        {{ desa.nama }} [ {{ desa.id }} ]
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Kode Pos *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.npsn" placeholder="Kode pos"/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Telepon *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.telepon" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Handphone *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.handphone" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Fax *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.fax" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.email" placeholder=""/>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <button class="btn btn-primary btn-sm" ng-click="nextstep(2)">Langkah selanjutnya</button>
+
+</section>
+
+<section id="step-2" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">2 OF 7 : YAYASAN</p>    
+    <p>Hanya di tujukan sekolah/madrasah swasta.</p>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                <label class="form-label">Nama yayasan *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.nama" placeholder="nama yayasan"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label class="form-label">Alamat yayasan *</label>
+                <textarea class="form-control input-sm" ng-model="sekolah.yayasan.nama" rows="5" placeholder="alamat yayasan"/></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Nomor akte *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_no" placeholder="nama yayasan"/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Tanggal akte *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_tanggal" placeholder="nama yayasan"/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Nama notaris *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_notaris" placeholder="nama yayasan"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Akte pengesahan *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_pengesahan" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Telepon *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.telepon" placeholder=""/>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.email" placeholder=""/>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <button class="btn btn-primary btn-sm" ng-click="nextstep(3)">Langkah selanjutnya</button>
+    <button class="btn btn-link btn-sm" ng-click="nextstep(1)">Langkah sebelumnya</button>
+    
+</section>
+
+
+<section id="step-3" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">3 OF 7 : PROGRAM PENDIDIKAN</p>    
+    <p>Hanya di tujukan untuk SMK dan SLB</p>
+
+    <div class="">
+        <div class="text-center" style="padding: 50px 50px;">
+            Belum memiliki data, anda dapat menambah program pendidikan dengan mengklik tombol tambah prodi di bawah ini .
+        </div>
+
+    </div>
+
+    <hr />
+    <button class="btn btn-primary btn-sm" ng-click="nextstep(4)">Langkah selanjutnya</button>
+    <button class="btn btn-link btn-sm" ng-click="nextstep(2)">Langkah sebelumnya</button>
+</section>
+
+<section id="step-4" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">4 OF 7 : VISI DAN MISI</p>    
+
+    <hr />
+    <button class="btn btn-primary btn-sm" ng-click="nextstep(5)">Langkah selanjutnya</button>
+    <button class="btn btn-link btn-sm" ng-click="nextstep(3)">Langkah sebelumnya</button>
+</section>
+
+<section id="step-5" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">5 OF 7 : STAKE HOLDER</p>    
+
+    <hr />
+    <button class="btn btn-primary btn-sm" ng-click="nextstep(6)">Langkah selanjutnya</button>
+    <button class="btn btn-link btn-sm" ng-click="nextstep(4)">Langkah sebelumnya</button>
+</section>
+
+<section id="step-6" class="step hide">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">6 OF 7 : KONTAK</p>    
+
+    <hr />
+    <button class="btn btn-primary btn-sm">Langkah selanjutnya</button>
+    <button class="btn btn-link btn-sm" ng-click="nextstep(5)">Langkah sebelumnya</button>
+</section>

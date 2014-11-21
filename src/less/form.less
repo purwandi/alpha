@@ -1,0 +1,156 @@
+// Override Form Control
+// Shared size and type resets
+.form-control {
+  background-color: darken(@input-bg, 2%);
+  &:focus {
+    background-color: @input-bg;
+  }
+}
+
+.form-control {
+  &.input-lg {
+    border-radius: 2px;
+  }
+  &.input-sm {
+    border-radius: 0px;
+  }
+}
+
+.input-group-addon,
+.input-group-btn {
+  border-radius: 0px;
+}
+
+.form-search-group {
+  position: relative;
+  i {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    z-index: 5;
+    color: #aaa;
+    font-size: 18px;
+  }
+
+  input {
+    position: relative;
+    z-index: 3;
+    padding-left: 30px;
+  }
+}
+
+.form-search-group-sm {
+  i {
+    top: 2px;
+  }
+}
+
+/**
+ * Form validation
+ * -------------------------------------------
+ */
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none;
+}
+/* invalid & dirty => red -- CSS3 only */
+input.ng-invalid.ng-dirty:not(:focus),
+select.ng-invalid.ng-dirty:not(:focus),
+textarea.ng-invalid.ng-dirty:not(:focus) {
+  border-color: #e74c3c;
+}
+
+/* valid & dirty => green */
+input.ng-valid.ng-dirty,
+select.ng-valid.ng-dirty,
+textarea.ng-valid.ng-dirty {
+  // border-color: #2ecc71;
+}
+
+.validation-message {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+// Writer box
+// -------------------------------------------
+
+.write-box {
+  margin-top: 10px;
+  margin-bottom: 15px;
+
+  .go-zen {
+    padding-top: 9px;
+    padding-right: 10px;
+  }
+
+  ul {
+    // margin-bottom: 10px;
+    background: #f7f7f7;
+    border:1px solid rgb(221, 221, 221);
+    padding: 10px 10px 0 10px;
+  }
+  .nav li a {
+    padding: 5px 15px;
+    color: #000;
+  }
+  .tab-content {
+    background: #FFF;
+  }
+  .form-group {
+    margin-bottom: 0px;
+  }
+  #preview {
+    padding: 10px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  textarea {
+    border-top: none;
+    border-bottom: 1px dotted;
+    background: #FFF;
+  }
+}
+
+.panel-body {
+  .write-box {
+    .go-zen {
+      padding-right: 20px;
+    }
+  }
+}
+
+// Drag and drop zone
+.drop-zone {
+  border-color: #f0b840;
+  box-shadow: 0px 1px 2px #f0b840 inset, 0px 0px 5px #f0b840;
+}
+
+.drag-and-drop {
+  margin: 0;
+  padding: 7px 10px;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 16px;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+
+  input {
+    display: none;
+  }
+
+  .default, .loading, .error {
+    display: inline-block;
+  }
+
+  .default, .loading, .error {
+    display: none;
+  }
+}

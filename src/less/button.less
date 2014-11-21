@@ -1,0 +1,43 @@
+.btn {
+  border-radius: 2px 2px 2px 2px;
+  padding-left: ( 2 * @padding-base-horizontal);
+  padding-right: ( 2 * @padding-base-horizontal);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn.btn-xs {
+  padding-left: @padding-base-horizontal;
+  padding-right: @padding-base-horizontal;
+}
+
+.btn-group {
+  .btn {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+// Button Sizes
+// --------------------------------------------------
+
+.btn-large {
+  padding-left: (3 * @padding-large-horizontal);
+  padding-right: (3 * @padding-large-horizontal);
+}
+
+.btn-icon {
+  padding: @padding-base-vertical @padding-base-horizontal;
+}
+
+.btn-blue {
+  background-color: @base-st-color;
+  color: #FFF;
+
+  &:hover {
+    color: #FFF;
+    background-color: darken(@base-st-color, 10%)
+  }
+}
