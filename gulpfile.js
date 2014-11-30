@@ -23,6 +23,8 @@ gulp.task('app-scripts', function() {
     './src/js/config/*.js',
     './src/js/plugins/*.js',
     './src/js/app.js',
+    './src/js/helpers.js',
+    './src/js/directives/*.js',
     './src/js/base/**/*.js',
     './src/js/asesor/**/*.js',
     './src/js/sekolah/**/*.js'

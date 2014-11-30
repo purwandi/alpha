@@ -3,112 +3,99 @@
  * https://github.com/humphreybc/super-simple-tasks/blob/master/public/js/app.js
  */
 
-var ChromeStorage, DB, LocalStorage, store = {};
-
-DB = (function() {
-  function DB() {}
-
-  DB.db_key = 'todo';
-
-  return DB;
-
-})();
-
-// store 
+// store
+var store = {}; 
 store.serialize = function(value) {
   return JSON.stringify(value)
-}
+};
 
 store.deserialize = function(value) {
   if (typeof value != 'string') { return undefined }
   try { return JSON.parse(value) }
   catch(e) { return value || undefined }
-}
+};
 
-LocalStorage = (function() {
-  function LocalStorage() {}
+(function() {
+  angular
+    .module('storage', [])
 
-  LocalStorage.get = function(key, callback) {
-    var value;
-    value = localStorage.getItem(key);
-    value = store.deserialize(value);
-    return callback(value);
-  };
+    .factory('storage', function($q, localStore, chromeStore) {
+      var driver;
+      var deferred = $q;
 
-  LocalStorage.getSync = function(key) {
-    var value;
-    value = localStorage.getItem(key);
-    return store.deserialize(value);
-  };
+      if (window.storageType == 'ChromeStorage' ) {
+        driver = chromeStore
+      } else {
+        driver = localStore;
+      }
 
-  LocalStorage.set = function(key, value) {
-    value = store.serialize(value);
-    return localStorage.setItem(key, value);
-  };
+      return {
+        init: function(key) {
 
-  LocalStorage.remove = function(key) {
-    return localStorage.removeItem(key);
-  };
-
-  LocalStorage.forEach = function(callback) {
-    for (var i=0; i<localStorage.length; i++) {
-      var key = localStorage.key(i);
-      callback(key, LocalStorage.get(key));
-    }
-  };
-
-  LocalStorage.getAll = function() {
-    var ret = {};
-    LocalStorage.forEach(function(key, val) {
-      ret[key] = val;
-    });
-    return ret;
-  }
-
-  return LocalStorage;
-
-})();
-
-ChromeStorage = (function() {
-  function ChromeStorage() {}
-
-  ChromeStorage.get = function(key, callback) {
-    return chrome.storage.sync.get(key, function(value) {
-      value = value[key] || null || LocalStorage.getSync(key);
-      return callback(store.deserialize(value));
-    });
-  };
-
-  ChromeStorage.set = function(key, value, callback) {
-
-    if (value === undefined) { return ChromeStorage.remove(key) }
-
-    var params;
-    params = {};
-    params[key] = store.serialize(value);
-    return chrome.storage.sync.set(params, function() {});
-  };
-
-  ChromeStorage.remove = function(key) {
-    return chrome.storage.sync.remove(key, function() {});
-  };
-
-  if (!!window.chrome && chrome.storage) {
-    chrome.storage.onChanged.addListener(function(changes, namespace) {
-      var key, storageChange, _results;
-      _results = [];
-      for (key in changes) {
-        if (key === DB.db_key) {
-          storageChange = changes[key];
-          _results.push(Views.showTasks(storageChange.newValue));
-        } else {
-          _results.push(void 0);
+        },
+        set: function(key, value) {
+          return driver.set(key, value);
+        },
+        get: function(key) {
+          return driver.get(key);
+        },
+        remove: function(key) {
+          return driver.remove(key);
         }
       }
-      return _results;
-    });
-  }
+    })
 
-  return ChromeStorage;
+    .factory('localStore', function($q) {
+      
+      var deferred = $q.defer();
+
+      return {
+        init: function(key) {
+
+        },
+        set: function(key, value) {
+          value = store.serialize(value);
+          return localStorage.setItem(key, value);
+        },
+        get: function(key) {
+          value = localStorage.getItem(key);
+          value = store.deserialize(value);
+          deferred.resolve(value);
+          return deferred.promise;
+        },
+        remove: function(key) {
+          return localStorage.removeItem(key);
+        }
+      }
+    })
+
+    .factory('chromeStore', function($q) {
+
+      var deferred = $q.defer();
+
+      return {
+        init: function(key) {
+
+        },
+        set: function(key, value) {
+          if (value === undefined) { 
+            return ChromeStorage.remove(key) 
+          }
+          var params = {};    
+          params[key] = value;
+          return chrome.storage.local.set(params, function() {});
+        },
+        get: function(key) {
+          chrome.storage.local.get(key, function(value) {
+            value = value[key] || null;
+            deferred.resolve(value);
+          });
+          return deferred.promise;
+        },
+        remove: function(key) {
+          return chrome.storage.local.remove(key, function() {});
+        }
+      }
+    });
 
 })();

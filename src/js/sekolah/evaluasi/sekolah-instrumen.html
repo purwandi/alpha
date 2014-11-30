@@ -1,1 +1,22 @@
-Instrumen
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="pull-right"> #{{ butir.nomor }}</div>
+        {{ butir.right_nama }}
+    </div>
+    <div class="panel-body">
+        <p class="lead">{{ butir.nama }}</p>
+        <div class="radio" ng-repeat="opsi in butir.pilihan">
+            <label>
+                <input type="radio" ng-model="evaluasi.id" name="pilihan_{{ butir.nomor }}" value="{{ opsi.nilai}}" > 
+                {{ opsi.nama }}
+            </label>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="pull-right">
+            <input class="form-control input-sm" style="width: 50px;" ng-model="_current" />
+        </div>
+        <button class="btn btn-primary btn-sm" ng-click="next()">Next</button>
+        <button class="btn btn-default btn-sm" ng-click="prev()">Prev</button>
+    </div>
+</div>

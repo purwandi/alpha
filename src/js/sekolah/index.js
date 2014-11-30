@@ -2,8 +2,10 @@
     angular
         .module('app.sekolah', [
             'ui.router',
+            'app.directive.prodi',
             'app.sekolah.repository',
-            'app.sekolah.biodata'
+            'app.sekolah.biodata',
+            'app.sekolah.evaluasi'
         ])
 
         .config(function($stateProvider)
@@ -23,14 +25,25 @@
                 .state('sekolah.biodata', 
                 {
                     url: '/biodata',
-                    controller: 'AppSekolahBiodata',
-                    templateUrl: '/templates/sekolah-biodata.html'
+                    controller: 'AppSekolahBiodataCtrl',
+                    templateUrl: '/templates/sekolah-biodata.html',
+                    resolve: {
+                        sekolah: function(AppSekolahRepository) {
+                            return AppSekolahRepository.init();
+                        }
+                    }
                 })
                 
                 .state('sekolah.instrumen',
                 {
                     url: '/instrumen',
-                    templateUrl: '/templates/sekolah-instrumen.html'
+                    templateUrl: '/templates/sekolah-instrumen.html',
+                    controller: 'AppSekolahEvaluasiCtrl',
+                    resolve: {
+                        sekolah: function(AppSekolahRepository) {
+                            return AppSekolahRepository.init();
+                        }
+                    }
                 })
 
                 .state('sekolah.laporan',

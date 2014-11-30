@@ -1,11 +1,16 @@
-<!-- <section id="step-0" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">BIODATA TERISI</p>
+<!-- <section id="step-0" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">BIODATA TERISI</p>
     <a href="/#/sekolah/biodata?step=1" class="btn btn-primary">Update</a>
 </section> -->
+<style type="text/css">
+    section {
+        margin-bottom: 80px;
+    }
+</style>
 
 <section id="step-1" class="step"> 
     
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">1 OF 7 : BIODATA</p>
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">1 OF 7 : BIODATA</p>
 
     <div class="row">
         <div class="col-md-4">
@@ -31,57 +36,49 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-label">Jenjang *</label>
-                <select class="form-control input-sm" ng-model="sekolah.jenjang_id">
-                    <option ng-repeat="jenjang in config.jenjang">
-                        {{ jenjang.nama }}
-                        </option>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.jenjang_id"
+                    ng-options="jenjang.id as jenjang.nama for jenjang in config.jenjang">
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-label">Status *</label>
-                <select class="form-control input-sm" ng-model="sekolah.status">
-                    <option ng-repeat="status in config.status">
-                        {{ status.nama }}
-                    </option>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.status"
+                    ng-options="status.id as status.nama for status in config.status">
                 </select>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-9">
-            <div class="form-group">
-                <label class="form-label">Alamat *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat" placeholder="Alamat"/>
-            </div>
-        </div>
+    <div class="form-group">
+        <label class="form-label">Alamat *</label>
+        <input class="form-control input-sm" type="text" ng-model="sekolah.alamat" placeholder="Alamat"/>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="form-group">
-                <label class="form-label">Dusun</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat" placeholder="Alamat"/>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.dusun" placeholder="Dusun"/>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label class="form-label">No *</label>
                 <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_no" placeholder="No"/>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label class="form-label">RT</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rt" placeholder=""/>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rt" placeholder="RT"/>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label class="form-label">RW</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rw" placeholder=""/>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.alamat_rw" placeholder="RW"/>
             </div>
         </div>
     </div>
@@ -89,31 +86,31 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label class="form-label">Provinsi *</label>
-                <select class="form-control input-sm" ng-model="sekolah.provinsi_id" ng-change="pickKota()">
-                    <option ng-repeat="provinsi in config.wilayah.provinsi" value="{{ provinsi.id }}">
-                        {{ provinsi.nama }} [ {{ provinsi.id }} ]
-                    </option>
+                <label class="form-label">Provinsi * {{ sekolah.provinsi_id }}</label>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.provinsi_id"
+                    ng-options="provinsi.id as provinsi.nama for provinsi in config.wilayah.provinsi">
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-label">Kabupaten / Kota *</label>
-                <select class="form-control input-sm" ng-model="sekolah.kota_id" ng-change="pickKecamatan()">
-                    <option ng-repeat="kota in config.wilayah.kota" value="{{ kota.id }}">
-                        {{ kota.nama }} [ {{ kota.id }} ]
-                    </option>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.kota_id" 
+                    ng-options="kota.id as kota.nama for kota in config.wilayah.kota">
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-label">Kecamatan *</label>
-                <select class="form-control input-sm" ng-model="sekolah.kecamatan_id" ng-change="pickDesa()">
-                    <option ng-repeat="kecamatan in config.wilayah.kecamatan" value="{{ kecamatan.id }}">
-                        {{ kecamatan.nama }} [ {{ kecamatan.id }} ]
-                    </option>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.kecamatan_id" 
+                    ng-options="kecamatan.id as kecamatan.nama for kecamatan in config.wilayah.kecamatan">
                 </select>
             </div>
         </div>
@@ -123,17 +120,17 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label class="form-label">Kelurahan / Desa *</label>
-                <select class="form-control input-sm" ng-model="sekolah.desa_id">
-                    <option ng-repeat="desa in config.wilayah.desa" value="{{ desa.id }}">
-                        {{ desa.nama }} [ {{ desa.id }} ]
-                    </option>
+                <select 
+                    class="form-control input-sm" 
+                    ng-model="sekolah.desa_id" 
+                    ng-options="desa.id as desa.nama for desa in config.wilayah.desa">
                 </select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label class="form-label">Kode Pos *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.npsn" placeholder="Kode pos"/>
+                <input class="form-control input-sm" type="text" ng-model="sekolah.kode_pos" placeholder="Kode pos"/>
             </div>
         </div>
         <div class="col-md-4">
@@ -173,8 +170,8 @@
 
 </section>
 
-<section id="step-2" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">2 OF 7 : YAYASAN</p>    
+<section id="step-2" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">2 OF 7 : YAYASAN</p>    
     <p>Hanya di tujukan sekolah/madrasah swasta.</p>
     <div class="row">
         <div class="col-md-9">
@@ -189,7 +186,7 @@
         <div class="col-md-7">
             <div class="form-group">
                 <label class="form-label">Alamat yayasan *</label>
-                <textarea class="form-control input-sm" ng-model="sekolah.yayasan.nama" rows="5" placeholder="alamat yayasan"/></textarea>
+                <textarea class="form-control input-sm" ng-model="sekolah.yayasan.alamat" rows="5" placeholder="alamat yayasan"/></textarea>
             </div>
         </div>
     </div>
@@ -244,15 +241,29 @@
 </section>
 
 
-<section id="step-3" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">3 OF 7 : PROGRAM PENDIDIKAN</p>    
+<section id="step-3" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">3 OF 7 : PROGRAM PENDIDIKAN</p>    
     <p>Hanya di tujukan untuk SMK dan SLB</p>
 
-    <div class="">
-        <div class="text-center" style="padding: 50px 50px;">
+    <div class="" style="margin-bottom: 50px;" ng-hide="sekolah.program">
+        <div class="text-center" style="padding: 50px 50px; 80px; 50px">
             Belum memiliki data, anda dapat menambah program pendidikan dengan mengklik tombol tambah prodi di bawah ini .
-        </div>
+        </div>        
+    </div>
 
+    <div>
+        <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
+            <div class="panel-heading">
+                {{ program.sprodi_id }} <prodi prodid="{{ program.sprodi_id }}"></prodi>
+            </div>
+            <div class="panel-body">
+                {{ program.tujuan }}
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-default btn-sm" ng-click="openProgram()">Tambah Program</button>
     </div>
 
     <hr />
@@ -260,24 +271,58 @@
     <button class="btn btn-link btn-sm" ng-click="nextstep(2)">Langkah sebelumnya</button>
 </section>
 
-<section id="step-4" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">4 OF 7 : VISI DAN MISI</p>    
+<section id="step-4" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">4 OF 7 : VISI DAN MISI</p>    
+
+    <div class="form-group">
+        <label class="control-label">Visi</label>
+        <textarea class="form-control input-sm" rows="6" ng-model="sekolah.visi"></textarea>   
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Misi</label>
+        <textarea class="form-control input-sm" rows="6" ng-model="sekolah.misi"></textarea>   
+    </div>
 
     <hr />
     <button class="btn btn-primary btn-sm" ng-click="nextstep(5)">Langkah selanjutnya</button>
     <button class="btn btn-link btn-sm" ng-click="nextstep(3)">Langkah sebelumnya</button>
 </section>
 
-<section id="step-5" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">5 OF 7 : STAKE HOLDER</p>    
+<section id="step-5" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">5 OF 7 : STAKE HOLDER</p>    
 
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Kepala Sekolah/Madrasah</label>
+                <input class="form-control" type="text" ng-model="sekolah.kepsek_nama">
+            </div>
+            <div class="form-group">
+                <label class="control-label">NIP </label>
+                <input class="form-control" type="text" ng-model="sekolah.kepsek_nip">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Pengawas Sekolah/Madrasah</label>
+                <input class="form-control" type="text" ng-model="sekolah.pengawas_nama">
+            </div>
+            <div class="form-group">
+                <label class="control-label">NIP </label>
+                <input class="form-control" type="text" ng-model="sekolah.pengawas_nip">
+            </div>
+        </div>
+    </div>
+    
     <hr />
     <button class="btn btn-primary btn-sm" ng-click="nextstep(6)">Langkah selanjutnya</button>
     <button class="btn btn-link btn-sm" ng-click="nextstep(4)">Langkah sebelumnya</button>
 </section>
 
-<section id="step-6" class="step hide">
-    <p class="lead" style="border-bottom: 1px solid #EFEFEF; padding-bottom: 10px;">6 OF 7 : KONTAK</p>    
+<section id="step-6" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">6 OF 7 : KONTAK</p>    
 
     <hr />
     <button class="btn btn-primary btn-sm">Langkah selanjutnya</button>
