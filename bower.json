@@ -2,9 +2,9 @@
   "name":       "Alpha",
   "version":    "0.0.1",
   "devDependencies": {
-    "angular":              "1.2.27",
-    "angular-sanitize":     "1.2.27",
-    "angular-animate":      "1.2.27",
+    "angular":              "latest",
+    "angular-sanitize":     "latest",
+    "angular-animate":      "latest",
     "angular-ui-router":    "latest",
     "angular-bootstrap":    "latest",
     "bootstrap":            "latest",

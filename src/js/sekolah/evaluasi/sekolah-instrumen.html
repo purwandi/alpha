@@ -1,4 +1,28 @@
 <div class="panel panel-default">
+    <div class="panel-heading">{{ sekolah.nama }}</div>
+    <div class="panel-body">
+        {{ sekolah.alamat }}
+    </div>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-warning" ng-hide="prodi_current">
+            <small>Untuk memulai pengisian instrumen, klik link berikut ini.</small>
+        </div>
+        <a href="/#/" 
+            onclick="return false;" 
+            class="list-group-item prodi-evaluasi" 
+            ng-repeat="prodi in sekolah.program" 
+            ng-click="goEvaluasi(prodi.id)" 
+            id="prodi-{{ prodi.id }}">
+
+            <div class="pull-right" ng-hide="prodi_current"> Mulai <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
+
+            <prodi prodid="{{ prodi.id }}"></prodi>
+        </a>
+    </div>
+</div>
+
+<div class="panel panel-default" ng-show="prodi_current">
     <div class="panel-heading">
         <div class="pull-right"> #{{ butir.nomor }}</div>
         {{ butir.right_nama }}

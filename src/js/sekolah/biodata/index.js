@@ -15,10 +15,7 @@
                 }
             };
 
-            var isArrayObject = function(object) {
-                if (Object.prototype.toString.call(object) === '[object Array]') return true;
-                else return false;
-            }
+            $scope.form_program = true;
 
         // -----------------------------------------------------------------------
         // RUNNER
@@ -26,23 +23,37 @@
            
             // init()
             // -----------------------------------------------------------------------
-            AppSekolahRepository.sekolah = $scope.sekolah = sekolah;
+            $scope.sekolah = AppSekolahRepository.sekolah = sekolah;
 
             if (sekolah == undefined) {
                 $scope.sekolah = { program: [] };
-                console.log($scope.sekolah);
             } else if (sekolah.program == undefined) {
-                console.log('Program undefined');
                 $scope.sekolah.program = [];
             }
             
+            $scope.$watch(function() {
+                return $scope.sekolah.jenjang_id;
+            }, function(oldValue, newValue) {
+                var _jenjang = parseInt($scope.sekolah.jenjang_id);
+                console.log('Old value : ' + oldValue);
+                console.log('New value : ' + newValue);
+                
+                if (oldValue != newValue) {
+                    $scope.sekolah.program = []; 
+                }
 
-            /* if ($scope.hasOwnProperty('sekolah.program') == false ) {
-                // || ! isArrayObject($scope.sekolah.program)
-                $scope.sekolah.program = [];
-                console.log('Program is instanceof');
-            }
-    */
+                if (_jenjang < 18) {
+                    $scope.sekolah.program = [{
+                        id: 200
+                    }];
+                    $scope.form_program = true;
+                } else {
+                    $scope.form_program = false;
+                    if ($scope.sekolah.program == undefined) {
+                        $scope.sekolah.program = [];   
+                    }
+                }
+            });
 
             var update = function(value) {
                 AppSekolahRepository.update(value);   
@@ -94,42 +105,36 @@
         // WILAYAH OPT
         // -----------------------------------------------------------------------
         // 
-        
-            if ($scope.hasOwnProperty('sekolah.provinsi_id')) {
-                $scope.$watch(function() {
-                    return $scope.sekolah.provinsi_id;
-                }, function(oldValue, newValue) {
-                    var kota = TAFFY(DAERAH.KOTA),
-                        provinsi = parseInt($scope.sekolah.provinsi_id);
+        // 
+            $scope.$watch(function() {
+                return $scope.sekolah.provinsi_id;
+            }, function(oldValue, newValue) {
+                var kota = TAFFY(DAERAH.KOTA),
+                    provinsi = parseInt($scope.sekolah.provinsi_id);
 
-                    $scope.config.wilayah.kota = kota({provinsi_id:{is:provinsi}}).order('nama').get();
-                    $scope.config.wilayah.kecamatan = {};
-                    $scope.config.wilayah.desa = {};
-                });
-            }
+                $scope.config.wilayah.kota = kota({provinsi_id:{is:provinsi}}).order('nama').get();
+                $scope.config.wilayah.kecamatan = {};
+                $scope.config.wilayah.desa = {};
+            });
+            
+            $scope.$watch(function() {
+                return $scope.sekolah.kota_id;
+            }, function(oldValue, newValue) {
+                var kecamatan = TAFFY(DAERAH.KECAMATAN),
+                    kota = parseInt($scope.sekolah.kota_id);
 
-            if ($scope.hasOwnProperty('sekolah.kota_id')) {
-                $scope.$watch(function() {
-                    return $scope.sekolah.kota_id;
-                }, function(oldValue, newValue) {
-                    var kecamatan = TAFFY(DAERAH.KECAMATAN),
-                        kota = parseInt($scope.sekolah.kota_id);
+                $scope.config.wilayah.kecamatan = kecamatan({kota_id:{is:kota}}).order('nama').get();
+                $scope.config.wilayah.desa = {};
+            });
 
-                    $scope.config.wilayah.kecamatan = kecamatan({kota_id:{is:kota}}).order('nama').get();
-                    $scope.config.wilayah.desa = {};
-                });
-            }
+            $scope.$watch(function() {
+                return $scope.sekolah.kecamatan_id;
+            }, function(oldValue, newValue) {
+                var desa = TAFFY(DAERAH.DESA),
+                    kecamatan = parseInt($scope.sekolah.kecamatan_id);
 
-            if ($scope.hasOwnProperty('sekolah.kecamatan_id')) {
-                $scope.$watch(function() {
-                    return $scope.sekolah.kecamatan_id;
-                }, function(oldValue, newValue) {
-                    var desa = TAFFY(DAERAH.DESA),
-                        kecamatan = parseInt($scope.sekolah.kecamatan_id);
-
-                    $scope.config.wilayah.desa = desa({kecamatan_id:{is:kecamatan}}).order('nama').get();
-                });
-            }
+                $scope.config.wilayah.desa = desa({kecamatan_id:{is:kecamatan}}).order('nama').get();
+            });
 
         // -----------------------------------------------------------------------
         // END WILAYAH OPT
@@ -140,11 +145,11 @@
         .controller('AppSekolahBiodataProgramCtrl', function($scope, $modalInstance, AppSekolahRepository) {
 
             var prodi = TAFFY(APP.PRODI);
-
-            $scope.sekolah = AppSekolahRepository.sekolah;
+            var _sekolah = AppSekolahRepository.sekolah;
+            $scope.sekolah = _sekolah;
+            
             $scope.prodi = prodi({jenjang_id: {is:parseInt($scope.sekolah.jenjang_id)}}).order('nama').get();
             
-
             $scope.save = function() {
                 // $scope.sekolah.program.push($scope.program);
                 $modalInstance.close($scope.program);

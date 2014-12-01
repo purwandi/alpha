@@ -173,70 +173,73 @@
 <section id="step-2" class="step">
     <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">2 OF 7 : YAYASAN</p>    
     <p>Hanya di tujukan sekolah/madrasah swasta.</p>
-    <div class="row">
-        <div class="col-md-9">
-            <div class="form-group">
-                <label class="form-label">Nama yayasan *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.nama" placeholder="nama yayasan"/>
+
+    <div ng-hide="sekolah.status == 'N'">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label class="form-label">Nama yayasan *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.nama" placeholder="nama yayasan"/>
+                </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label class="form-label">Alamat yayasan *</label>
+                    <textarea class="form-control input-sm" ng-model="sekolah.yayasan.alamat" rows="5" placeholder="alamat yayasan"/></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Nomor akte *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_no" placeholder="nama yayasan"/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Tanggal akte *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_tanggal" placeholder="nama yayasan"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Nama notaris *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_notaris" placeholder="nama yayasan"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="form-label">Akte pengesahan *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_pengesahan" placeholder=""/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Telepon *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.telepon" placeholder=""/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.email" placeholder=""/>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <button class="btn btn-primary btn-sm" ng-click="nextstep(3)">Langkah selanjutnya</button>
+        <button class="btn btn-link btn-sm" ng-click="nextstep(1)">Langkah sebelumnya</button>
     </div>
-
-    <div class="row">
-        <div class="col-md-7">
-            <div class="form-group">
-                <label class="form-label">Alamat yayasan *</label>
-                <textarea class="form-control input-sm" ng-model="sekolah.yayasan.alamat" rows="5" placeholder="alamat yayasan"/></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Nomor akte *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_no" placeholder="nama yayasan"/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="form-label">Tanggal akte *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_tanggal" placeholder="nama yayasan"/>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Nama notaris *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_notaris" placeholder="nama yayasan"/>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="form-label">Akte pengesahan *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.akte_pengesahan" placeholder=""/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="form-label">Telepon *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.telepon" placeholder=""/>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label class="form-label">Email *</label>
-                <input class="form-control input-sm" type="text" ng-model="sekolah.yayasan.email" placeholder=""/>
-            </div>
-        </div>
-    </div>
-
-    <hr />
-
-    <button class="btn btn-primary btn-sm" ng-click="nextstep(3)">Langkah selanjutnya</button>
-    <button class="btn btn-link btn-sm" ng-click="nextstep(1)">Langkah sebelumnya</button>
     
 </section>
 
@@ -245,27 +248,26 @@
     <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">3 OF 7 : PROGRAM PENDIDIKAN</p>    
     <p>Hanya di tujukan untuk SMK dan SLB</p>
 
-    <div class="" style="margin-bottom: 50px;" ng-hide="sekolah.program">
-        <div class="text-center" style="padding: 50px 50px; 80px; 50px">
-            Belum memiliki data, anda dapat menambah program pendidikan dengan mengklik tombol tambah prodi di bawah ini .
-        </div>        
-    </div>
-
-    <div>
+    <div class="" style="margin-bottom: 50px;" ng-hide="form_program">
         <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
             <div class="panel-heading">
-                {{ program.sprodi_id }} <prodi prodid="{{ program.sprodi_id }}"></prodi>
+                {{ program.id }} <prodi prodid="{{ program.id }}"></prodi>
             </div>
             <div class="panel-body">
                 {{ program.tujuan }}
             </div>
         </div>
+
+        <div class="text-center">
+            <button class="btn btn-default btn-sm" ng-click="openProgram()">Tambah Program</button>
+        </div>
     </div>
 
-    <div class="text-center">
-        <button class="btn btn-default btn-sm" ng-click="openProgram()">Tambah Program</button>
+        
+
     </div>
 
+    
     <hr />
     <button class="btn btn-primary btn-sm" ng-click="nextstep(4)">Langkah selanjutnya</button>
     <button class="btn btn-link btn-sm" ng-click="nextstep(2)">Langkah sebelumnya</button>

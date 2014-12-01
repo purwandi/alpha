@@ -15,7 +15,12 @@
                 {
                     url: '/sekolah',
                     abstract: true,
-                    templateUrl: '/templates/sekolah.html'
+                    templateUrl: '/templates/sekolah.html',
+                    resolve: {
+                        sekolah: function(AppSekolahRepository) {
+                            return AppSekolahRepository.init();
+                        }
+                    }
                 })
                 .state('sekolah.home', 
                 {
@@ -25,27 +30,16 @@
                 .state('sekolah.biodata', 
                 {
                     url: '/biodata',
-                    controller: 'AppSekolahBiodataCtrl',
                     templateUrl: '/templates/sekolah-biodata.html',
-                    resolve: {
-                        sekolah: function(AppSekolahRepository) {
-                            return AppSekolahRepository.init();
-                        }
-                    }
+                    controller: 'AppSekolahBiodataCtrl'
+                    
                 })
-                
                 .state('sekolah.instrumen',
                 {
                     url: '/instrumen',
                     templateUrl: '/templates/sekolah-instrumen.html',
-                    controller: 'AppSekolahEvaluasiCtrl',
-                    resolve: {
-                        sekolah: function(AppSekolahRepository) {
-                            return AppSekolahRepository.init();
-                        }
-                    }
+                    controller: 'AppSekolahEvaluasiCtrl'
                 })
-
                 .state('sekolah.laporan',
                 {
                     url: '/laporan',
