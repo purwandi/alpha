@@ -11,8 +11,9 @@
             $scope.prodi_current    = false;
             $scope.butir    = {};
 
-            var _bagian,
-                _instrumen,
+            var _source_bagian,
+                _bagian,
+                _source_instrumen,
                 _group_id,
                 _sources,
                 _total;
@@ -21,7 +22,7 @@
                 if ($scope.prodi_current == false) {
                     $scope.prodi_current = parseInt(prodi);
                     $('.prodi-evaluasi').addClass('hide');
-                    $('#prodi-'+prodi).removeClass('hide').addClass('active');   
+                    $('#prodi-'+prodi).removeClass('hide');   
 
                     // init source 
                     __init_group();
@@ -31,7 +32,7 @@
                     $scope.prodi_current = false;
                     $scope._current = 1;
                     $scope.butir = {};
-                    $('.prodi-evaluasi').removeClass('hide').removeClass('active');     
+                    $('.prodi-evaluasi').removeClass('hide');     
                 }
             }
 
@@ -50,11 +51,12 @@
             }
 
             var __init_source = function() {
-                _bagian     = TAFFY(INSTRUMEN.BAGIAN);
-                _instrumen  = TAFFY(INSTRUMEN.BUTIR);
+                _source_bagian     = TAFFY(INSTRUMEN.BAGIAN);
+                _source_instrumen  = TAFFY(INSTRUMEN.BUTIR);
+                _bagian            = _source_bagian({ group_id: { is: parseInt(_group_id.group_id) }});
 
-                _sources    =  _instrumen()
-                                .join( _bagian({ group_id: { is: parseInt(_group_id.group_id) }}), ['bagian_id', 'id'])
+                _sources    =  _source_instrumen()
+                                .join( _bagian, ['bagian_id', 'id'])
                                 .order('nomor');
 
                 _total      = _sources.count();
@@ -66,11 +68,13 @@
             }
 
             var __source_initialize = function(data, current) {
+                // console.log(current);
                 $scope.butir = data[current - 1];
+                // console.log(data);
             }
 
             $scope.$watch('_current', function() {
-                if (parseInt($scope._current) > 0 && parseInt($scope._current) < _total) {
+                if (parseInt($scope._current) > 0 && parseInt($scope._current) <= _total) {
                     __source_initialize($scope.sources, $scope._current);
                 }
             });
@@ -82,10 +86,11 @@
 
                 if (_total > parseInt($scope._current)) {
                     $scope._current = parseInt($scope._current) + 1;
-                    insertUpdate();
                 } else {
                     alert('Soal telah habis');
                 }
+
+                insertUpdate();
             }
 
 
@@ -96,17 +101,19 @@
 
                 if (parseInt($scope._current) > 1) {
                     $scope._current = parseInt($scope._current) - 1;
-                    insertUpdate();
                 } else {
                     alert('Tidak bisa melakukan prev');
                 }
+
+                insertUpdate();
             }
 
             var insertUpdate = function () {
-                var _data = $scope.butir,
-                    _jawaban = parseInt($scope.evaluasi.id),
-                    _sekolah = sekolah,
-                    _evaluasi = {};
+                var _data       = $scope.butir,
+                    _jawaban    = parseInt($scope.evaluasi.id),
+                    _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current),
+                    _program    = sekolah.program[_index],
+                    _evaluasi   = {};
 
                 _evaluasi.id        = _data.id;
                 _evaluasi.prodi_id  = $scope.prodi_current;
@@ -115,11 +122,13 @@
                 _evaluasi.jawaban   = _jawaban;
                 _evaluasi.hasil     = _jawaban * _data.bobot;
 
-                if (sekolah.evaluasi == undefined) {
-                    sekolah.evaluasi = [];
+                // console.log(sekolah.program[_index]);
+
+                if (_program.butir == undefined) {
+                    _program.butir = [];
                 }
 
-                var db = TAFFY(sekolah.evaluasi);
+                var db = TAFFY(_program.butir);
                 var soal = db({nomor: { is: parseInt(_evaluasi.nomor)}});
 
                 // insert or update data evaluasi
@@ -129,69 +138,14 @@
                     db.insert(_evaluasi);   
                 }
 
-                sekolah.evaluasi = db().get();
+                _program.butir = db().get();
                 AppSekolahRepository.update(sekolah);
-                
+
+                // Calculator
+                App.Calculator.init(db, _group_id.group_id, $scope.prodi_current);
+                // console.log(App.Calculator.komponen);
+                // console.log(App.Calculator.hasil);
             }
-
-            /*
-            
-
-            var sources = function() {
-                $scope.butir = _sources.get()[$scope._current - 1];
-            }
-
-            // init
-            // ------------------------------------------------------
-            sources();
-            
-
-            $scope.$watch('_current', function() {
-                if (parseInt($scope._current) > 0 && parseInt($scope._current) < _total) {
-                    sources();
-                }
-                
-            });
-
-            $scope.next = function(current) {
-                if ($scope.evaluasi.id == undefined) {
-                    return alert('Please select');
-                }
-
-                if (_total > parseInt($scope._current)) {
-                    $scope._current = parseInt($scope._current) + 1;
-                    insertUpdate();
-                } else {
-                    alert('Soal telah habis');
-                }
-            }
-
-            $scope.prev = function(current) {
-                if ($scope.evaluasi.id == undefined) {
-                    return alert('Please select');
-                }
-
-                if (parseInt($scope._current) > 1) {
-                    $scope._current = parseInt($scope._current) - 1;
-                    insertUpdate();
-                } else {
-                    alert('Tidak bisa melakukan prev');
-                }
-            }
-
-            var insertUpdate = function () {
-                var _data = $scope.butir,
-                    _jawaban = parseInt($scope.evaluasi.id),
-                    _sekolah = sekolah,
-                    _evaluasi = {};
-
-                _evaluasi.id = _data.id;
-                _evaluasi.nomor = _data.nomor;
-                _evaluasi.jawaban = _jawaban;
-                _evaluasi.hasil = _jawaban * _data.bobot;
-
-                console.log(_evaluasi);
-            } */
         })
     
         .controller('AppSekolahIsiEvaluasiCtrl', function($scope, sekolah, AppSekolahRepository) {

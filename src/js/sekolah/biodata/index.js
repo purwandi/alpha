@@ -23,20 +23,22 @@
            
             // init()
             // -----------------------------------------------------------------------
-            $scope.sekolah = AppSekolahRepository.sekolah = sekolah;
+            AppSekolahRepository.sekolah = sekolah;
+            $scope.sekolah = AppSekolahRepository.sekolah;
 
             if (sekolah == undefined) {
                 $scope.sekolah = { program: [] };
             } else if (sekolah.program == undefined) {
                 $scope.sekolah.program = [];
             }
+
+
+
             
             $scope.$watch(function() {
                 return $scope.sekolah.jenjang_id;
-            }, function(oldValue, newValue) {
+            }, function(newValue, oldValue) {
                 var _jenjang = parseInt($scope.sekolah.jenjang_id);
-                console.log('Old value : ' + oldValue);
-                console.log('New value : ' + newValue);
                 
                 if (oldValue != newValue) {
                     $scope.sekolah.program = []; 
@@ -54,6 +56,8 @@
                     }
                 }
             });
+
+
 
             var update = function(value) {
                 AppSekolahRepository.update(value);   
@@ -83,7 +87,8 @@
                 if ($scope.sekolah.jenjang_id != undefined) {
                     var modalInstance = $modal.open({
                         templateUrl: '/templates/sekolah-program.html',
-                        controller: 'AppSekolahBiodataProgramCtrl'
+                        controller: 'AppSekolahBiodataProgramCtrl',
+                        scope: $scope
                     });
 
                     modalInstance.result.then(function(item) {
@@ -142,16 +147,14 @@
 
         })
 
-        .controller('AppSekolahBiodataProgramCtrl', function($scope, $modalInstance, AppSekolahRepository) {
+        .controller('AppSekolahBiodataProgramCtrl', function($scope, $modalInstance) {
 
-            var prodi = TAFFY(APP.PRODI);
-            var _sekolah = AppSekolahRepository.sekolah;
-            $scope.sekolah = _sekolah;
-            
-            $scope.prodi = prodi({jenjang_id: {is:parseInt($scope.sekolah.jenjang_id)}}).order('nama').get();
+            var prodi       = TAFFY(APP.PRODI);
+            var _sekolah    = $scope.sekolah;
+
+            $scope.prodi = prodi({jenjang_id: {is:parseInt(_sekolah.jenjang_id)}}).order('nama').get();
             
             $scope.save = function() {
-                // $scope.sekolah.program.push($scope.program);
                 $modalInstance.close($scope.program);
             }
 
