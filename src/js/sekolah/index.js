@@ -5,7 +5,9 @@
             'app.directive.prodi',
             'app.sekolah.repository',
             'app.sekolah.biodata',
-            'app.sekolah.evaluasi'
+            'app.sekolah.evaluasi',
+            'app.sekolah.laporan',
+            'app.sekolah.pendaftaran'
         ])
 
         .config(function($stateProvider)
@@ -43,7 +45,8 @@
                 .state('sekolah.laporan',
                 {
                     url: '/laporan',
-                    templateUrl: '/templates/sekolah-laporan.html'
+                    templateUrl: '/templates/sekolah-laporan.html',
+                    controller: 'AppSekolahLaporanCtrl'
                 })
 
                 .state('sekolah.pendaftaran',

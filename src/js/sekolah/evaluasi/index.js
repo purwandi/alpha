@@ -68,9 +68,7 @@
             }
 
             var __source_initialize = function(data, current) {
-                // console.log(current);
                 $scope.butir = data[current - 1];
-                // console.log(data);
             }
 
             $scope.$watch('_current', function() {
@@ -128,6 +126,14 @@
                     _program.butir = [];
                 }
 
+                if (_program.komponen == undefined) {
+                    _program.komponen = [];
+                }
+
+                if (_program.hasil == undefined) {
+                    _program.hasil = {};
+                }
+
                 var db = TAFFY(_program.butir);
                 var soal = db({nomor: { is: parseInt(_evaluasi.nomor)}});
 
@@ -139,10 +145,17 @@
                 }
 
                 _program.butir = db().get();
-                AppSekolahRepository.update(sekolah);
+                
 
                 // Calculator
-                App.Calculator.init(db, _group_id.group_id, $scope.prodi_current);
+                App.Calculator.init(db, _program.komponen, _group_id.group_id, $scope.prodi_current);
+                // console.log(App.Calculator.komponen);
+
+                _program.komponen   = App.Calculator.komponen();
+                _program.hasil      = App.Calculator.hasil();
+                
+                AppSekolahRepository.update(sekolah);
+
                 // console.log(App.Calculator.komponen);
                 // console.log(App.Calculator.hasil);
             }
