@@ -22,6 +22,8 @@
                 _index, 
                 _program;
 
+        var DB_Butir;
+
 		$scope.goEvaluasi = function(prodi) {
 			if ($scope.prodi_current == false) {
 				$scope.prodi_current = parseInt(prodi);
@@ -76,13 +78,14 @@
                 _program.butir = [];
             }
 
-            var DB_Butir = TAFFY(_program.butir);
+            DB_Butir = TAFFY(_program.butir);
 
             _sources.get().forEach(function(entry) {
 
                 var instrumen    = DB_Butir({ nomor: { is: parseInt(entry.nomor) } });
                 var data = { 
                     id: entry.id,
+                    bagian_id: entry.bagian_id,
                     nomor: entry.nomor,
                     instrumen: entry 
                 };
@@ -111,11 +114,27 @@
         	console.log($scope.jawaban);
         }
 
+        $scope.update = function() {
+            // console.log(sekolah);
+
+            App.Skoring.init(DB_Butir, $scope.program.komponen, _group_id.group_id, $scope.prodi_current);
+
+            $scope.program.komponen = App.Skoring.komponen();
+            $scope.program.hasil = App.Skoring.hasil();
+
+            // console.log(App.Skoring.komponen());
+
+            AppSekolahRepository.update(sekolah);
+        }
+
         $scope.getValue = function(id, bagian, bobot, nomor, nilai) {
         	insertUpdate(id, bagian, bobot, nomor, nilai);
         }
 
         var insertUpdate = function(id, bagian, bobot, nomor, nilai) {
+            
+            //AppSekolahRepository.update(sekolah);
+
         	/*var _butir 		= {},
         		_komponen 	= {},
         		_index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current),

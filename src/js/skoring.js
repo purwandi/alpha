@@ -28,10 +28,25 @@ App.Skoring = (function() {
             __nilaiKomp40   = 0;
 
         _bagian.each(function (record,recordnumber) {
-            var skor  = db({bagian_id: {is: record.id}}).sum('hasil');
-            var nilai = roundDecimal((skor/record.skormaks) * record.bobot);
+            var butir    = db({ bagian_id: {is: record.id} });
+
+            var skor = 0;
+
+            console.log(butir.get());
+
+            butir.each(function(key) {
+                // console.log(key.evaluasi);
+                skor = skor + key.evaluasi.hasil;
+            });
+
+            // console.log(skor);
+
+            var nilai   = roundDecimal((skor/record.skormaks) * record.bobot);
             var ratusan = roundDecimal((skor/record.skormaks) * 100);
-            var layak  = getLayak(ratusan);                    
+            var layak   = getLayak(ratusan);                    
+
+
+            //console.log(skor);
 
             var komponen_data = {
                 id      : record.id,
@@ -41,6 +56,8 @@ App.Skoring = (function() {
                 ratusan : ratusan,
                 layak   : layak
             };
+
+           // console.log(komponen_data);
 
             // var db = TAFFY(_program.butir);
             var komponen = __komponen({id: { is: parseInt(record.id)}});

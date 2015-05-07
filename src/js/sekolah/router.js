@@ -41,6 +41,15 @@
                 }
             })
 
+            .state('sekolah-home.laporan', {
+                url: '/laporan',
+                controller: 'SekolahLaporanCtrl',
+                templateUrl: '/templates/sekolah-home.laporan.html',
+                resolve: {
+                    sekolah: getSekolah
+                }
+            })
+
 
         function getSekolah(AppSekolahRepository) {
             return AppSekolahRepository.init();

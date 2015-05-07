@@ -29,20 +29,25 @@
                 <td>{{ butir.instrumen.nomor }}</td>
                 <td>{{ butir.instrumen.nama }} </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td></td>
                 <td>{{ butir.instrumen }}</td>
-            </tr>
+            </tr> -->
             <tr>
                 <td></td>
                 <td>
+                    <div class="hide">
+                        {{ butir.evaluasi.jawaban  = butir.evaluasi.jawaban ? butir.evaluasi.jawaban : 0 }}      
+                    </div>
+
                     <div class="radio" ng-repeat="opsi in butir.instrumen.pilihan track by $index">
                         <label>
                             <input 
                                 type="radio" 
                                 id="{{ $index }}"
-                                ng-model="butir.instrumen.evaluasi.jawaban"
+                                ng-model="butir.evaluasi.jawaban"
                                 value="{{ opsi.nilai }}"
+                                ng-click="update()"
                                 name="pilihan_{{ butir.instrumen.nomor }}" 
                                 />
                             {{ opsi.nama }}
@@ -50,13 +55,41 @@
                         </label>
                     </div>
 
-                    {{ butir.instrumen.evaluasi.hasil = butir.instrumen.evaluasi.jawaban * butir.instrumen.bobot }}
-                    
+                    <div class="hide">          
+                        {{ butir.evaluasi.hasil = butir.evaluasi.jawaban * butir.instrumen.bobot }}
+                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
     <br />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>KOMPONEN</th>
+                <th>Bobot</th>
+                <th>STM</th>
+                <th>STP</th>
+                <th>NK</th>
+                <th>NSR</th>
+                <th>KELAYAKAN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="komponen in program.komponen">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ komponen.skor }}</td>
+                <td>{{ komponen.nilai }}</td>
+                <td>{{ komponen.ratusan }}</td>
+                <td>{{ komponen.layak }}</td>
+            </tr>
+        </tbody>
+    </table>
 
     <button class="btn btn-default" ng-click="test()">Test</button>
 </div>

@@ -17,7 +17,7 @@ $(document).ready(function() {
 
             'app.directive.prodi',
             'app.directive.maxheight',
-            'app.directive.butir',
+            'app.directive.affix',
             
             'app.base', 
             'app.sekolah', 
