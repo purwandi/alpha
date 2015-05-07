@@ -23,10 +23,14 @@ gulp.task('app-scripts', function() {
     './src/js/config/*.js',
     './src/js/plugins/*.js',
     './src/js/app.js',
-    './src/js/helpers.js',
+    './src/js/*.js',
     './src/js/directives/*.js',
     './src/js/base/**/*.js',
+    './src/js/asesor/app.js',
+    './src/js/asesor/*.js',
     './src/js/asesor/**/*.js',
+    './src/js/sekolah/app.js',
+    './src/js/sekolah/router.js',
     './src/js/sekolah/**/*.js'
   ];
 
@@ -50,61 +54,12 @@ gulp.task('app-less', function() {
     .pipe(gulp.dest('release/css'));
 });
 
-/* Frameworks Copy Task
-  ------------------------------------------------- */
-gulp.task('framework-copy', function() {
-
-  gulp.src([
-    path + '/**/*.min.js',
-    path + '/**/*-min.js',
-    path + '/**/*.min.js.map'
-  ])
-  .pipe(gulp.dest('./release/js/'));
-
-  gulp
-    .src([path + 'angular-validation/locales/**/*.json'])
-    .pipe(gulp.dest('./release/js/locales/'))
-
-  gulp
-    .src([path + 'ionicons/fonts/*'])
-    .pipe(gulp.dest('./release/fonts/'));
-
-   gulp
-    .src(['./src/js/meta/**/*.js'])
-    .pipe(gulp.dest('./release/js/meta'));
-
-  gulp
-    .src([path + 'ionicons/css/ionicons.min.css'])
-    .pipe(gulp.dest('./release/css/'));
-});
-
-gulp.task('frameworks-less', function() {
-  gulp
-    .src(path + 'bootstrap/less/normalize.less')
-    .pipe(less({compress: true}))
-    .pipe(concat('normalize.min.css'))
-    .pipe(gulp.dest('release/css'));
-
-  gulp
-    .src(path + 'bootstrap/less/print.less')
-    .pipe(less({compress: true}))
-    .pipe(concat('print.min.css'))
-    .pipe(gulp.dest('release/css'));
-
-  gulp
-    .src('./src/less/bootstrap.less')
-    .pipe(less({compress: true}))
-    .pipe(concat('bootstrap.min.css'))
-    .pipe(gulp.dest('release/css'));
-});
-
 gulp.task('watch', function() {
   gulp.watch('./src/less/*.less', ["app-less"]);
   gulp.watch('./src/js/**/*.html', ["templates"]);
   gulp.watch('./src/js/**/*.js', ["app-scripts"]);
 });
 
-gulp.task('framework', ['framework-copy', 'frameworks-less']);
 gulp.task('app', ['app-scripts', 'app-less']);
-gulp.task('build', ['framework', 'default']);
+gulp.task('build', ['default']);
 gulp.task('default', ['templates', 'app']);

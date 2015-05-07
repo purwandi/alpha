@@ -1,7 +1,7 @@
 {
   "name": "Alpha",
   "version": "0.0.2",
-  "homepage": "http://studentjob.co.id",
+  "homepage": "http://app.bap-sm.or.id",
   "devDependencies": {
     "gulp": "latest",
     "gulp-concat": "latest",

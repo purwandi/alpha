@@ -1,0 +1,34 @@
+<style type="text/css">
+	.list-group-item.relax {
+		padding: 25px 35px;
+	}
+	.list-group-item a {
+		color: #000;
+	}
+	.list-group-item a:hover {
+		text-decoration: none;
+	}
+	.list-group-item p {
+		margin: 0;
+	}
+	.text-danger p {
+		font-size: 20px;
+		font-weight: 400;
+		color: #d92231;
+	}
+</style>
+
+
+<p class="lead">Siapkan hasil visitasi sekolah. Pilih satuan pendidikan yang akan laporkan hasil visitasinya. Kemudian pindahkan hasil visitasi tersebut ke dalam aplikasi skoring pada langkah selanjutnya. </p>
+
+<div class="list-group" ng-repeat="sekolah in vm.data.data">
+	<div class="list-group-item relax" >
+		<div class="text-danger"><p>{{ sekolah.nama }}</p></div>
+		<div class="">{{ sekolah.alamat }}</div>
+	</div>
+	<a ui-sref="asesor.visitasi({npsn:sekolah.npsn, prodi: prodi.kode})" class="list-group-item" ng-repeat="prodi in sekolah.data">
+		<span class="pull-right">Mulai laporan</span>
+		{{ prodi.kode }} {{ prodi.nama }}
+	</a>
+	
+</div>

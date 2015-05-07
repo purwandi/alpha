@@ -13,9 +13,18 @@ $(document).ready(function() {
 (function() {
     angular
         .module('app', [
+            'ui.router',
 
+            'app.directive.prodi',
+            'app.directive.maxheight',
+            'app.directive.butir',
+            
             'app.base', 
             'app.sekolah', 
             'app.asesor'
         ])
+
+        .config(function($locationProvider) {
+            $locationProvider.html5Mode(true);
+        })
 }) ();

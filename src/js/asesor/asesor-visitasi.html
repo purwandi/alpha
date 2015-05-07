@@ -1,0 +1,59 @@
+<style type="text/css">
+	h4 {
+		font-size: 18px;
+		font-weight: 300;
+		line-height: 1.2;
+	}
+	.media {
+		margin-bottom: 40px
+	}
+</style>
+<p>
+	<span class="pull-right">{{ vm.prodi.nama }}</span>
+	{{ vm.sekolah.nama }} 
+</p>
+<hr />
+
+<table class="table table-condensed table-bordered">
+	<thead>
+		<tr>
+			<th rowspan="2" class="text-center" style="vertical-align: middle;">No</th>
+			<th colspan="4" class="text-center">Pengisian Menurut</th>
+			<th rowspan="2" class="text-center" style="vertical-align: middle;">Keterangan</th>
+		</tr>
+		<tr>
+			<th class="text-center">Sekolah</th>
+			<th class="text-center">Asesor&nbsp;1</th>
+			<th class="text-center">Asesor&nbsp;2</th>
+			<th class="text-center">Kelompok</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="butir in vm.butir">
+			<td width="1%" class="text-center">{{ butir.nomor }}</td>
+			<td width="1%"><input type="text" class="form-control input-sm" placeholder="" /></td>
+			<td width="1%"><input type="text" class="form-control input-sm" placeholder="" /></td>
+			<td width="1%"><input type="text" class="form-control input-sm" placeholder="" /></td>
+			<td width="1%"><input type="text" class="form-control input-sm" placeholder="" /></td>
+			<td><input type="text" class="form-control input-sm" placeholder="Keterangan" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- <div class="media" ng-repeat="butir in vm.butir">
+  	<div class="media-left">
+      	<h4>{{ butir.nomor }}</h4>
+  	</div>
+  	<div class="media-body" style="padding: 0px 8px;">
+    	<h4 class="media-heading">{{ butir.nama }}</h4>
+    	<div class="radio" ng-repeat="opsi in butir.pilihan">
+            <label ng-click="vm.onSelectButir()">
+                <input type="radio" ng-model="vm.visitasi.id" name="pilihan_{{ butir.nomor }}" value="{{ opsi.nilai}}" > 
+                {{ opsi.nama }}
+            </label>
+        </div>
+
+        <hr style="margin-bottom: 0px" />
+        <textarea class="form-control" placeholder="Berilah keterangan apabila terdapat perbedaan jawaban"></textarea>
+  	</div>
+</div> -->

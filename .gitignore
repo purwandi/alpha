@@ -1,8 +1,10 @@
-bower_components/*
 node_modules/*
 logs/*
 .nfs.*
+._*
+.DS_Store
 release/css/*
 release/js/*
 release/fonts/*
 release/templates/*
+release/bower_components/*

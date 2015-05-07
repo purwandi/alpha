@@ -1,9 +1,49 @@
+<style type="text/css">
+	.list-group-item {
+		padding: 25px 35px;
+	}
+	.list-group-item a {
+		color: #000;
+	}
+	.list-group-item a:hover {
+		text-decoration: none;
+	}
+	.list-group-item p {
+		margin: 0;
+	}
+	.text-danger p {
+		font-size: 20px;
+		font-weight: 400;
+		color: #d92231;
+	}
+</style>
+
 <div class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <a ui-sref="sekolah.biodata">Sekolah</a>
+	<div class="row">
+        <div class="col-sm-8 col-md-8  col-md-offset-2 col-sm-offset-2">
+        	<h1 class="page-header">Sistem Penskoran Akreditasi</h1>
+			<p class="lead">Aplikasi Penskoran dan Pemeringkatan Hasil Akreditasi</p>
+		    
+		    <ul class="list-group">
+		    	<li class="list-group-item">
+		    		<a ui-sref="sekolah">
+		    			<div class="text-danger"><p>Aplikasi Skoring Sekolah</p></div>
+		    			<div class="lead" style="font-size:18px;font-weight:bold;margin:0;">
+		    				<p class="bodytext">Menuju Aplikasi</p>
+		    			</div>
+		    		</a>
+		    	</li>
+		    	<li class="list-group-item">
+		    		<a ui-sref="asesor.home">
+		    			<div class="text-danger"><p>Aplikasi Skoring Tim Asesor</p></div>
+		    			<div class="lead" style="font-size:18px;font-weight:bold;margin:0;">
+		    				<p class="bodytext">Menuju Aplikasi</p>
+		    			</div>
+		    		</a>
+		    	</li>
+		    </ul>
+            
 
         </div>
-        <div class="col-sm-6"></div>
     </div>
 </div>

@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h3 class="modal-title">Program Pendidikan</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label class="control-label">Program Pendidikan *</label>
+        <select 
+            class="form-control input-sm" 
+            ng-model="program.id"
+            ng-options="program.id as program.nama for program in prodi">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Penanggung Jawab *</label>
+        <input class="form-control input-sm" type="text" ng-model="program.ketua_nama">     
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">NIP</label>
+        <input class="form-control input-sm" type="text" ng-model="program.ketua_nip">     
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Tujuan Program *</label>
+        <textarea class="form-control input-sm" rows="4" ng-model="program.tujuan"></textarea>   
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="save()">OK</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,18 +1,26 @@
 // Override Form Control
 // Shared size and type resets
 .form-control {
-  background-color: darken(@input-bg, 2%);
+  // background-color: darken(@input-bg, 2%);
+  border-radius: 0px;
+
   &:focus {
     background-color: @input-bg;
   }
-}
 
-.form-control {
-  &.input-lg {
-    border-radius: 2px;
-  }
-  &.input-sm {
-    border-radius: 0px;
+  &.no-bordered {
+    border: 1px solid #fff;
+    border-bottom: 1px solid #eee;
+     -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+             box-shadow: none;
+
+    &:focus {
+      border-bottom: 1px solid #d4d4d5;
+      -webkit-box-shadow: none;
+         -moz-box-shadow: none;
+              box-shadow: none;
+    }
   }
 }
 
@@ -43,6 +51,15 @@
   i {
     top: 2px;
   }
+}
+
+
+label {
+    font-weight: 500;
+}
+.checkbox,
+.radio {
+    margin-top: 0px;
 }
 
 /**

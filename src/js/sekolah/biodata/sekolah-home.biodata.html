@@ -1,0 +1,292 @@
+<!-- <section id="step-0" class="step">
+    <p class="lead" style="border-bottom: 1px solid #EFEFEF; margin-bottom: 20px; padding-bottom: 10px;">BIODATA TERISI</p>
+    <a href="/#/sekolah/biodata?step=1" class="btn btn-primary">Update</a>
+</section> -->
+<style type="text/css">
+    section {
+        margin-bottom: 80px;
+    }
+</style>
+
+<ul class="list-group">
+	<li class="list-group-item">
+	    <h4>BIODATA SEKOLAH</h4>
+	</li>
+
+	<li class="list-group-item">
+	    <div class="row">
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.npsn" placeholder="NPSN"/>
+	            </div>
+	        </div>
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.nss" placeholder="NSS"/>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="form-group">
+	        <input class="form-control no-bordered" type="text" ng-model="sekolah.nama" placeholder="Nama sekolah/madrasah"/>
+	    </div>
+
+	    <div class="row">
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.jenjang_id"
+	                    ng-options="jenjang.id as jenjang.nama for jenjang in config.jenjang">
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.status"
+	                    ng-options="status.id as status.nama for status in config.status">
+	                </select>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="form-group">
+	        <input class="form-control no-bordered" type="text" ng-model="sekolah.alamat" placeholder="Alamat jalan"/>
+	    </div>
+
+	    <div class="row">
+	        <div class="col-md-2">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.alamat_no" placeholder="No"/>
+	            </div>
+	        </div>
+	        <div class="col-md-2">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.alamat_rt" placeholder="RT"/>
+	            </div>
+	        </div>
+	        <div class="col-md-2">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.alamat_rw" placeholder="RW"/>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="row">
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.provinsi_id"
+	                    ng-options="provinsi.id as provinsi.nama for provinsi in config.wilayah.provinsi">
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.kota_id" 
+	                    ng-options="kota.id as kota.nama for kota in config.wilayah.kota">
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.kecamatan_id" 
+	                    ng-options="kecamatan.id as kecamatan.nama for kecamatan in config.wilayah.kecamatan">
+	                </select>
+	            </div>
+	        </div>
+	    </div>
+
+	    <div class="row">
+	        <div class="col-md-4">
+	            <div class="form-group">
+	                <select 
+	                    class="form-control no-bordered" 
+	                    ng-model="sekolah.desa_id" 
+	                    ng-options="desa.id as desa.nama for desa in config.wilayah.desa">
+	                </select>
+	            </div>
+	        </div>
+	        <div class="col-md-3">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.kode_pos" placeholder="Kode pos"/>
+	            </div>
+	        </div>
+	        <div class="col-md-4">
+	            
+	        </div>
+	    </div>
+
+	    <div class="row">
+	        <div class="col-md-3">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.telepon" placeholder="Nomor telepon"/>
+	            </div>
+	        </div>
+	        <div class="col-md-3">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.handphone" placeholder="Nomor handphone"/>
+	            </div>
+	        </div>
+	        <div class="col-md-3">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.fax" placeholder="Nomor fax"/>
+	            </div>
+	        </div>
+	        <div class="col-md-3">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.email" placeholder="Email sekolah"/>
+	            </div>
+	        </div>
+	    </div>
+	</li>
+</ul>
+
+
+<ul class="list-group">
+	<li class="list-group-item">
+	    <h4>
+	    	INFORMASI YAYASAN
+	    	<small>Hanya di tujukan sekolah/madrasah swasta</small>
+	    </h4>
+	</li>
+	<li class="list-group-item">
+	    <div ng-hide="sekolah.status == 'N'">
+	        <div class="row">
+	            <div class="col-md-9">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.nama" placeholder="Nama yayasan"/>
+	                </div>
+	            </div>
+	        </div>
+
+	        <div class="row">
+	            <div class="col-md-7">
+	                <div class="form-group">
+	                    <textarea class="form-control no-bordered" ng-model="sekolah.yayasan.alamat" rows="5" placeholder="Alamat yayasan"/></textarea>
+	                </div>
+	            </div>
+	        </div>
+
+	        <div class="row">
+	            <div class="col-md-4">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_no" placeholder="Nomor akte yayasan"/>
+	                </div>
+	            </div>
+	            <div class="col-md-3">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_tanggal" placeholder="Tanggal akte yayasan"/>
+	                </div>
+	            </div>
+	            <div class="col-md-4">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_notaris" placeholder="Nama notaris"/>
+	                </div>
+	            </div>
+	        </div>
+
+	        <div class="row">
+	            <div class="col-md-4">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_pengesahan" placeholder="Nomor akte pengesahan"/>
+	                </div>
+	            </div>
+	            <div class="col-md-3">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.telepon" placeholder="Telepon yayasan"/>
+	                </div>
+	            </div>
+	            <div class="col-md-3">
+	                <div class="form-group">
+	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.email" placeholder="Email yayasan"/>
+	                </div>
+	            </div>
+	        </div>
+
+	        
+	    </div>
+	</li>
+</ul>
+
+
+<ul class="list-group">
+	<li class="list-group-item">
+	    <h4>PROGRAM PENDIDIKAN <small>Hanya di tujukan untuk SMK dan SLB</small></h4>
+	</li>    
+	<li class="list-group-item">
+
+		<div ng-show="form_program">
+			Blank space
+		</div>
+	    <div ng-hide="form_program">
+	        <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
+	            <div class="panel-heading">
+	                {{ program.id }} <prodi prodid="{{ program.id }}"></prodi>
+	            </div>
+	            <div class="panel-body">
+	                {{ program.tujuan }}
+	            </div>
+	        </div>
+
+	        <div class="text-center">
+	            <button class="btn btn-primary btn-sm" ng-click="openProgram()">Tambah Program</button>
+	        </div>
+	    </div>
+	</li>
+</ul>
+
+<ul class="list-group">
+	<li class="list-group-item">
+		<h4>VISI DAN MISI</h4>
+	</li>
+	<li class="list-group-item">
+
+	    <div class="form-group">
+	        <label class="control-label">Visi</label>
+	        <textarea class="form-control no-bordered" rows="6" ng-model="sekolah.visi"></textarea>   
+	    </div>
+
+	    <div class="form-group">
+	        <label class="control-label">Misi</label>
+	        <textarea class="form-control no-bordered" rows="6" ng-model="sekolah.misi"></textarea>   
+	    </div>
+	</li>
+</ul>
+
+<ul class="list-group">
+	<li class="list-group-item">
+		<h4>STAKE HOLDER</h4>    
+	</li>
+	<li class="list-group-item">
+
+	    <div class="row">
+	        <div class="col-md-6">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.kepsek_nama" placeholder="Nama kepala sekolah/madrasah">
+	            </div>
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.kepsek_nip" placeholder="NIP kepala sekolah/madrasah">
+	            </div>
+	        </div>
+	        <div class="col-md-6">
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.pengawas_nama" placeholder="Nama pengawas sekolah/madrasah">
+	            </div>
+	            <div class="form-group">
+	                <input class="form-control no-bordered" type="text" ng-model="sekolah.pengawas_nip" placeholder="NIP pengawas sekolah/madrasah">
+	            </div>
+	        </div>
+    	</div>
+    </li>
+</ul>
+
+<button class="btn btn-primary btn-block" ng-click="save()">Simpan Data</button>
+<br /><br /><br /><br />

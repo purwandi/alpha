@@ -1,22 +1,13 @@
 (function() {
     angular
-        .module('app.base', ['ui.router'])
+        .module('app.base', [])
+        .config(router)
 
-        .config(function($stateProvider, $urlRouterProvider) 
-        {
-            $urlRouterProvider
-                .otherwise('/');
-
-            $stateProvider
-                .state('home', 
-                {
-                    url: '/',
-                    templateUrl: '/templates/home.html'
-                })
-                .state('laporan', 
-                {
-                    url: '/laporan',
-                    templateUrl: '/templates/sekolah-biodata.html'
-                })
-        })
+    function router($stateProvider) {
+        $stateProvider
+            .state('home', {
+                url: '/',
+                templateUrl: '/templates/home.html'
+            })
+    }
 })();

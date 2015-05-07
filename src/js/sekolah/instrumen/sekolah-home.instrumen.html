@@ -1,0 +1,62 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{ sekolah.nama }}</div>
+    <div class="panel-body">
+        {{ sekolah.alamat }}
+    </div>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-warning" ng-hide="prodi_current">
+            <small>Untuk memulai pengisian instrumen, klik link berikut ini.</small>
+        </div>
+        <a href="/#/" 
+            onclick="return false;" 
+            class="list-group-item prodi-evaluasi" 
+            ng-repeat="prodi in sekolah.program" 
+            ng-click="goEvaluasi(prodi.id)" 
+            id="prodi-{{ prodi.id }}">
+
+            <div class="pull-right" ng-hide="prodi_current"> Mulai <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
+
+            <prodi prodid="{{ prodi.id }}"></prodi>
+        </a>
+    </div>
+</div>
+
+<div ng-show="prodi_current">
+    <table class="table table-bordered">
+        <tbody ng-repeat="butir in program.butir">
+            <tr>
+                <td>{{ butir.instrumen.nomor }}</td>
+                <td>{{ butir.instrumen.nama }} </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{ butir.instrumen }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="radio" ng-repeat="opsi in butir.instrumen.pilihan track by $index">
+                        <label>
+                            <input 
+                                type="radio" 
+                                id="{{ $index }}"
+                                ng-model="butir.instrumen.evaluasi.jawaban"
+                                value="{{ opsi.nilai }}"
+                                name="pilihan_{{ butir.instrumen.nomor }}" 
+                                />
+                            {{ opsi.nama }}
+
+                        </label>
+                    </div>
+
+                    {{ butir.instrumen.evaluasi.hasil = butir.instrumen.evaluasi.jawaban * butir.instrumen.bobot }}
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+
+    <button class="btn btn-default" ng-click="test()">Test</button>
+</div>
