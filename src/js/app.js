@@ -24,7 +24,9 @@ $(document).ready(function() {
             'app.asesor'
         ])
 
-        .config(function($locationProvider) {
-            $locationProvider.html5Mode(true);
+        .config(function($locationProvider, $urlRouterProvider) {
+            // $locationProvider.html5Mode(true);
+            $urlRouterProvider
+                .otherwise('/')
         })
 }) ();

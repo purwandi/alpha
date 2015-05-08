@@ -1,1 +1,65 @@
-{{ sekolah }}
+<div class="panel panel-default">
+    <div class="panel-heading">{{ sekolah.nama }}</div>
+    <div class="panel-body">
+        {{ sekolah.alamat }}
+    </div>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-warning" ng-hide="prodi_current">
+            <small>Untuk memulai pengisian instrumen, klik link berikut ini.</small>
+        </div>
+        <a href="/#/" 
+            onclick="return false;" 
+            class="list-group-item prodi-evaluasi" 
+            ng-repeat="prodi in sekolah.program" 
+            ng-click="goEvaluasi(prodi.id)" 
+            id="prodi-{{ prodi.id }}">
+
+            <div class="pull-right" ng-hide="prodi_current"> Mulai <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
+
+            <prodi prodid="{{ prodi.id }}"></prodi>
+        </a>
+    </div>
+</div>
+
+<div ng-show="prodi_current">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th>KOMPONEN</th>
+                <th class="text-center">Bobot</th>
+                <th class="text-center">STM</th>
+                <th class="text-center">STP</th>
+                <th class="text-center">NK</th>
+                <th class="text-center">NSR</th>
+                <th class="text-center">LAYAK</th>
+            </tr>
+        </thead>
+        <tfoot>
+        	<tr>
+        		<th colspan="6">NILAI AKHIR AKREDITASI</th>
+        		<th class="text-center">{{ program.hasil.nilai }}</th>
+        		<th></th>
+        	</tr>
+        	<tr>
+        		<th colspan="6">PERINGKAT AKREDITASI</th>
+        		<th class="text-center">{{ program.hasil.peringkat }}</th>
+        		<th></th>
+        	</tr>
+        </tfoot>
+        <tbody>
+        	<span ng-init="no = 0"></span>
+            <tr ng-repeat="komponen in program.komponen">
+                <td class="text-center">{{ komponen.nomor }}</td>
+                <td>{{ komponen.komponen.nama }}</td>
+                <td class="text-center">{{ komponen.komponen.bobot }}</td>
+                <td class="text-center">{{ komponen.komponen.skormaks }}</td>
+                <td class="text-center">{{ komponen.skor }}</td>
+                <td class="text-center">{{ komponen.nilai }}</td>
+                <td class="text-center">{{ komponen.ratusan }}</td>
+                <td class="text-center">{{ komponen.layak == 'L' ? 'Layak' : 'Tidak Layak'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

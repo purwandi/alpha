@@ -27,8 +27,10 @@ $(document).ready(function() {
             'app.asesor'
         ])
 
-        .config(function($locationProvider) {
-            $locationProvider.html5Mode(true);
+        .config(function($locationProvider, $urlRouterProvider) {
+            // $locationProvider.html5Mode(true);
+            $urlRouterProvider
+                .otherwise('/')
         })
 }) ();
 
@@ -257,6 +259,8 @@ App.Skoring = (function() {
             __tidakLayak    = 0,
             __nilaiKomp40   = 0;
 
+        var nomor = 1;
+
         _bagian.each(function (record,recordnumber) {
             var butir    = db({ bagian_id: {is: record.id} });
 
@@ -284,7 +288,9 @@ App.Skoring = (function() {
                 skor    : skor,
                 nilai   : nilai,
                 ratusan : ratusan,
-                layak   : layak
+                layak   : layak,
+                nomor   : nomor,
+                komponen: record
             };
 
            // console.log(komponen_data);
@@ -695,7 +701,7 @@ store.deserialize = function(value) {
             })
 
             .state('sekolah-home.index', {
-                url: '',
+                url: '/',
                 templateUrl: '/templates/sekolah-home.index.html'
             })
 
@@ -886,7 +892,12 @@ store.deserialize = function(value) {
 		.module('app.sekolah')
 		.controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
 
-	function SekolahInstrumenCtrl($scope, sekolah, AppSekolahRepository) {
+	function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
+
 		$scope.sekolah = sekolah;
 		$scope.prodi_current = false;
 		$scope.butir = {};
@@ -904,6 +915,7 @@ store.deserialize = function(value) {
                 _program;
 
         var DB_Butir;
+        var DB_Komponen;
 
 		$scope.goEvaluasi = function(prodi) {
 			if ($scope.prodi_current == false) {
@@ -915,9 +927,6 @@ store.deserialize = function(value) {
 				 */
 				__init_group();
 				__init_source();
-
-
-
 
 			} else {
 				$scope.prodi_current = false;
@@ -957,6 +966,10 @@ store.deserialize = function(value) {
             // ------------------------------------------------
             if (_program.butir == undefined) {
                 _program.butir = [];
+            }
+
+            if (_program.komponen == undefined) {
+                _program.komponen = [];
             }
 
             DB_Butir = TAFFY(_program.butir);
@@ -1001,7 +1014,7 @@ store.deserialize = function(value) {
             App.Skoring.init(DB_Butir, $scope.program.komponen, _group_id.group_id, $scope.prodi_current);
 
             $scope.program.komponen = App.Skoring.komponen();
-            $scope.program.hasil = App.Skoring.hasil();
+            $scope.program.hasil    = App.Skoring.hasil();
 
             // console.log(App.Skoring.komponen());
 
@@ -1010,62 +1023,6 @@ store.deserialize = function(value) {
 
         $scope.getValue = function(id, bagian, bobot, nomor, nilai) {
         	insertUpdate(id, bagian, bobot, nomor, nilai);
-        }
-
-        var insertUpdate = function(id, bagian, bobot, nomor, nilai) {
-            
-            //AppSekolahRepository.update(sekolah);
-
-        	/*var _butir 		= {},
-        		_komponen 	= {},
-        		_index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current),
-        		_program	= sekolah.program[_index],
-        		_evaluasi	= {};
-
-        	_evaluasi.id 		= id;
-        	_evaluasi.prodi_id  = $scope.prodi_current;
-        	_evaluasi.bagian_id	= bagian;
-        	_evaluasi.nomor 	= nomor;
-        	_evaluasi.jawaban	= nilai;
-        	_evaluasi.hasil 	= nilai * bobot;
-
-        	if (_program.butir == undefined) {
-        		_program.butir = [];
-        	}
-
-        	if (_program.komponen == undefined) {
-        		_program.komponen = [];
-        	}
-
-        	if (_program.hasil == undefined) {
-        		_program.hasil = {};
-        	}
-
-        	var db 		= TAFFY(_program.butir);
-        	var soal 	= db({ nomor: { is: parseInt(nomor) } });
-
-        	if (soal.first()) {
-        		console.debug('Update');
-        		soal.update(_evaluasi);
-        	} else {
-        		console.debug('Insert');
-        		
-        		// console.log(db);
-        		db.insert(_evaluasi);
-        		console.debug(db().get());
-        	}
-
-        	 _program.butir = db().get();
-
-        	// console.log(_program);
-        	// console.log(_evaluasi);
-
-        	App.Skoring.init(db, _program.komponen, _group_id.group_id, $scope.prodi_current);
-
-        	_program.komponen   = App.Skoring.komponen();
-            _program.hasil      = App.Skoring.hasil();
-            
-            AppSekolahRepository.update(sekolah);*/
         }
 
 	}
@@ -1079,8 +1036,35 @@ store.deserialize = function(value) {
 		.controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
 
 
-	function SekolahLaporanCtrl($scope, sekolah) {
+	function SekolahLaporanCtrl($scope, $state, sekolah) {
+
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
+
 		$scope.sekolah = sekolah;
+		$scope.program = {};
+		$scope.prodi_current = false;
+
+		$scope.goEvaluasi = function(prodi) {
+			if ($scope.prodi_current == false) {
+				$scope.prodi_current = parseInt(prodi);
+				$('.prodi-evaluasi').addClass('hide');
+                $('#prodi-'+prodi).removeClass('hide');   
+				
+
+				var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
+            	var _program    = sekolah.program[_index];
+            	$scope.program  = _program;
+
+			} else {
+				$scope.prodi_current = false;
+				$scope.butir 	= {};
+				$scope.program 	= {};
+				$('.prodi-evaluasi').removeClass('hide');     
+			}
+		}
 	}
 
 })();

@@ -19,7 +19,7 @@
             })
 
             .state('sekolah-home.index', {
-                url: '',
+                url: '/',
                 templateUrl: '/templates/sekolah-home.index.html'
             })
 

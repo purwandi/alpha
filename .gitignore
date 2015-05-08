@@ -2,6 +2,7 @@ node_modules/*
 logs/*
 .nfs.*
 ._*
+*.zip
 .DS_Store
 release/css/*
 release/fonts/*

@@ -27,6 +27,8 @@ App.Skoring = (function() {
             __tidakLayak    = 0,
             __nilaiKomp40   = 0;
 
+        var nomor = 1;
+
         _bagian.each(function (record,recordnumber) {
             var butir    = db({ bagian_id: {is: record.id} });
 
@@ -54,7 +56,9 @@ App.Skoring = (function() {
                 skor    : skor,
                 nilai   : nilai,
                 ratusan : ratusan,
-                layak   : layak
+                layak   : layak,
+                nomor   : nomor,
+                komponen: record
             };
 
            // console.log(komponen_data);
