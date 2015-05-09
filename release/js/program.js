@@ -1,6 +1,7 @@
 var APP = {};
 
 APP.GROUP = [
+  {"id": "", "nama": "Pilih group jenjang"},
   {"id": 11, "nama": "SD/MI"},
   {"id": 12, "nama": "SMP/MTs"},
   {"id": 13, "nama": "SMA/MA"},
@@ -12,6 +13,7 @@ APP.GROUP = [
 ];
 
 APP.JENJANG = [
+  {"id": "", "nama": "Pilih jenjang"},
   {"id": 12, "group_id": 11, "nama": "SD"},
   {"id": 13, "group_id": 11, "nama": "MI"},
   {"id": 14, "group_id": 12, "nama": "SMP"},
@@ -159,6 +161,7 @@ APP.PRODI = [
 ];
 
 APP.STATUS = [
+  {"id": "", "nama": "Pilih status"},
   {"id": "N", "nama" : "Negeri"},
   {"id": "S", "nama" : "Swasta"},
 ]

@@ -1,5 +1,13 @@
 // Override Form Control
 // Shared size and type resets
+.validation-invalid {
+  color: #e74c3c;
+  padding-left: 13px;
+  padding-top: 5px;
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
 .form-control {
   // background-color: darken(@input-bg, 2%);
   border-radius: 0px;
@@ -74,7 +82,8 @@ label {
 input.ng-invalid.ng-dirty:not(:focus),
 select.ng-invalid.ng-dirty:not(:focus),
 textarea.ng-invalid.ng-dirty:not(:focus) {
-  border-color: #e74c3c;
+  border-bottom: 1px solid #e74c3c;
+  color: #e74c3c;
 }
 
 /* valid & dirty => green */

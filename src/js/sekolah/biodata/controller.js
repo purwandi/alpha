@@ -7,8 +7,11 @@
 		.controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
 
 
-	function SekolahBiodataCtrl($scope, $modal, sekolah, AppSekolahRepository) {
+	function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
 		// var $scope = this;
+     
+        // Injector
+        var $validationProvider = $injector.get('$validation'); 
 
 		$scope.sekolah = {};
 		$scope.config = {
