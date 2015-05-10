@@ -32,7 +32,7 @@
 
     /* @ngInject */
     function Request($q, $http) {
-        var baseUrl   = Env.API_URL,
+        var baseUrl   = 'http://api.bap-sm.lo',
             defaults  = {};
 
         $http.defaults.headers.common['Content-Type'] = 'application/json';

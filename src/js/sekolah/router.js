@@ -49,6 +49,22 @@
                     sekolah: getSekolah
                 }
             })
+            .state('sekolah-home.pendaftaran', {
+                url:'/pendaftaran',
+                controller: 'SekolahPendaftaranCtrl',
+                templateUrl: '/templates/sekolah-home.pendaftaran.html',
+                resolve: {
+                    sekolah: getSekolah
+                }
+            })
+            .state('sekolah-home.cetak', {
+                url:'/cetak',
+                controller: 'SekolahCetakCtrl',
+                templateUrl: '/templates/sekolah-home.cetak.html',
+                resolve: {
+                    sekolah: getSekolah
+                }
+            })
 
 
         function getSekolah(AppSekolahRepository) {

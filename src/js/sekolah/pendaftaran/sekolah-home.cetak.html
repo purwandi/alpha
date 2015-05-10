@@ -1,0 +1,69 @@
+<p class="lead">
+    <strong>PERNYATAAN KEPALA SEKOLAH</strong>
+</p>
+
+<p>Yang bertanda tangan di bawa ini, </p>
+<table class="table">
+    <tbody>
+        <tr>
+            <td>Nama sekolah/madrasah</td>
+            <td>:</td>
+            <td>{{ sekolah.nama }}</td>
+        </tr>
+        <tr>
+            <td>NPSN / NSS</td>
+            <td>:</td>
+            <td>{{ sekolah.npsn }} / {{ sekolah.nss }}</td>
+        </tr>
+        <tr>
+            <td>Alamat</td>
+            <td>:</td>
+            <td>
+                {{ sekolah.alamat }}
+                <daerah-desa daerah-id="{{ sekolah.desa_id }}"></daerah-desa>
+                <daerah-kecamatan daerah-id="{{ sekolah.kecamatan_id }}"></daerah-kecamatan> <br />
+                <daerah-kota daerah-id="{{ sekolah.kota_id }}"></daerah-kota>
+                <daerah-provinsi daerah-id="{{ sekolah.provinsi_id }}"></daerah-provinsi>
+                {{ sekolah.kode_pos }}
+            </td>
+        </tr>
+        <tr>
+            <td>Program</td>
+            <td>:</td>
+            <td>
+                <ol>
+                    <li ng-repeat="program in sekolah.program">
+                        <prodi prodid="{{ program.id }}"></prodi>
+                    </li>
+                </ol>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Dengan ini menyatakan bahwa :</p>
+<ol>
+    <li>Data yang diberikan dalam dokumen ini adalah benar dan sesuai dengan
+keadaan sesungguhnya</li>
+    <li>Saya bertanggung jawab atas jawaban dan pernyataan yang diberikan
+dalam dokumen ini.</li>
+</ol>
+
+<p>Demikian pernyataan ini saya buat dengan sesungguhnya dan penuh rasa tanggung jawab.</p>
+
+
+
+<p>Pernyataan ini dibuat pada tanggal ________________, 20_____</p>
+<p>di ________________</p>
+
+<div class="pull-right">
+    <qrcode version="2" error-correction-level="M" size="100" data="{{ sekolah.kode }}"></qrcode>
+</div>
+
+<p>Kepala sekolah/madrasah, <br /> {{ sekolah.nama }}</p>
+<br /><br /><br />Materai Rp. 6.000<br /><br /><br /><br />
+
+{{ sekolah.kepsek_nama }}
+
+
+

@@ -1,0 +1,72 @@
+<p class="lead">Pendaftaran Akreditasi</p>
+
+<div class="alert alert-info" ng-show="success">
+    Pendaftaran berhasil dilakukan.
+</div>
+<div class="alert alert-danger" ng-show="error">
+    Pendaftaran gagal dilakukan.
+</div>
+
+
+<p>Apabila anda melakukan perubahan terhadap isian istrumen setelah melakukan pendaftaran, anda di wajibkan untuk melakukan pendaftarn kembali dengan menekan tombol "kirim".</p>
+
+<form name="Form" role="form">
+<div class="">
+    <div class="form-grop">
+        <span id="pemohon_nama"></span>
+        <input type="text"
+            name="pemohon_nama"
+            class="form-control no-bordered"
+            ng-model="data.pemohon_nama"
+            placeholder="Nama pendaftar"
+            validator="required"
+            valid-method="blur"
+            required-error-message="Nama pendaftar tidak boleh kosong"
+            message-id="pemohon_nama"
+        >
+    </div>
+    <div class="form-grop">
+        <span id="pemohon-nik"></span>
+        <input type="text"
+            name="pemohon_nik"
+            class="form-control no-bordered"
+            ng-model="data.pemohon_nik"
+            placeholder="Nomor induk kependudukan pendaftar"
+            validator="required, digit"
+            valid-method="blur"
+            length="16"
+            required-error-message="NIK Pendaftar tidak boleh kosong"
+            digit-error-message="Harus 16 digit"
+            message-id="pemohon-nik"
+        >
+    </div>
+
+    <br />
+    <button type="button" validation-submit="Form" ng-click="pendaftaran()" class="btn btn-primary">Kirim</button>
+</div>
+</form>
+<br />
+<br />
+
+<div class="" ng-show="sekolah.kode">
+    <p>Pendaftaran telah berhasil dilakukan dengan keterangan sebagai berikut : </p>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Waktu Pendaftaran</td>
+                <td>:</td>
+                <td>{{ sekolah.created_at  }}</td>
+            </tr>
+            <tr>
+                <td>Kode Pendaftaran</td>
+                <td>:</td>
+                <td>{{ sekolah.kode }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a ui-sref="sekolah-home.cetak" role="button" class="btn btn-primary">Cetak bukti pendaftaran</a>
+</div>
+
+<hr />

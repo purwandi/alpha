@@ -353,6 +353,7 @@
                     <div class="form-group">
                         <span id="yayasan-alamat"></span>
                         <textarea
+                            name="yayasan-alamat"
                             class="form-control no-bordered"
                             ng-model="sekolah.yayasan.alamat"
                             rows="5"
@@ -373,26 +374,26 @@
                             name="yayasan-akte-nomor"
                             class="form-control no-bordered"
                             ng-model="sekolah.yayasan.akte_no"
-                            placeholder="Nomor akte yayasan"
                             validator="required"
                             required-error-message="Harus di isi"
-                            valid-method="blur"
+                            placeholder="Nomor akte yayasan"
                             message-id="yayasan-akte-nomor"
                             >
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <input type="text"
                             name="yayasan-akte-tanggal"
                             data-field="date"
+                            readonly="readonly"
                             class="form-control no-bordered"
                             ng-model="sekolah.yayasan.akte_tanggal"
                             placeholder="Tanggal akte yayasan"
                             >
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-group">
                         <span id="yayasan-akte-notaris"></span>
                         <input type="text"
@@ -410,16 +411,6 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="text"
-                            name="yayasan-akte"
-                            class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.akte_pengesahan"
-                            placeholder="Nomor akte pengesahan"
-                            >
-                    </div>
-                </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <span id="yayasan-telepon"></span>
@@ -428,8 +419,9 @@
                             class="form-control no-bordered"
                             ng-model="sekolah.yayasan.telepon"
                             placeholder="Telepon yayasan"
-                            validator="number"
-                            number-error-message="Harus angka"
+                            validator="required, numeric"
+                            required-error-message="Harus di isi"
+                            numeric-error-message="Harus angka"
                             message-id="yayasan-telepon"
                             >
                     </div>
@@ -442,8 +434,8 @@
                             class="form-control no-bordered"
                             ng-model="sekolah.yayasan.email"
                             placeholder="Email yayasan"
-                            validator="email"
-                            email-error-message="Harus email yang valid"
+                            validator="validemail"
+                            validemail-error-message="Harus email yang valid"
                             message-id="yayasan-email"
                             >
                     </div>
@@ -455,6 +447,55 @@
     </li>
 </ul>
 
+<ul class="list-group">
+    <li class="list-group-item">
+        <h4>PERIZINAN</h4>
+    </li>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text"
+                    name="sekolah-si-nomor"
+                    class="form-control no-bordered"
+                    ng-model="sekolah.surat.pendirian.nomor"
+                    placeholder="Nomor surat izin pendirian"
+                    >
+
+            </div>
+            <div class="col-md-4">
+                <input type="text"
+                    name="sekolah-si-tanggal"
+                    data-field="date"
+                    readonly="readonly"
+                    class="form-control no-bordered"
+                    ng-model="sekolah.surat.pendirian.tanggal"
+                    placeholder="Tanggal surat izin pendirian"
+                    >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text"
+                    name="sekolah-si-nomor"
+                    class="form-control no-bordered"
+                    ng-model="sekolah.surat.operasional.nomor"
+                    placeholder="Nomor surat izin operasional"
+                    >
+
+            </div>
+            <div class="col-md-4">
+                <input type="text"
+                    name="sekolah-si-tanggal"
+                    data-field="date"
+                    readonly="readonly"
+                    class="form-control no-bordered"
+                    ng-model="sekolah.surat.operasional.tanggal"
+                    placeholder="Tanggal surat izin operasional"
+                    >
+            </div>
+        </div>
+    </li>
+</ul>
 
 <ul class="list-group">
     <li class="list-group-item">
@@ -466,14 +507,24 @@
 
         </div>
         <div ng-hide="form_program">
-            <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
-                <div class="panel-heading">
-                    {{ program.id }} <prodi prodid="{{ program.id }}"></prodi>
-                </div>
-                <div class="panel-body">
-                    {{ program.tujuan }}
-                </div>
-            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Program</th>
+                        <th>Ketua</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="program in sekolah.program track by $index">
+                        <td>{{ program.id }}</td>
+                        <td><prodi prodid="{{ program.id }}"></prodi></td>
+                        <td>{{ program.ketua.nama}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="text-center">
                 <button class="btn btn-primary btn-sm" ng-click="openProgram()">Tambah Program</button>

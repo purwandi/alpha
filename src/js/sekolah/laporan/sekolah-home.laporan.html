@@ -1,4 +1,6 @@
-<div class="panel panel-default">
+<p class="lead">Cetak Hasil Pengisian</p>
+
+<div class="panel panel-default hidden-print">
     <div class="panel-heading">{{ sekolah.nama }}</div>
     <div class="panel-body">
         {{ sekolah.alamat }}
@@ -7,14 +9,29 @@
         <div class="list-group-item list-group-item-warning" ng-hide="prodi_current">
             <small>Untuk memulai pengisian instrumen, klik link berikut ini.</small>
         </div>
-        <a href="/#/" 
-            onclick="return false;" 
-            class="list-group-item prodi-evaluasi" 
-            ng-repeat="prodi in sekolah.program" 
-            ng-click="goEvaluasi(prodi.id)" 
-            id="prodi-{{ prodi.id }}">
+        <a href="/#/"
+            onclick="return false;"
+            class="list-group-item prodi-evaluasi prodi-biodata"
+            ng-click="goEvaluasi('biodata')"
+            >
+            <div class="pull-right" ng-hide="prodi_current"> Cetak <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
+            Cetak Biodata
+        </a>
+    </div>
+</div>
+<div class="panel panel-default hidden-print">
+    <div class="list-group">
+        <a href="/#/"
+            onclick="return false;"
+            class="list-group-item prodi-evaluasi prodi-{{ prodi.id }}"
+            ng-repeat="prodi in sekolah.program"
+            ng-click="goEvaluasi(prodi.id)">
 
-            <div class="pull-right" ng-hide="prodi_current"> Mulai <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-hide="prodi_current">
+                {{ prodi.hasil.peringkat }} ( {{ prodi.hasil.nilai }} )
+                Cetak <i class="icon ion-ios7-arrow-right"></i>
+            </div>
             <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
 
             <prodi prodid="{{ prodi.id }}"></prodi>
@@ -22,7 +39,154 @@
     </div>
 </div>
 
+<div ng-show="biodata">
+    <hr />
+    <p class="lead"><strong>DATA IDENTITAS SEKOLAH/MADRASAH</strong></p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Nama sekolah/madrasah</td>
+                <td>:</td>
+                <td>{{ sekolah.nama }}</td>
+            </tr>
+            <tr>
+                <td>NPSN / NSS</td>
+                <td>:</td>
+                <td>{{ sekolah.npsn }} / {{ sekolah.nss }}</td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    {{ sekolah.alamat }}
+                    <daerah-desa daerah-id="{{ sekolah.desa_id }}"></daerah-desa>
+                    <daerah-kecamatan daerah-id="{{ sekolah.kecamatan_id }}"></daerah-kecamatan> <br />
+                    <daerah-kota daerah-id="{{ sekolah.kota_id }}"></daerah-kota>
+                    <daerah-provinsi daerah-id="{{ sekolah.provinsi_id }}"></daerah-provinsi>
+                    {{ sekolah.kode_pos }}
+                </td>
+            </tr>
+            <tr>
+                <td>Kontak</td>
+                <td>:</td>
+                <td>Telpon {{ sekolah.telepon }} <br />
+                    Handphone {{ sekolah.handphone }} <br />
+                    Fax {{ sekolah.fax }} <br /> Email {{ sekolah.email }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>:</td>
+                <td>{{ sekolah.status == 'N' ? 'Negeri' : 'Swasta' }}</td>
+            </tr>
+            <tr>
+                <td>Nama Yayasan</td>
+                <td>:</td>
+                <td>{{ sekolah.status == 'S' ? sekolah.yayasan.nama : '-'}}</td>
+            </tr>
+            <tr>
+                <td>Nomor akte</td>
+                <td>:</td>
+                <td>{{ sekolah.status == 'S' ? sekolah.yayasan.akte_no : '-'}}</td>
+            </tr>
+            <tr>
+                <td>Izin Pendirian</td>
+                <td>:</td>
+                <td>{{ sekolah.surat.pendirian.nomor }} - {{ sekolah.surat.pendirian.tanggal }}</td>
+            </tr>
+            <tr>
+                <td>Izin Operasional</td>
+                <td>:</td>
+                <td>{{ sekolah.surat.operasional.nomor }} - {{ sekolah.surat.operasional.tanggal }}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><strong>Visi</strong></td>
+            </tr>
+            <tr>
+                <td colspan="3">{{ sekolah.visi }}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><strong>Misi</strong></td>
+            </tr>
+            <tr>
+                <td colspan="3">{{ sekolah.misi }}</td>
+            </tr>
+            <tr>
+                <td>Kepala Sekolah</td>
+                <td>:</td>
+                <td>
+                    {{ sekolah.kepsek_nama }} <br /> NIP {{ sekolah.kepsek_nip }}
+                </td>
+            </tr>
+            <tr>
+                <td>Pengawas Sekolah</td>
+                <td>:</td>
+                <td>
+                    {{ sekolah.pengawas_nama }} <br /> NIP {{ sekolah.pengawas_nip }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Program</strong></td>
+                <td>:</td>
+                <td>
+                    <dl>
+                        <span ng-repeat="program in sekolah.program">
+                        <dt><prodi prodid="{{ program.id }}"></prodi></dt>
+                        <dd>{{ program.ketua_nama }}</dd>
+                        </span>
+                    </dl>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary" onclick="window.print()">Cetak</button>
+</div>
+
 <div ng-show="prodi_current">
+    <hr />
+    <p class="lead"><strong>REKAPITULASI PENGISIAN INSTRUMEN</strong></p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Nama sekolah/madrasah</td>
+                <td>:</td>
+                <td>{{ sekolah.nama }}</td>
+            </tr>
+            <tr>
+                <td>NPSN / NSS</td>
+                <td>:</td>
+                <td>{{ sekolah.npsn }} / {{ sekolah.nss }}</td>
+            </tr>
+            <tr>
+                <td>Program / Paket Keahlian</td>
+                <td>:</td>
+                <td>
+                    <span ng-repeat="prog in sekolah.program" class="prodi-evaluasi prodi-{{ prog.id }}">
+                        {{ prog.id }} <prodi prodid="{{ prog.id }}"></prodi>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>:</td>
+                <td>
+                    {{ sekolah.alamat }}
+                    <daerah-desa daerah-id="{{ sekolah.desa_id }}"></daerah-desa>
+                    <daerah-kecamatan daerah-id="{{ sekolah.kecamatan_id }}"></daerah-kecamatan> <br />
+                    <daerah-kota daerah-id="{{ sekolah.kota_id }}"></daerah-kota>
+                    <daerah-provinsi daerah-id="{{ sekolah.provinsi_id }}"></daerah-provinsi>
+                    {{ sekolah.kode_pos }}
+                </td>
+            </tr>
+            <tr>
+                <td>Kontak</td>
+                <td>:</td>
+                <td>Telpon {{ sekolah.telepon }} <br />
+                    Handphone {{ sekolah.handphone }} <br />
+                    Fax {{ sekolah.fax }} <br /> Email {{ sekolah.email }}</td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table">
         <thead>
             <tr>
@@ -38,14 +202,14 @@
         </thead>
         <tfoot>
         	<tr>
-        		<th colspan="6">NILAI AKHIR AKREDITASI</th>
+        		<th colspan="5">NILAI AKHIR AKREDITASI</th>
         		<th class="text-center">{{ program.hasil.nilai }}</th>
-        		<th></th>
+        		<th colspan="2"></th>
         	</tr>
         	<tr>
-        		<th colspan="6">PERINGKAT AKREDITASI</th>
+        		<th colspan="5">PERINGKAT AKREDITASI</th>
         		<th class="text-center">{{ program.hasil.peringkat }}</th>
-        		<th></th>
+        		<th colspan="2"></th>
         	</tr>
         </tfoot>
         <tbody>
@@ -62,4 +226,5 @@
             </tr>
         </tbody>
     </table>
+    <button type="button" class="btn btn-primary hidden-print" onclick="window.print()">Cetak</button>
 </div>

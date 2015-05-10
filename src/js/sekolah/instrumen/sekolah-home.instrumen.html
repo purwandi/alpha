@@ -1,4 +1,6 @@
-<div class="panel panel-default">
+<p class="lead">Pengisian Instrumen Akreditasi</p>
+
+<div class="panel panel-default hidden-print">
     <div class="panel-heading">{{ sekolah.nama }}</div>
     <div class="panel-body">
         {{ sekolah.alamat }}
@@ -7,14 +9,16 @@
         <div class="list-group-item list-group-item-warning" ng-hide="prodi_current">
             <small>Untuk memulai pengisian instrumen, klik link berikut ini.</small>
         </div>
-        <a href="/#/" 
-            onclick="return false;" 
-            class="list-group-item prodi-evaluasi" 
-            ng-repeat="prodi in sekolah.program" 
-            ng-click="goEvaluasi(prodi.id)" 
-            id="prodi-{{ prodi.id }}">
+        <a href="/#/"
+            onclick="return false;"
+            class="list-group-item prodi-evaluasi prodi-{{ prodi.id }}"
+            ng-repeat="prodi in sekolah.program"
+            ng-click="goEvaluasi(prodi.id)">
 
-            <div class="pull-right" ng-hide="prodi_current"> Mulai <i class="icon ion-ios7-arrow-right"></i></div>
+            <div class="pull-right" ng-hide="prodi_current">
+                {{ prodi.hasil.peringkat }} ( {{ prodi.hasil.nilai }} )
+                Mulai <i class="icon ion-ios7-arrow-right"></i>
+            </div>
             <div class="pull-right" ng-show="prodi_current"> Kembali <i class="icon ion-ios7-arrow-left"></i></div>
 
             <prodi prodid="{{ prodi.id }}"></prodi>
@@ -22,7 +26,56 @@
     </div>
 </div>
 
+
+
 <div ng-show="prodi_current">
+    <div>
+        <hr />
+        <p class="lead"><strong>DATA IDENTITAS SEKOLAH/MADRASAH</strong></p>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Nama sekolah/madrasah</td>
+                    <td>:</td>
+                    <td>{{ sekolah.nama }}</td>
+                </tr>
+                <tr>
+                    <td>NPSN / NSS</td>
+                    <td>:</td>
+                    <td>{{ sekolah.npsn }} / {{ sekolah.nss }}</td>
+                </tr>
+                <tr>
+                    <td>Program / Paket Keahlian</td>
+                    <td>:</td>
+                    <td>
+                        <span ng-repeat="prog in sekolah.program" class="prodi-evaluasi prodi-{{ prog.id }}">
+                            {{ prog.id }}<prodi prodid="{{ prog.id }}"></prodi>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>:</td>
+                    <td>
+                        {{ sekolah.alamat }}
+                        <daerah-desa daerah-id="{{ sekolah.desa_id }}"></daerah-desa>
+                        <daerah-kecamatan daerah-id="{{ sekolah.kecamatan_id }}"></daerah-kecamatan> <br />
+                        <daerah-kota daerah-id="{{ sekolah.kota_id }}"></daerah-kota>
+                        <daerah-provinsi daerah-id="{{ sekolah.provinsi_id }}"></daerah-provinsi>
+                        {{ sekolah.kode_pos }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kontak</td>
+                    <td>:</td>
+                    <td>Telpon {{ sekolah.telepon }} <br />
+                        Handphone {{ sekolah.handphone }} <br />
+                        Fax {{ sekolah.fax }} <br /> Email {{ sekolah.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
     <table class="table table-bordered">
         <tbody ng-repeat="butir in program.butir">
             <tr>
@@ -37,25 +90,25 @@
                 <td></td>
                 <td>
                     <div class="hide">
-                        {{ butir.evaluasi.jawaban  = butir.evaluasi.jawaban ? butir.evaluasi.jawaban : 0 }}      
+                        {{ butir.evaluasi.jawaban  = butir.evaluasi.jawaban ? butir.evaluasi.jawaban : 0 }}
                     </div>
 
                     <div class="radio" ng-repeat="opsi in butir.instrumen.pilihan track by $index">
                         <label>
-                            <input 
-                                type="radio" 
+                            <input
+                                type="radio"
                                 id="{{ $index }}"
                                 ng-model="butir.evaluasi.jawaban"
                                 value="{{ opsi.nilai }}"
                                 ng-click="update()"
-                                name="pilihan_{{ butir.instrumen.nomor }}" 
+                                name="pilihan_{{ butir.instrumen.nomor }}"
                                 />
                             {{ opsi.nama }}
 
                         </label>
                     </div>
 
-                    <div class="hide">          
+                    <div class="hide">
                         {{ butir.evaluasi.hasil = butir.evaluasi.jawaban * butir.instrumen.bobot }}
                     </div>
                 </td>
@@ -64,5 +117,5 @@
     </table>
     <br />
 
-    <button class="btn btn-default" ng-click="test()">Test</button>
+    <button class="btn btn-default" onclick="window.print()">Cetak Dokumen</button> <br /> <br /> <br /> <br />
 </div>

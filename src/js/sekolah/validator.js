@@ -130,21 +130,35 @@
                     } else {
                         return (urlRegex.test(value));
                     }
+                },
+                validemail: function(value, scope, element, attrs) {
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return emailRegex.test(value);
+                    }
                 }
-
             })
             .setDefaultMsg({
                 digit: {
                     error: 'Number should between 5 ~ 10',
-                    success: 'good'
+                    success: ''
                 },
                 maxdigit: {
                     error: 'Number should between 5 ~ 10',
-                    success: 'good'
+                    success: ''
                 },
                 mindigit: {
                     error: 'Number should between 5 ~ 10',
-                    success: 'good'
+                    success: ''
+                },
+                numeric: {
+                    error: '',
+                    success: ''
+                },
+                validemail: {
+                    error: '',
+                    success: ''
                 }
             });
 

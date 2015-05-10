@@ -18,9 +18,10 @@ $(document).ready(function() {
             'app.directive.prodi',
             'app.directive.maxheight',
             'app.directive.affix',
-            
-            'app.base', 
-            'app.sekolah', 
+            'app.app.directive.daerah',
+
+            'app.base',
+            'app.sekolah',
             'app.asesor'
         ])
 

@@ -34,7 +34,7 @@
 			if ($scope.prodi_current == false) {
 				$scope.prodi_current = parseInt(prodi);
 				$('.prodi-evaluasi').addClass('hide');
-                $('#prodi-'+prodi).removeClass('hide');
+                $('.prodi-'+prodi).removeClass('hide');
 				/**
 				 * Initialize
 				 */
