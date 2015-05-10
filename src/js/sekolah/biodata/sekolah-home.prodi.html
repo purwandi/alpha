@@ -1,33 +1,65 @@
-<div class="modal-header">
-    <h3 class="modal-title">Program Pendidikan</h3>
-</div>
-<div class="modal-body">
-    <div class="form-group">
-        <label class="control-label">Program Pendidikan *</label>
-        <select 
-            class="form-control input-sm" 
-            ng-model="program.id"
-            ng-options="program.id as program.nama for program in prodi">
-        </select>
+<form class="" name="FormProgram">
+    <div class="modal-header">
+        <h3 class="modal-title">Program Pendidikan</h3>
     </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">Program Pendidikan / Paket Keahlian *</label>
+            <select
+                name="program-id"
+                class="form-control input-sm"
+                ng-model="program.id"
+                ng-options="program.id as program.nama for program in prodi"
+                validator="required"
+                required-error-message="Program harus di isi"
+                message-id="program-id">
+            </select>
+            <span id="program-id"></span>
+        </div>
 
-    <div class="form-group">
-        <label class="control-label">Penanggung Jawab *</label>
-        <input class="form-control input-sm" type="text" ng-model="program.ketua_nama">     
+        <div class="form-group">
+            <label class="control-label">Penanggung Jawab / Ketua Paket Keahlian</label>
+            <input type="text"
+                name="program-ketua-nama"
+                class="form-control input-sm"
+                ng-model="program.ketua_nama"
+                validator="required"
+                required-error-message="Tidak boleh kosong"
+                message-id="program-ketua-nama"
+                >
+            <span id="program-ketua-nama"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">NIP</label>
+            <input type="text"
+                name="program-ketua-nip"
+                class="form-control input-sm"
+                ng-model="program.ketua_nip"
+                validator="digit"
+                length="18"
+                digit-error-message="Harus 18 digit"
+                message-id="program-ketua-nip"
+                >
+            <span id="program-ketua-nip"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Tujuan Program *</label>
+            <textarea
+                name="program-tujuan"
+                class="form-control input-sm"
+                rows="4"
+                ng-model="program.tujuan"
+                validator="required"
+                required-error-message="Tidak boleh kosong"
+                message-id="program-tujuan"></textarea>
+            <span id="program-tujuan"></span>
+        </div>
+
     </div>
-
-    <div class="form-group">
-        <label class="control-label">NIP</label>
-        <input class="form-control input-sm" type="text" ng-model="program.ketua_nip">     
+    <div class="modal-footer">
+        <button class="btn btn-primary" validation-submit="FormProgram" ng-click="save()">OK</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
     </div>
-
-    <div class="form-group">
-        <label class="control-label">Tujuan Program *</label>
-        <textarea class="form-control input-sm" rows="4" ng-model="program.tujuan"></textarea>   
-    </div>
-
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="save()">OK</button>
-    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-</div>
+</form>

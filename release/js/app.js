@@ -465,6 +465,18 @@ store.deserialize = function(value) {
 
 
 (function() {
+  angular
+    .module('app.directive.datepicker', [])
+    .directive('datePicker', function() {
+      return {
+        restrict: 'E',
+        link: function(scope, element, attrs) {
+          $(element).DateTimePicker();
+        }
+      }
+    })
+  })();
+(function() {
     angular
         .module('app.directive.maxheight', [])
 
@@ -678,6 +690,7 @@ store.deserialize = function(value) {
 
 			'validation', 
 			'validation.rule',
+			'app.directive.datepicker',
 
 			'app.sekolah.repository'
 		])
@@ -753,11 +766,11 @@ store.deserialize = function(value) {
 
 	function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
 		// var $scope = this;
-     
-        // Injector
-        var $validationProvider = $injector.get('$validation'); 
 
-		$scope.sekolah = {};
+        // Injector
+        var $validationProvider = $injector.get('$validation');
+
+		// $scope.sekolah = {};
 		$scope.config = {
 			jenjang: APP.JENJANG,
 			status: APP.STATUS,
@@ -783,9 +796,9 @@ store.deserialize = function(value) {
             return $scope.sekolah.jenjang_id;
         }, function(newValue, oldValue) {
             var _jenjang = parseInt($scope.sekolah.jenjang_id);
-            
+
             if (oldValue != newValue) {
-                $scope.sekolah.program = []; 
+                $scope.sekolah.program = [];
             }
 
             if (_jenjang < 18) {
@@ -796,14 +809,14 @@ store.deserialize = function(value) {
             } else {
                 $scope.form_program = false;
                 if ($scope.sekolah.program == undefined) {
-                    $scope.sekolah.program = [];   
+                    $scope.sekolah.program = [];
                 }
             }
         });
 
 
 		var update = function(value) {
-            AppSekolahRepository.update(value);   
+            AppSekolahRepository.update(value);
         }
 
 
@@ -818,8 +831,8 @@ store.deserialize = function(value) {
 		// -----------------------------------------------------------------------
         // WILAYAH OPT
         // -----------------------------------------------------------------------
-        // 
-        // 
+        //
+        //
             $scope.$watch(function() {
                 return $scope.sekolah.provinsi_id;
             }, function(oldValue, newValue) {
@@ -830,7 +843,7 @@ store.deserialize = function(value) {
                 $scope.config.wilayah.kecamatan = {};
                 $scope.config.wilayah.desa = {};
             });
-            
+
             $scope.$watch(function() {
                 return $scope.sekolah.kota_id;
             }, function(oldValue, newValue) {
@@ -875,12 +888,14 @@ store.deserialize = function(value) {
 
 	}
 
-	function SekolahBiodataProgramCtrl($scope, $modalInstance) {
+	function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
 		var prodi       = TAFFY(APP.PRODI);
         var _sekolah    = $scope.sekolah;
 
+        var $validationProvider = $injector.get('$validation');
+
         $scope.prodi = prodi({jenjang_id: {is:parseInt(_sekolah.jenjang_id)}}).order('nama').get();
-        
+
         $scope.save = function() {
             $modalInstance.close($scope.program);
         }
@@ -1125,16 +1140,21 @@ store.deserialize = function(value) {
             base64Regex = /[^a-zA-Z0-9\/\+=]/i,
             numericDashRegex = /^[\d\-\s]+$/,
             urlRegex = /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
-        
+
         $validationProvider
             .setExpression({
                 digit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
-                    if (!numericRegex.test(length)) {
+                    if ( ! value) {
+                        return true;
+                    }
+                    else if (value && !numericRegex.test(length)) {
                         return false;
+                    } else {
+                        return value.length === parseInt(length, 10);
                     }
 
-                    return value.length === parseInt(length, 10);
+
                 },
                 maxdigit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
@@ -1146,6 +1166,7 @@ store.deserialize = function(value) {
                 },
                 mindigit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
+
                     if (!numericRegex.test(length)) {
                         return false;
                     }
@@ -1153,33 +1174,76 @@ store.deserialize = function(value) {
                     return value.length >= parseInt(length, 10)
                 },
                 alpha: function(value, scope, element, attrs) {
-                    return (alphaRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaRegex.test(value));
+                    }
                 },
                 alphanumeric: function(value, scope, element, attrs) {
-                    return (alphaNumericRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaNumericRegex.test(value));
+                    }
                 },
                 alphadash: function(value, scope, element, attrs) {
-                    return (alphaDashRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaDashRegex.test(value));
+                    }
+                },
+                numeric: function(value, scope, element, attrs) {
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (numericRegex.test(value));
+                    }
                 },
                 integer: function(value, scope, element, attrs) {
-                    return (integerRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (integerRegex.test(value));
+                    }
                 },
                 decimal: function(value, scope, element, attrs) {
-                    return (decimalRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (decimalRegex.test(value));
+                    }
                 },
                 isnatural: function(value, scope, element, attrs) {
-                    return (naturalRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (naturalRegex.test(value));
+                    }
                 },
                 isnaturalnozero: function(value, scope, element, attrs) {
-                    return (naturalNoZeroRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (naturalNoZeroRegex.test(value));
+                    }
                 },
                 validip: function(value, scope, element, attrs) {
-                    return (ipRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (ipRegex.test(value));
+                    }
                 },
                 validurl: function(value, scope, element, attrs) {
-                    return (urlRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (urlRegex.test(value));
+                    }
                 }
-                
+
             })
             .setDefaultMsg({
                 digit: {

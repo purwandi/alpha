@@ -10,415 +10,585 @@
 
 <form name="Form" role="form">
 <ul class="list-group">
-	<li class="list-group-item">
-	    <h4>BIODATA SEKOLAH/MADRASAH</h4>
-	</li>
+    <li class="list-group-item">
+        <h4>BIODATA SEKOLAH/MADRASAH</h4>
+    </li>
 
-	<li class="list-group-item">
-	    <div class="row">
-	        <div class="col-md-4">
-	            <div class="form-group">
-	            	<span id="sekolah-npsn"></span>
-	                <input type="text"
-                		name="sekolah-npsn"	
-                		class="form-control no-bordered"  
-                		ng-model="sekolah.npsn" 
-                		placeholder="NPSN" 
-                		validator="required, number, digit"
-                		length="8"
-                		required-error-message="NPSN harus di isi"
-                		number-error-message="Harus angka"
-                		digit-error-message="Karakter harus 8 digit"
-                		required-success-message=""
-                		valid-method="blur" 
-                		message-id="sekolah-npsn"
-                		/>
-	                
-	            </div>
-	        </div>
-	        <div class="col-md-4">
-	            <div class="form-group">
-	            	<span id="sekolah-nss"></span>
-	                <input type="text" 
-                		name="sekolah-nss"
-                		class="form-control no-bordered" 
-                		ng-model="sekolah.nss" 
-                		placeholder="NSS"
-                		validator="number, digit"
-                		length="12"
-                		digit-error-message="Karakter harus 12 digit"
-                		number-error-message="Harus angka"
-                		required-success-message=""
-                		valid-method="blur" 
-                		message-id="sekolah-nss"
-                		/>
-	            </div>
-	        </div>
-	    </div>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-npsn"></span>
+                    <input type="text"
+                        name="sekolah-npsn"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.npsn"
+                        placeholder="NPSN"
+                        validator="required, number, digit"
+                        length="8"
+                        required-error-message="Karakter harus 8 digit"
+                        digit-error-message="Karakter harus 8 digit"
+                        number-error-message="Harus angka"
+                        valid-method="blur"
+                        message-id="sekolah-npsn"
+                        >
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-nss"></span>
+                    <input type="text"
+                        name="sekolah-nss"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.nss"
+                        placeholder="NSS"
+                        validator="digit"
+                        length="12"
+                        digit-error-message="Karakter harus 12 digit"
+                        valid-method="blur"
+                        message-id="sekolah-nss"
+                        >
+                </div>
+            </div>
+        </div>
 
-	    <div class="form-group">
-	    	<span id="sekolah-nama"></span>
-	        <input type="text"
-        		name="sekolah-nama"
-        		class="form-control no-bordered"  
-        		ng-model="sekolah.nama" 
-        		placeholder="Nama sekolah/madrasah"
-        		validator="required"
-        		required-error-message="Nama sekolah/madrasah harus di isi"
-        		required-success-message=""
-        		valid-method="blur" 
-        		message-id="sekolah-nama"/>
-	    </div>
+        <div class="form-group">
+            <span id="sekolah-nama"></span>
+            <input type="text"
+                name="sekolah-nama"
+                class="form-control no-bordered"
+                ng-model="sekolah.nama"
+                placeholder="Nama sekolah/madrasah"
+                validator="required"
+                required-error-message="Nama sekolah/madrasah harus di isi"
+                valid-method="blur"
+                message-id="sekolah-nama">
+        </div>
 
-	    <div class="row">
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-jenjang"></span>
-	                <select 
-	                    name="sekolah-jenjang"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.jenjang_id"
-	                    ng-options="jenjang.id as jenjang.nama for jenjang in config.jenjang"
-	                    validator="required"
-	                    required-error-message="Jenjang harus dipilih"
-	                    required-success-message=""
-	                    message-id="sekolah-jenjang"
-	                    >
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-status"></span>
-	                <select 
-	                    name="sekolah-status"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.status"
-	                    ng-options="status.id as status.nama for status in config.status"
-	                    validator="required"
-	                    required-error-message="Status harus dipilih"
-	                    required-success-message="&nbsp;"
-	                    message-id="sekolah-status"
-	                    >
-	                </select>
-	            </div>
-	        </div>
-	    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-jenjang"></span>
+                    <select
+                        name="sekolah-jenjang"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.jenjang_id"
+                        ng-options="jenjang.id as jenjang.nama for jenjang in config.jenjang"
+                        validator="required"
+                        required-error-message="Jenjang harus dipilih"
+                        required-success-message=""
+                        valid-method="blur"
+                        message-id="sekolah-jenjang"
+                        >
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-status"></span>
+                    <select
+                        name="sekolah-status"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.status"
+                        ng-options="status.id as status.nama for status in config.status"
+                        validator="required"
+                        required-error-message="Status harus dipilih"
+                        valid-method="blur"
+                        message-id="sekolah-status"
+                        >
+                    </select>
+                </div>
+            </div>
+        </div>
 
-	    <div class="form-group">
-	    	<span id="sekolah-jalan"></span>
-	        <input type="text"
-	        		name="sekolah-jalan"
-	        		class="form-control no-bordered"
-	        		ng-model="sekolah.alamat" 
-	        		placeholder="Alamat jalan"
-	        		validator="required"
-            		required-error-message="Alamat jalan harus di isi"
-            		required-success-message=""
-            		valid-method="blur" 
-            		message-id="sekolah-jalan"/>
-	    </div>
+        <div class="form-group">
+            <span id="sekolah-jalan"></span>
+            <input type="text"
+                    name="sekolah-jalan"
+                    class="form-control no-bordered"
+                    ng-model="sekolah.alamat"
+                    placeholder="Alamat jalan"
+                    validator="required"
+                    required-error-message="Alamat jalan harus di isi"
+                    required-success-message=""
+                    valid-method="blur"
+                    message-id="sekolah-jalan">
+        </div>
 
-	    <div class="row">
-	        <div class="col-md-3">
-	            <div class="form-group">
-	            	<span id="sekolah-jalan-nomor"></span>
-	                <input type="text" 
-	                	name="sekolah-jalan-nomor"
-	                	class="form-control no-bordered" 
-	                	ng-model="sekolah.alamat_no" 
-	                	placeholder="No"
-	                	validator="number, maxdigit"
-	                	length="3"
-	                	number-error-message="Harus di isi dengan angka" 
-	                	number-success-message=""
-		                message-id="sekolah-jalan-nomor"/>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <span id="sekolah-jalan-rt"></span>
-	                <input type="text" 
-	                	name="sekolah-jalan-rt"
-	                	class="form-control no-bordered" 
-	                	ng-model="sekolah.alamat_rt" 
-	                	placeholder="RT"
-	                	validator="number, maxdigit"
-	                	length="3"
-	                	number-error-message="Harus di isi dengan angka" 
-	                	number-success-message=""
-		                message-id="sekolah-jalan-rt"/>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <span id="sekolah-jalan-rw"></span>
-	                <input type="text" 
-	                    name="sekolah-jalan-rw"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.alamat_rw" 
-	                    placeholder="RW"
-	                    validator="number, maxdigit"
-	                	length="3"
-	                	number-error-message="Harus di isi dengan angka" 
-	                	number-success-message=""
-		                message-id="sekolah-jalan-rw"/>
-	            </div>
-	        </div>
-	    </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span id="sekolah-jalan-nomor"></span>
+                    <input type="text"
+                        name="sekolah-jalan-nomor"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.alamat_no"
+                        placeholder="No"
+                        validator="number, maxdigit"
+                        length="3"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-jalan-nomor">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span id="sekolah-jalan-rt"></span>
+                    <input type="text"
+                        name="sekolah-jalan-rt"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.alamat_rt"
+                        placeholder="RT"
+                        validator="number, maxdigit"
+                        length="3"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-jalan-rt">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span id="sekolah-jalan-rw"></span>
+                    <input type="text"
+                        name="sekolah-jalan-rw"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.alamat_rw"
+                        placeholder="RW"
+                        validator="number, maxdigit"
+                        length="3"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-jalan-rw">
+                </div>
+            </div>
+        </div>
 
-	    <div class="row">
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-provinsi"></span>
-	                <select 
-	                    name="sekolah-provinsi"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.provinsi_id"
-	                    ng-options="provinsi.id as provinsi.nama for provinsi in config.wilayah.provinsi"
-	                    validator="required"
-	                    required-error-message="Provinsi harus dipilih"
-	                    required-success-message=""
-	                    message-id="sekolah-provinsi"
-	                    >
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-kota"></span>
-	                <select 
-	                    name="sekolah-kota"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.kota_id" 
-	                    ng-options="kota.id as kota.nama for kota in config.wilayah.kota"
-	                    validator="required"
-	                    required-error-message="Kota harus dipilih"
-	                    required-success-message=""
-	                    message-id="sekolah-kota">
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-kecamatan"></span>
-	                <select 
-	                    name="sekolah-kecamatan"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.kecamatan_id" 
-	                    ng-options="kecamatan.id as kecamatan.nama for kecamatan in config.wilayah.kecamatan"
-	                    validator="required"
-	                    required-error-message="Kecamatan harus dipilih"
-	                    required-success-message=""
-	                    message-id="sekolah-kecamatan">
-	                </select>
-	            </div>
-	        </div>
-	    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-provinsi"></span>
+                    <select
+                        name="sekolah-provinsi"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.provinsi_id"
+                        ng-options="provinsi.id as provinsi.nama for provinsi in config.wilayah.provinsi"
+                        validator="required"
+                        required-error-message="Provinsi harus dipilih"
+                        valid-method="blur"
+                        message-id="sekolah-provinsi"
+                        >
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-kota"></span>
+                    <select
+                        name="sekolah-kota"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.kota_id"
+                        ng-options="kota.id as kota.nama for kota in config.wilayah.kota"
+                        validator="required"
+                        required-error-message="Kota harus dipilih"
+                        valid-method="blur"
+                        message-id="sekolah-kota">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-kecamatan"></span>
+                    <select
+                        name="sekolah-kecamatan"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.kecamatan_id"
+                        ng-options="kecamatan.id as kecamatan.nama for kecamatan in config.wilayah.kecamatan"
+                        validator="required"
+                        required-error-message="Kecamatan harus dipilih"
+                        valid-method="blur"
+                        message-id="sekolah-kecamatan">
+                    </select>
+                </div>
+            </div>
+        </div>
 
-	    <div class="row">
-	        <div class="col-md-4">
-	            <div class="form-group">
-	                <span id="sekolah-desa"></span>
-	                <select 
-	                    name="sekolah-desa"
-	                    class="form-control no-bordered" 
-	                    ng-model="sekolah.desa_id" 
-	                    ng-options="desa.id as desa.nama for desa in config.wilayah.desa"
-	                    validator="required"
-	                    required-error-message="Kelurahan harus dipilih"
-	                    required-success-message=""
-	                    message-id="sekolah-desa">
-	                </select>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <span id="sekolah-kodepos"></span>
-	                <input type="text"
-	                    name="sekolah-kodepos"
-	                    class="form-control no-bordered"  
-	                    ng-model="sekolah.kode_pos" 
-	                    placeholder="Kode pos"
-	                    validator="required, digit"
-	                    length="5"
-	                    required-error-message="Kodepos harus di isi"
-	                    required-success-message=""
-	                    digit-error-message="Kode pos harus 5 digit"
-	                    digit-success-message=""
-	                    message-id="sekolah-kodepos"
-	                    />
-	            </div>
-	        </div>
-	        <div class="col-md-4">
-	            
-	        </div>
-	    </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-desa"></span>
+                    <select
+                        name="sekolah-desa"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.desa_id"
+                        ng-options="desa.id as desa.nama for desa in config.wilayah.desa"
+                        validator="required"
+                        required-error-message="Kelurahan harus dipilih"
+                        valid-method="blur"
+                        message-id="sekolah-desa">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <span id="sekolah-kodepos"></span>
+                    <input type="text"
+                        name="sekolah-kodepos"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.kode_pos"
+                        placeholder="Kode pos"
+                        validator="required, digit"
+                        length="5"
+                        required-error-message="Kodepos harus di isi"
+                        digit-error-message="Kode pos harus 5 digit"
+                        valid-method="blur"
+                        message-id="sekolah-kodepos"
+                        >
+                </div>
+            </div>
+            <div class="col-md-4">
 
-	    <div class="row">
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.telepon" placeholder="Nomor telepon"/>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.handphone" placeholder="Nomor handphone"/>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.fax" placeholder="Nomor fax"/>
-	            </div>
-	        </div>
-	        <div class="col-md-3">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.email" placeholder="Email sekolah"/>
-	            </div>
-	        </div>
-	    </div>
-	</li>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-telepon"></span>
+                    <input type="text"
+                        name="sekolah-telepon"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.telepon"
+                        placeholder="Nomor telepon"
+                        validator="required, number"
+                        required-error-message="Nomor telpon harus di isi"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-telepon"
+                        >
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-hp"></span>
+                    <input type="text"
+                        name="sekolah-hp"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.handphone"
+                        placeholder="Nomor handphone"
+                        validator="required, number"
+                        required-error-message="Nomor handhpone harus di isi"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-hp"
+                    >
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <span id="sekolah-fax"></span>
+                    <input type="text"
+                        name="sekolah-fax"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.fax"
+                        placeholder="Nomor fax"
+                        validator="number"
+                        number-error-message="Harus di isi dengan angka"
+                        valid-method="blur"
+                        message-id="sekolah-fax"
+                        >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span id="sekolah-email"></span>
+                    <input type="text"
+                        name="sekolah-email"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.email"
+                        placeholder="Email sekolah"
+                        validator="required, email"
+                        required-error-message="Email harus di isi"
+                        email-error-message="Harus email yang valid"
+                        valid-method="blur"
+                        message-id="sekolah-email"
+                        >
+                </div>
+            </div>
+        </div>
+    </li>
 </ul>
 
 
 <ul class="list-group">
-	<li class="list-group-item">
-	    <h4>
-	    	INFORMASI YAYASAN
-	    	<small>Hanya di tujukan sekolah/madrasah swasta</small>
-	    </h4>
-	</li>
-	<li class="list-group-item">
-	    <div ng-hide="sekolah.status == 'N'">
-	        <div class="row">
-	            <div class="col-md-9">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.nama" placeholder="Nama yayasan"/>
-	                </div>
-	            </div>
-	        </div>
+    <li class="list-group-item">
+        <h4>
+            INFORMASI YAYASAN
+            <small>Hanya di tujukan sekolah/madrasah swasta</small>
+        </h4>
+    </li>
+    <li class="list-group-item">
+        <div ng-hide="sekolah.status == 'N'">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <span id="yayasan-nama"></span>
+                        <input type="text"
+                            name="yayasan-nama"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.nama"
+                            placeholder="Nama yayasan"
+                            validator="required"
+                            required-error-message="Harus di isi"
+                            valid-method="blur"
+                            message-id="yayasan-nama"
+                            >
+                    </div>
+                </div>
+            </div>
 
-	        <div class="row">
-	            <div class="col-md-7">
-	                <div class="form-group">
-	                    <textarea class="form-control no-bordered" ng-model="sekolah.yayasan.alamat" rows="5" placeholder="Alamat yayasan"/></textarea>
-	                </div>
-	            </div>
-	        </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <span id="yayasan-alamat"></span>
+                        <textarea
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.alamat"
+                            rows="5"
+                            placeholder="Alamat yayasan"
+                            validator="required"
+                            required-error-message="Harus di isi"
+                            valid-method="blur"
+                            message-id="yayasan-alamat"></textarea>
+                    </div>
+                </div>
+            </div>
 
-	        <div class="row">
-	            <div class="col-md-4">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_no" placeholder="Nomor akte yayasan"/>
-	                </div>
-	            </div>
-	            <div class="col-md-3">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_tanggal" placeholder="Tanggal akte yayasan"/>
-	                </div>
-	            </div>
-	            <div class="col-md-4">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_notaris" placeholder="Nama notaris"/>
-	                </div>
-	            </div>
-	        </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span id="yayasan-akte-nomor"></span>
+                        <input type="text"
+                            name="yayasan-akte-nomor"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.akte_no"
+                            placeholder="Nomor akte yayasan"
+                            validator="required"
+                            required-error-message="Harus di isi"
+                            valid-method="blur"
+                            message-id="yayasan-akte-nomor"
+                            >
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text"
+                            name="yayasan-akte-tanggal"
+                            data-field="date"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.akte_tanggal"
+                            placeholder="Tanggal akte yayasan"
+                            >
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <span id="yayasan-akte-notaris"></span>
+                        <input type="text"
+                            name="yayasan-akte-notaris"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.akte_notaris"
+                            placeholder="Nama notaris"
+                            validator="required"
+                            required-error-message="Harus di isi"
+                            valid-method="blur"
+                            message-id="yayasan-akte-notaris"
+                            >
+                    </div>
+                </div>
+            </div>
 
-	        <div class="row">
-	            <div class="col-md-4">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.akte_pengesahan" placeholder="Nomor akte pengesahan"/>
-	                </div>
-	            </div>
-	            <div class="col-md-3">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.telepon" placeholder="Telepon yayasan"/>
-	                </div>
-	            </div>
-	            <div class="col-md-3">
-	                <div class="form-group">
-	                    <input class="form-control no-bordered" type="text" ng-model="sekolah.yayasan.email" placeholder="Email yayasan"/>
-	                </div>
-	            </div>
-	        </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text"
+                            name="yayasan-akte"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.akte_pengesahan"
+                            placeholder="Nomor akte pengesahan"
+                            >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <span id="yayasan-telepon"></span>
+                        <input type="text"
+                            name="yayasan-telepon"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.telepon"
+                            placeholder="Telepon yayasan"
+                            validator="number"
+                            number-error-message="Harus angka"
+                            message-id="yayasan-telepon"
+                            >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <span id="yayasan-email"></span>
+                        <input type="text"
+                            name="yayasan-email"
+                            class="form-control no-bordered"
+                            ng-model="sekolah.yayasan.email"
+                            placeholder="Email yayasan"
+                            validator="email"
+                            email-error-message="Harus email yang valid"
+                            message-id="yayasan-email"
+                            >
+                    </div>
+                </div>
+            </div>
 
-	        
-	    </div>
-	</li>
+
+        </div>
+    </li>
 </ul>
 
 
 <ul class="list-group">
-	<li class="list-group-item">
-	    <h4>PROGRAM PENDIDIKAN <small>Hanya di tujukan untuk SMK dan SLB</small></h4>
-	</li>    
-	<li class="list-group-item">
+    <li class="list-group-item">
+        <h4>PROGRAM PENDIDIKAN <small>Hanya di tujukan untuk SMK dan SLB</small></h4>
+    </li>
+    <li class="list-group-item">
 
-		<div ng-show="form_program">
-			Blank space
-		</div>
-	    <div ng-hide="form_program">
-	        <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
-	            <div class="panel-heading">
-	                {{ program.id }} <prodi prodid="{{ program.id }}"></prodi>
-	            </div>
-	            <div class="panel-body">
-	                {{ program.tujuan }}
-	            </div>
-	        </div>
+        <div ng-show="form_program">
 
-	        <div class="text-center">
-	            <button class="btn btn-primary btn-sm" ng-click="openProgram()">Tambah Program</button>
-	        </div>
-	    </div>
-	</li>
+        </div>
+        <div ng-hide="form_program">
+            <div class="panel panel-default" ng-repeat="program in sekolah.program track by $index">
+                <div class="panel-heading">
+                    {{ program.id }} <prodi prodid="{{ program.id }}"></prodi>
+                </div>
+                <div class="panel-body">
+                    {{ program.tujuan }}
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary btn-sm" ng-click="openProgram()">Tambah Program</button>
+            </div>
+        </div>
+    </li>
 </ul>
 
 <ul class="list-group">
-	<li class="list-group-item">
-		<h4>VISI DAN MISI</h4>
-	</li>
-	<li class="list-group-item">
+    <li class="list-group-item">
+        <h4>VISI DAN MISI</h4>
+    </li>
+    <li class="list-group-item">
 
-	    <div class="form-group">
-	        <label class="control-label">Visi</label>
-	        <textarea class="form-control no-bordered" rows="6" ng-model="sekolah.visi"></textarea>   
-	    </div>
+        <div class="form-group">
+            <span id="sekolah-visi"></span>
+            <textarea
+                name="sekolah-visi"
+                class="form-control no-bordered"
+                rows="6"
+                placeholder="Visi sekolah"
+                ng-model="sekolah.visi"
+                validator="required"
+                required-error-message="Visi harus di isi"
+                message-id="sekolah-visi"
+                valid-method="blur"></textarea>
+        </div>
 
-	    <div class="form-group">
-	        <label class="control-label">Misi</label>
-	        <textarea class="form-control no-bordered" rows="6" ng-model="sekolah.misi"></textarea>   
-	    </div>
-	</li>
+        <div class="form-group">
+            <span id="sekolah-misi"></span>
+            <textarea
+                name="sekolah-misi"
+                class="form-control no-bordered"
+                rows="6"
+                placeholder="Misi sekolah"
+                ng-model="sekolah.misi"
+                validator="required"
+                required-error-message="Misi harus di isi"
+                message-id="sekolah-misi"
+                valid-method="blur"></textarea>
+        </div>
+    </li>
 </ul>
 
 <ul class="list-group">
-	<li class="list-group-item">
-		<h4>STAKE HOLDER</h4>    
-	</li>
-	<li class="list-group-item">
+    <li class="list-group-item">
+        <h4>STAKE HOLDER</h4>
+    </li>
+    <li class="list-group-item">
 
-	    <div class="row">
-	        <div class="col-md-6">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.kepsek_nama" placeholder="Nama kepala sekolah/madrasah">
-	            </div>
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.kepsek_nip" placeholder="NIP kepala sekolah/madrasah">
-	            </div>
-	        </div>
-	        <div class="col-md-6">
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.pengawas_nama" placeholder="Nama pengawas sekolah/madrasah">
-	            </div>
-	            <div class="form-group">
-	                <input class="form-control no-bordered" type="text" ng-model="sekolah.pengawas_nip" placeholder="NIP pengawas sekolah/madrasah">
-	            </div>
-	        </div>
-    	</div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span id="sekolah-kepsek-nama"></span>
+                    <input type="text"
+                        name="sekolah-kepsek-nama"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.kepsek_nama"
+                        placeholder="Nama kepala sekolah/madrasah"
+                        validator="required"
+                        required-error-message="Tidak boleh kosong"
+                        message-id="sekolah-kepsek-nama"
+                        valid-method="blur"
+                        >
+                </div>
+                <div class="form-group">
+                    <span id="sekolah-kepsek-nip"></span>
+                    <input type="text"
+                        name="sekolah-kepsek-nip"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.kepsek_nip"
+                        placeholder="NIP kepala sekolah/madrasah"
+                        validator="digit"
+                        length="18"
+                        digit-error-message="Harus 18 digit"
+                        message-id="sekolah-kepsek-nip"
+                        valid-method="blur"
+                        >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span id="sekolah-pengawas-nama"></span>
+                    <input type="text"
+                        name="sekolah-pengawas-nama"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.pengawas_nama"
+                        placeholder="Nama pengawas sekolah/madrasah"
+                        validator="required"
+                        required-error-message="Tidak boleh kosong"
+                        message-id="sekolah-pengawas-nama"
+                        valid-method="blur"
+                        >
+                </div>
+                <div class="form-group">
+                    <span id="sekolah-pengawas-nip"></span>
+                    <input type="text"
+                        name="sekolah-pengawas-nip"
+                        class="form-control no-bordered"
+                        ng-model="sekolah.pengawas_nip"
+                        placeholder="NIP pengawas sekolah/madrasah"
+                        validator="required, digit"
+                        length="18"
+                        required-error-message="Tidak boleh kosong"
+                        digit-error-message="Harus 18 digit"
+                        message-id="sekolah-pengawas-nip"
+                        valid-method="blur"
+                        >
+                </div>
+            </div>
+        </div>
     </li>
 </ul>
 
 <button class="btn btn-primary btn-block" validation-submit="Form" ng-click="save()">Simpan Data</button>
-<br /><br /><br /><br />
+<br ><br ><br ><br >
 </form>
+<date-picker></date-picker>

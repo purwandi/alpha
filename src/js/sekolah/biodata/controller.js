@@ -9,11 +9,11 @@
 
 	function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
 		// var $scope = this;
-     
-        // Injector
-        var $validationProvider = $injector.get('$validation'); 
 
-		$scope.sekolah = {};
+        // Injector
+        var $validationProvider = $injector.get('$validation');
+
+		// $scope.sekolah = {};
 		$scope.config = {
 			jenjang: APP.JENJANG,
 			status: APP.STATUS,
@@ -39,9 +39,9 @@
             return $scope.sekolah.jenjang_id;
         }, function(newValue, oldValue) {
             var _jenjang = parseInt($scope.sekolah.jenjang_id);
-            
+
             if (oldValue != newValue) {
-                $scope.sekolah.program = []; 
+                $scope.sekolah.program = [];
             }
 
             if (_jenjang < 18) {
@@ -52,14 +52,14 @@
             } else {
                 $scope.form_program = false;
                 if ($scope.sekolah.program == undefined) {
-                    $scope.sekolah.program = [];   
+                    $scope.sekolah.program = [];
                 }
             }
         });
 
 
 		var update = function(value) {
-            AppSekolahRepository.update(value);   
+            AppSekolahRepository.update(value);
         }
 
 
@@ -74,8 +74,8 @@
 		// -----------------------------------------------------------------------
         // WILAYAH OPT
         // -----------------------------------------------------------------------
-        // 
-        // 
+        //
+        //
             $scope.$watch(function() {
                 return $scope.sekolah.provinsi_id;
             }, function(oldValue, newValue) {
@@ -86,7 +86,7 @@
                 $scope.config.wilayah.kecamatan = {};
                 $scope.config.wilayah.desa = {};
             });
-            
+
             $scope.$watch(function() {
                 return $scope.sekolah.kota_id;
             }, function(oldValue, newValue) {
@@ -131,12 +131,14 @@
 
 	}
 
-	function SekolahBiodataProgramCtrl($scope, $modalInstance) {
+	function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
 		var prodi       = TAFFY(APP.PRODI);
         var _sekolah    = $scope.sekolah;
 
+        var $validationProvider = $injector.get('$validation');
+
         $scope.prodi = prodi({jenjang_id: {is:parseInt(_sekolah.jenjang_id)}}).order('nama').get();
-        
+
         $scope.save = function() {
             $modalInstance.close($scope.program);
         }

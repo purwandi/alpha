@@ -8,6 +8,7 @@
 
 			'validation', 
 			'validation.rule',
+			'app.directive.datepicker',
 
 			'app.sekolah.repository'
 		])

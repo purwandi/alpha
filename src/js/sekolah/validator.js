@@ -28,16 +28,21 @@
             base64Regex = /[^a-zA-Z0-9\/\+=]/i,
             numericDashRegex = /^[\d\-\s]+$/,
             urlRegex = /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
-        
+
         $validationProvider
             .setExpression({
                 digit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
-                    if (!numericRegex.test(length)) {
+                    if ( ! value) {
+                        return true;
+                    }
+                    else if (value && !numericRegex.test(length)) {
                         return false;
+                    } else {
+                        return value.length === parseInt(length, 10);
                     }
 
-                    return value.length === parseInt(length, 10);
+
                 },
                 maxdigit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
@@ -49,6 +54,7 @@
                 },
                 mindigit: function(value, scope, element, attrs) {
                     var length = parseInt(attrs.length);
+
                     if (!numericRegex.test(length)) {
                         return false;
                     }
@@ -56,33 +62,76 @@
                     return value.length >= parseInt(length, 10)
                 },
                 alpha: function(value, scope, element, attrs) {
-                    return (alphaRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaRegex.test(value));
+                    }
                 },
                 alphanumeric: function(value, scope, element, attrs) {
-                    return (alphaNumericRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaNumericRegex.test(value));
+                    }
                 },
                 alphadash: function(value, scope, element, attrs) {
-                    return (alphaDashRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (alphaDashRegex.test(value));
+                    }
+                },
+                numeric: function(value, scope, element, attrs) {
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (numericRegex.test(value));
+                    }
                 },
                 integer: function(value, scope, element, attrs) {
-                    return (integerRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (integerRegex.test(value));
+                    }
                 },
                 decimal: function(value, scope, element, attrs) {
-                    return (decimalRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (decimalRegex.test(value));
+                    }
                 },
                 isnatural: function(value, scope, element, attrs) {
-                    return (naturalRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (naturalRegex.test(value));
+                    }
                 },
                 isnaturalnozero: function(value, scope, element, attrs) {
-                    return (naturalNoZeroRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (naturalNoZeroRegex.test(value));
+                    }
                 },
                 validip: function(value, scope, element, attrs) {
-                    return (ipRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (ipRegex.test(value));
+                    }
                 },
                 validurl: function(value, scope, element, attrs) {
-                    return (urlRegex.test(value));
+                    if ( ! value) {
+                        return true;
+                    } else {
+                        return (urlRegex.test(value));
+                    }
                 }
-                
+
             })
             .setDefaultMsg({
                 digit: {
