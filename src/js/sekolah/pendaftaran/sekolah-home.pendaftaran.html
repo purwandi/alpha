@@ -40,6 +40,12 @@
             message-id="pemohon-nik"
         >
     </div>
+    <br />
+    <div class="form-group">
+        <label class="control-label">Upload instrumen pengumpulan data dan informasi</label>
+        <upload-file ng-model="sekolah.dokumen" data-file="docs"></upload-file>
+        <small class="help-block">File dalam bentuk pdf</small>
+    </div>
 
     <br />
     <button type="button" validation-submit="Form" ng-click="pendaftaran()" class="btn btn-primary">Kirim</button>
@@ -62,6 +68,11 @@
                 <td>Kode Pendaftaran</td>
                 <td>:</td>
                 <td>{{ sekolah.kode }}</td>
+            </tr>
+            <tr>
+                <td>Dokumen Pendukung</td>
+                <td>:</td>
+                <td><a href="{{ sekolah.dokumen }}">{{ sekolah.dokumen }}</a></td>
             </tr>
         </tbody>
     </table>

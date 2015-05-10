@@ -12,3 +12,4 @@
 - Menambahkan fungsi cetak laporan
 - Menambahkan fitur pendaftaran online
 - Menambahkan fitur barcode untuk memudahkan melakukan proses verifikasi
+- Menambahkan fitur upload dokumen pendukung

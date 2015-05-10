@@ -1,0 +1,20 @@
+<div class="modal-header modal-danger">
+  <button type="button" class="close" ng-click="close()">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+  <h4 class="modal-title">{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <p>Permintaan tidak dapat diteruskan, mohon untuk melakukan koreksi sebagaimana keterangan dibawah ini.</p>
+  <table class="table table-condensed" style="border-bottom: 1px solid #ddd">
+    <tr ng-repeat="msg in messages">
+      <td style="width: 2%" class="text-danger"><i class="icon ion-ios-information-outline"></i></td>
+      <td>{{ msg.value }}</td>
+    </tr>
+  </table>
+
+</div>
+<div class="modal-footer" style="border-top:1px solid #FFF; text-align: center">
+  <button class="btn btn-sm btn-danger" ng-click="close()">Tutup Peringatan</button>
+</div>

@@ -7,7 +7,11 @@
         .controller('SekolahCetakCtrl', SekolahCetakCtrl)
 
 
-    function SekolahPendaftaranCtrl($scope, $injector, AppSekolahRepository, sekolah, Request) {
+    function SekolahPendaftaranCtrl($scope, $state, $injector, AppSekolahRepository, sekolah, Request) {
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
 
         var $validationProvider = $injector.get('$validation');
 

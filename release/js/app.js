@@ -35,6 +35,112 @@ $(document).ready(function() {
         })
 }) ();
 
+(function() {
+
+    'use strict';
+
+    angular
+        .module('alert', [
+            'ui.bootstrap.modal',
+            'template/modal/backdrop.html',
+            'template/modal/window.html',
+        ])
+        .factory('msgService', msgService);
+
+
+    function msgService($modal) {
+
+        var modal,
+            compileMessages = compileMessages,
+            openModal = openModal;
+
+        return {
+            modal: openModal,
+            confirm: openConfirmModal,
+            notif: openNotif
+        }
+
+        function compileMessages(messages) {
+            var msg   = TAFFY();
+
+            for (var index in messages) {
+                msg.insert({
+                  'key'    : index,
+                  'value'  : messages[index][0]
+                });
+            }
+
+            return msg().get();
+        }
+
+        function openConfirmModal() {
+            modal = $modal.open({
+                backdrop: 'static',
+                templateUrl: '/templates/modal-confirm-content.html',
+                /* @ngInject */
+                controller: function($scope) {
+                    $scope.close = function() {
+                        modal.close();
+                    }
+
+                    $scope.ok = function() {
+
+                    }
+                }
+            });
+        }
+
+        function openModal(title, messages, type) {
+            modal = $modal.open({
+                backdrop: 'static',
+                templateUrl: '/templates/modal-error-content.html',
+                /* @ngInject */
+                controller: function($scope) {
+                    $scope.title = title;
+                    $scope.type = type;
+                    $scope.messages = compileMessages(messages);
+                    $scope.close = function() {
+                        modal.close();
+                    }
+                }
+            })
+        }
+
+        function openNotif(title, message, type) {
+            var _template, _title;
+
+            if (type === 'danger') {
+                _template = '<div class="notify alert alert-danger fade in">';
+            //_title = 'Oh snap! You got an error!';
+            } else if (type === 'success') {
+                _template = '<div class="notify alert alert-success fade in">';
+            //_title = 'Great, you have successful!';
+            } else if (type === 'info') {
+                _template = '<div class="notify alert alert-info fade in">';
+            //_title = 'Great, you have successful!';
+            } else {
+                _template = '<div class="notify alert alert-warning fade in">';
+            //_title = 'Oh snap! You got an error!';
+            }
+
+            _template += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
+            _template += '<strong>' + title + '</strong>';
+            _template += '<hr class="message-inner-separator">';
+            _template += '<div class="notify-content">';
+            _template += message;
+            _template += '</div>';
+            _template += '</div>';
+
+            $('.message-bar').prepend(_template);
+
+            return setTimeout((function() {
+                $('.message-bar .alert').last().fadeOut(1000);
+                $('.message-bar .alert').last().remove();
+            }), 3000);
+        }
+    }
+
+})();
 /**
  * Get group id
  * 
@@ -162,7 +268,7 @@ var getHasil = function(nilai, jenjang_id) {
 
     /* @ngInject */
     function Request($q, $http) {
-        var baseUrl   = 'http://api.bap-sm.lo',
+        var baseUrl   = Env.API_URL,
             defaults  = {};
 
         $http.defaults.headers.common['Content-Type'] = 'application/json';
@@ -2446,6 +2552,94 @@ angular.module('monospaced.qrcode', [])
     };
   }]);
 (function() {
+    'use strict';
+
+    angular
+        .module('upload', ['angularFileUpload', 'alert'])
+        .directive('uploadFile', uploadFile);
+
+
+    /* @ngInject */
+    function uploadFile(FileUploader, msgService) {
+        return {
+            restrict: 'E',
+            scope: { ngModel: '='},
+            template: '<input type="file" nv-file-select uploader="uploader" /><input type="hidden" ng-model="ngModel">',
+            compile: function() {
+                return {
+                    pre: function(scope, element, attrs) {
+                        if (attrs.file == 'image') {
+                            var url = Env.API_URL + '/upload/image';
+                        } else {
+                            var url = Env.API_URL + '/upload/docs';
+                        }
+
+                        scope.uploader = new FileUploader({
+                            url: url,
+                            autoUpload: true,
+                            formData: [{
+                                _token: Env.TOKEN
+                            }],
+                        });
+                    },
+                    // link
+                    post: function(scope, element, attrs) {
+                        var uploader = scope.uploader;
+                        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                            scope.$apply(function() {
+                                scope.ngModel = response.url;
+                            });
+                        }
+
+                        uploader.onErrorItem = function(fileItem, response, status, headers) {
+                            msgService.modal(response.error.message, response.error.meta_message);
+                        };
+
+                        // /*{File|FileLikeObject}*/
+                        /* uploader.onWhenAddingFileFailed = function(item , filter, options) {
+                            console.info('onWhenAddingFileFailed', item, filter, options);
+                        };
+                        uploader.onAfterAddingFile = function(fileItem) {
+                            console.info('onAfterAddingFile', fileItem);
+                        };
+                        uploader.onAfterAddingAll = function(addedFileItems) {
+                            console.info('onAfterAddingAll', addedFileItems);
+                        };
+                        uploader.onBeforeUploadItem = function(item) {
+                            console.info('onBeforeUploadItem', item);
+                        };
+                        uploader.onProgressItem = function(fileItem, progress) {
+                            console.info('onProgressItem', fileItem, progress);
+                        };
+                        uploader.onProgressAll = function(progress) {
+                            console.info('onProgressAll', progress);
+                        };
+                        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                            console.info('onSuccessItem', fileItem, response, status, headers);
+                        };
+                        uploader.onErrorItem = function(fileItem, response, status, headers) {
+                            console.info('onErrorItem', fileItem, response, status, headers);
+                        };
+                        uploader.onCancelItem = function(fileItem, response, status, headers) {
+                            console.info('onCancelItem', fileItem, response, status, headers);
+                        };
+                        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+                            console.info('onCompleteItem', fileItem, response, status, headers);
+                        };
+                        uploader.onCompleteAll = function() {
+                            console.info('onCompleteAll');
+                        }; */
+
+                        // console.log(2);
+                        // console.log(scope.uploader);
+                    }
+                }
+            }
+        }
+    }
+
+})();
+(function() {
     angular
         .module('app.base', [])
         .config(router)
@@ -2620,6 +2814,7 @@ angular.module('monospaced.qrcode', [])
 			'validation.rule',
 			'app.directive.datepicker',
             'monospaced.qrcode',
+            'upload',
 
 			'app.sekolah.repository'
 		])
@@ -3038,7 +3233,11 @@ angular.module('monospaced.qrcode', [])
         .controller('SekolahCetakCtrl', SekolahCetakCtrl)
 
 
-    function SekolahPendaftaranCtrl($scope, $injector, AppSekolahRepository, sekolah, Request) {
+    function SekolahPendaftaranCtrl($scope, $state, $injector, AppSekolahRepository, sekolah, Request) {
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
 
         var $validationProvider = $injector.get('$validation');
 

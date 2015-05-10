@@ -10,6 +10,7 @@
 			'validation.rule',
 			'app.directive.datepicker',
             'monospaced.qrcode',
+            'upload',
 
 			'app.sekolah.repository'
 		])
