@@ -9,7 +9,7 @@ App.Skoring = (function() {
 
     /**
      * Bootstrap the library
-     * 
+     *
      * @param  object db       The taffy db object butir jawaban
      * @params object komponen
      * @param  int    group_id Group id satuan pendidikan
@@ -27,28 +27,20 @@ App.Skoring = (function() {
             __tidakLayak    = 0,
             __nilaiKomp40   = 0;
 
-        var nomor = 1;
+        var nomor           = 1;
 
         _bagian.each(function (record,recordnumber) {
             var butir    = db({ bagian_id: {is: record.id} });
 
             var skor = 0;
 
-            console.log(butir.get());
-
             butir.each(function(key) {
-                // console.log(key.evaluasi);
                 skor = skor + key.evaluasi.hasil;
             });
 
-            // console.log(skor);
-
             var nilai   = roundDecimal((skor/record.skormaks) * record.bobot);
             var ratusan = roundDecimal((skor/record.skormaks) * 100);
-            var layak   = getLayak(ratusan);                    
-
-
-            //console.log(skor);
+            var layak   = getLayak(ratusan);
 
             var komponen_data = {
                 id      : record.id,
@@ -61,16 +53,15 @@ App.Skoring = (function() {
                 komponen: record
             };
 
-           // console.log(komponen_data);
+            nomor = nomor + 1;
 
-            // var db = TAFFY(_program.butir);
             var komponen = __komponen({id: { is: parseInt(record.id)}});
 
             // insert or update data evaluasi
             if (komponen.first()) {
                 komponen.update(komponen_data);
             } else {
-                __komponen.insert(komponen_data);   
+                __komponen.insert(komponen_data);
             }
 
             __nilai = parseInt(__nilai) + parseInt(nilai);

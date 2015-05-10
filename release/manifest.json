@@ -1,12 +1,12 @@
 {
-  "name": "Alpha",
-  "description": "Aplikasi client sistem akreditasi online",
-  "version": "0.0.2",
+  "name": "Akreditasi Sekolah dan Madrasah - BAP PROVINSI",
+  "description": "Aplikasi client sistem akreditasi online sekolah/madrasah di Indonesia",
+  "version": "0.0.3",
   "manifest_version": 2,
   "minimum_chrome_version": "33",
   "permissions": [
     "storage",
-    "https://api.bap-sm.or.id/"
+    "http://api.bap-sm.or.id/"
   ],
   "icons": {
     "16": "icon16.png",

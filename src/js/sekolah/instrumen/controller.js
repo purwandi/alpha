@@ -24,7 +24,7 @@
                 _group_id,
                 _sources,
                 _total,
-                _index, 
+                _index,
                 _program;
 
         var DB_Butir;
@@ -34,7 +34,7 @@
 			if ($scope.prodi_current == false) {
 				$scope.prodi_current = parseInt(prodi);
 				$('.prodi-evaluasi').addClass('hide');
-                $('#prodi-'+prodi).removeClass('hide');   
+                $('#prodi-'+prodi).removeClass('hide');
 				/**
 				 * Initialize
 				 */
@@ -44,7 +44,7 @@
 			} else {
 				$scope.prodi_current = false;
 				$scope.butir = {};
-				$('.prodi-evaluasi').removeClass('hide');     
+				$('.prodi-evaluasi').removeClass('hide');
 			}
 		}
 
@@ -70,7 +70,7 @@
             _sources        =  _source_instrumen()
                                 .join( _bagian, ['bagian_id', 'id'])
                                 .order('nomor');
-            
+
             _index          = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
             _program        = sekolah.program[_index];
 
@@ -90,11 +90,11 @@
             _sources.get().forEach(function(entry) {
 
                 var instrumen    = DB_Butir({ nomor: { is: parseInt(entry.nomor) } });
-                var data = { 
+                var data = {
                     id: entry.id,
                     bagian_id: entry.bagian_id,
                     nomor: entry.nomor,
-                    instrumen: entry 
+                    instrumen: entry
                 };
 
                 if (instrumen.first()) {
@@ -104,7 +104,7 @@
                 }
             });
 
-            _program.butir  = DB_Butir().get(); 
+            _program.butir  = DB_Butir().get();
 
             AppSekolahRepository.update(sekolah);
 
@@ -113,31 +113,18 @@
             $scope.sources  = _sources.get();
             $scope.total    = _total;
             $scope.program  = _program;
-
-            // __source_initialize($scope.sources, $scope._current);
-        }
-
-        $scope.test = function() {
-        	console.log($scope.jawaban);
         }
 
         $scope.update = function() {
-            // console.log(sekolah);
 
             App.Skoring.init(DB_Butir, $scope.program.komponen, _group_id.group_id, $scope.prodi_current);
 
             $scope.program.komponen = App.Skoring.komponen();
             $scope.program.hasil    = App.Skoring.hasil();
 
-            // console.log(App.Skoring.komponen());
-
             AppSekolahRepository.update(sekolah);
         }
 
-        $scope.getValue = function(id, bagian, bobot, nomor, nilai) {
-        	insertUpdate(id, bagian, bobot, nomor, nilai);
-        }
-
 	}
-	
+
 })();
