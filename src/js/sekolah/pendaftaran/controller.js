@@ -21,8 +21,6 @@
 
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
-            pemohon_nama: 'Purwandi M',
-            pemohon_nik: '1234567890123456',
             jenjang_id: sekolah.jenjang_id,
             konten: sekolah,
             npsn: sekolah.npsn
