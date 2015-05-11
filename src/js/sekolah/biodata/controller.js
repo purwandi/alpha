@@ -1,33 +1,35 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah')
-		.controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
-		.controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
+    angular
+        .module('app.sekolah')
+        .controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
+        .controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
 
 
-	function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
-		// var $scope = this;
+    function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
+        // var $scope = this;
 
         // Injector
         var $validationProvider = $injector.get('$validation');
 
-		// $scope.sekolah = {};
-		$scope.config = {
-			jenjang: APP.JENJANG,
-			status: APP.STATUS,
-			wilayah: {
-				provinsi: DAERAH.PROVINSI
-			}
-		}
+        // $scope.sekolah = {};
+        $scope.config = {
+            jenjang: APP.JENJANG,
+            status: APP.STATUS,
+            wilayah: {
+                provinsi: DAERAH.PROVINSI
+            }
+        }
 
-		$scope.form_program = true;
+        $scope.form_program = true;
 
-		// init()
+        // init()
         // -----------------------------------------------------------------------
         AppSekolahRepository.sekolah = sekolah;
         $scope.sekolah = AppSekolahRepository.sekolah;
+        $scope.success = false;
+        $scope.error = false;
 
         if (sekolah == undefined) {
             $scope.sekolah = { program: [] };
@@ -58,7 +60,8 @@
         });
 
 
-		var update = function(value) {
+        var update = function(value) {
+            $scope.success = true;
             AppSekolahRepository.update(value);
         }
 
@@ -67,11 +70,12 @@
         // STEP
         // -----------------------------------------------------------------------
         $scope.save = function() {
-            return update($scope.sekolah);
+            $scope.success = true;
+            return AppSekolahRepository.update($scope.sekolah);
         }
 
 
-		// -----------------------------------------------------------------------
+        // -----------------------------------------------------------------------
         // WILAYAH OPT
         // -----------------------------------------------------------------------
         //
@@ -115,7 +119,7 @@
                     var modalInstance = $modal.open({
                         templateUrl: '/templates/sekolah-home.prodi.html',
                         controller: 'SekolahBiodataProgramCtrl',
-                   		scope: $scope
+                        scope: $scope
                     });
 
                     modalInstance.result.then(function(item) {
@@ -129,10 +133,10 @@
                 }
             }
 
-	}
+    }
 
-	function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
-		var prodi       = TAFFY(APP.PRODI);
+    function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
+        var prodi       = TAFFY(APP.PRODI);
         var _sekolah    = $scope.sekolah;
 
         var $validationProvider = $injector.get('$validation');
@@ -146,6 +150,6 @@
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
         }
-	}
+    }
 
 })();

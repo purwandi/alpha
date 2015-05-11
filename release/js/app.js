@@ -1,5 +1,5 @@
 var Env   = {};
-Env.API_URL        = 'http://api.bap-sm.lo';
+Env.API_URL        = 'http://api.bap-sm.or.id';
 Env.TIMEZONE        = [7, "WIB"];
 $(document).ready(function() {
 
@@ -2896,35 +2896,37 @@ angular.module('monospaced.qrcode', [])
 
 })();
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah')
-		.controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
-		.controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
+    angular
+        .module('app.sekolah')
+        .controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
+        .controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
 
 
-	function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
-		// var $scope = this;
+    function SekolahBiodataCtrl($scope, $modal, $injector, sekolah, AppSekolahRepository) {
+        // var $scope = this;
 
         // Injector
         var $validationProvider = $injector.get('$validation');
 
-		// $scope.sekolah = {};
-		$scope.config = {
-			jenjang: APP.JENJANG,
-			status: APP.STATUS,
-			wilayah: {
-				provinsi: DAERAH.PROVINSI
-			}
-		}
+        // $scope.sekolah = {};
+        $scope.config = {
+            jenjang: APP.JENJANG,
+            status: APP.STATUS,
+            wilayah: {
+                provinsi: DAERAH.PROVINSI
+            }
+        }
 
-		$scope.form_program = true;
+        $scope.form_program = true;
 
-		// init()
+        // init()
         // -----------------------------------------------------------------------
         AppSekolahRepository.sekolah = sekolah;
         $scope.sekolah = AppSekolahRepository.sekolah;
+        $scope.success = false;
+        $scope.error = false;
 
         if (sekolah == undefined) {
             $scope.sekolah = { program: [] };
@@ -2955,7 +2957,8 @@ angular.module('monospaced.qrcode', [])
         });
 
 
-		var update = function(value) {
+        var update = function(value) {
+            $scope.success = true;
             AppSekolahRepository.update(value);
         }
 
@@ -2964,11 +2967,12 @@ angular.module('monospaced.qrcode', [])
         // STEP
         // -----------------------------------------------------------------------
         $scope.save = function() {
-            return update($scope.sekolah);
+            $scope.success = true;
+            return AppSekolahRepository.update($scope.sekolah);
         }
 
 
-		// -----------------------------------------------------------------------
+        // -----------------------------------------------------------------------
         // WILAYAH OPT
         // -----------------------------------------------------------------------
         //
@@ -3012,7 +3016,7 @@ angular.module('monospaced.qrcode', [])
                     var modalInstance = $modal.open({
                         templateUrl: '/templates/sekolah-home.prodi.html',
                         controller: 'SekolahBiodataProgramCtrl',
-                   		scope: $scope
+                        scope: $scope
                     });
 
                     modalInstance.result.then(function(item) {
@@ -3026,10 +3030,10 @@ angular.module('monospaced.qrcode', [])
                 }
             }
 
-	}
+    }
 
-	function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
-		var prodi       = TAFFY(APP.PRODI);
+    function SekolahBiodataProgramCtrl($scope, $modalInstance,  $injector) {
+        var prodi       = TAFFY(APP.PRODI);
         var _sekolah    = $scope.sekolah;
 
         var $validationProvider = $injector.get('$validation');
@@ -3043,7 +3047,7 @@ angular.module('monospaced.qrcode', [])
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
         }
-	}
+    }
 
 })();
 (function() {
@@ -3247,8 +3251,6 @@ angular.module('monospaced.qrcode', [])
 
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
-            pemohon_nama: 'Purwandi M',
-            pemohon_nik: '1234567890123456',
             jenjang_id: sekolah.jenjang_id,
             konten: sekolah,
             npsn: sekolah.npsn
