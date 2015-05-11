@@ -33,12 +33,29 @@
                     post: function(scope, element, attrs) {
                         var uploader = scope.uploader;
                         uploader.onSuccessItem = function(fileItem, response, status, headers) {
+                            setTimeout((function() {
+                                $('body').removeClass('app-loading');
+                            }), 1000);
+
                             scope.$apply(function() {
                                 scope.ngModel = response.url;
                             });
+
+                            msgService.notif('Sukses', 'Proses upload file berhasil', 'info');
                         }
 
+                        uploader.onProgressItem = function(fileItem, progress) {
+                            $('body').addClass('app-loading');
+                        };
+                        uploader.onProgressAll = function(progress) {
+                            $('body').addClass('app-loading');
+                            msgService.notif('Info', 'Proses upload file');
+                        };
+
                         uploader.onErrorItem = function(fileItem, response, status, headers) {
+                            setTimeout((function() {
+                                $('body').removeClass('app-loading');
+                            }), 1000);
                             msgService.modal(response.error.message, response.error.meta_message);
                         };
 
@@ -55,18 +72,7 @@
                         uploader.onBeforeUploadItem = function(item) {
                             console.info('onBeforeUploadItem', item);
                         };
-                        uploader.onProgressItem = function(fileItem, progress) {
-                            console.info('onProgressItem', fileItem, progress);
-                        };
-                        uploader.onProgressAll = function(progress) {
-                            console.info('onProgressAll', progress);
-                        };
-                        uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                            console.info('onSuccessItem', fileItem, response, status, headers);
-                        };
-                        uploader.onErrorItem = function(fileItem, response, status, headers) {
-                            console.info('onErrorItem', fileItem, response, status, headers);
-                        };
+
                         uploader.onCancelItem = function(fileItem, response, status, headers) {
                             console.info('onCancelItem', fileItem, response, status, headers);
                         };

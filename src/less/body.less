@@ -1,3 +1,204 @@
 body {
     // margin-bottom: 50px;
 }
+
+// Message Small
+// --------------------------------------------------
+.message-bar {
+  z-index: 1080;
+  max-width: 350px;
+  min-width: 350px;
+  display: block;
+  position: fixed;
+  top: 25px;
+  right: 20px;
+  font-size: 13px;
+}
+
+.notifbar {
+  padding: 15px;
+  border: 1px solid transparent;
+  &.notifbar-default {
+    background-color: #009688;
+    color: #ffffff;
+  }
+  &.notifbar-info {
+    background-color: #5677fc;
+    color: #ffffff;
+  }
+  &.notifbar-danger {
+    background-color: #f2dede;
+    color: #a94442;
+  }
+
+}
+
+/* Copyright (c) 2014 by Mike Olsen (http://codepen.io/artfulhacker/pen/hikJd) */
+.app-loading .loading-bar
+{
+  display: block;
+  -webkit-animation: shift-rightwards 1s ease-in-out infinite;
+  -moz-animation: shift-rightwards 1s ease-in-out infinite;
+  -ms-animation: shift-rightwards 1s ease-in-out infinite;
+  -o-animation: shift-rightwards 1s ease-in-out infinite;
+  animation: shift-rightwards 1s ease-in-out infinite;
+  -webkit-animation-delay: .4s;
+  -moz-animation-delay: .4s;
+  -o-animation-delay: .4s;
+  animation-delay: .4s;
+}
+.loading-bar
+{
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 1800;
+  background: #60d778;
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+@-webkit-keyframes shift-rightwards
+{
+  0%
+  {
+    -webkit-transform:translateX(-100%);
+    -moz-transform:translateX(-100%);
+    -o-transform:translateX(-100%);
+    transform:translateX(-100%);
+  }
+
+  40%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  60%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  100%
+  {
+    -webkit-transform:translateX(100%);
+    -moz-transform:translateX(100%);
+    -o-transform:translateX(100%);
+    transform:translateX(100%);
+  }
+
+}
+@-moz-keyframes shift-rightwards
+{
+  0%
+  {
+    -webkit-transform:translateX(-100%);
+    -moz-transform:translateX(-100%);
+    -o-transform:translateX(-100%);
+    transform:translateX(-100%);
+  }
+
+  40%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  60%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  100%
+  {
+    -webkit-transform:translateX(100%);
+    -moz-transform:translateX(100%);
+    -o-transform:translateX(100%);
+    transform:translateX(100%);
+  }
+
+}
+@-o-keyframes shift-rightwards
+{
+  0%
+  {
+    -webkit-transform:translateX(-100%);
+    -moz-transform:translateX(-100%);
+    -o-transform:translateX(-100%);
+    transform:translateX(-100%);
+  }
+
+  40%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  60%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  100%
+  {
+    -webkit-transform:translateX(100%);
+    -moz-transform:translateX(100%);
+    -o-transform:translateX(100%);
+    transform:translateX(100%);
+  }
+
+}
+@keyframes shift-rightwards
+{
+  0%
+  {
+    -webkit-transform:translateX(-100%);
+    -moz-transform:translateX(-100%);
+    -o-transform:translateX(-100%);
+    transform:translateX(-100%);
+  }
+
+  40%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  60%
+  {
+    -webkit-transform:translateX(0%);
+    -moz-transform:translateX(0%);
+    -o-transform:translateX(0%);
+    transform:translateX(0%);
+  }
+
+  100%
+  {
+    -webkit-transform:translateX(100%);
+    -moz-transform:translateX(100%);
+    -o-transform:translateX(100%);
+    transform:translateX(100%);
+  }
+}

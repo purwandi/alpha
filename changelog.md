@@ -16,3 +16,4 @@
 - Menambahkan fitur upload dokumen pendukung
 - Membuat template di load pertama kali ketika membuka website
 - Menambahkan template chache
+- Menambahkan loading bar dan status upload file

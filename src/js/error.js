@@ -94,7 +94,9 @@
             _template += '</div>';
             _template += '</div>';
 
-            $('.message-bar').prepend(_template);
+            $('.message-bar').html(_template);
+
+            // $('.message-bar').prepend(_template);
 
             return setTimeout((function() {
                 $('.message-bar .alert').last().fadeOut(1000);
