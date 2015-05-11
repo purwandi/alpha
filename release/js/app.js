@@ -23,6 +23,8 @@ $(document).ready(function() {
             'app.directive.affix',
             'app.app.directive.daerah',
 
+            'templates',
+
             'app.base',
             'app.sekolah',
             'app.asesor'
@@ -2803,21 +2805,21 @@ angular.module('monospaced.qrcode', [])
 
 })();
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah', [
-			'ui.bootstrap',
-			'ui.bootstrap.tpls',
+    angular
+        .module('app.sekolah', [
+            'ui.bootstrap',
+            'ui.bootstrap.tpls',
 
-			'validation',
-			'validation.rule',
-			'app.directive.datepicker',
+            'validation',
+            'validation.rule',
+            'app.directive.datepicker',
             'monospaced.qrcode',
             'upload',
 
-			'app.sekolah.repository'
-		])
+            'app.sekolah.repository'
+        ])
 
 })();
 (function() {
@@ -3051,26 +3053,26 @@ angular.module('monospaced.qrcode', [])
 
 })();
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah')
-		.controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
+    angular
+        .module('app.sekolah')
+        .controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
 
-	function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
+    function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
 
         if ( ! sekolah) {
             $state.go('sekolah-home.biodata');
         }
 
-		$scope.sekolah = sekolah;
-		$scope.prodi_current = false;
-		$scope.butir = {};
-		$scope.jawaban = [];
-		$scope.instrumen = {};
+        $scope.sekolah = sekolah;
+        $scope.prodi_current = false;
+        $scope.butir = {};
+        $scope.jawaban = [];
+        $scope.instrumen = {};
         $scope.program = {};
 
-		var _source_bagian,
+        var _source_bagian,
                 _bagian,
                 _source_instrumen,
                 _group_id,
@@ -3082,39 +3084,39 @@ angular.module('monospaced.qrcode', [])
         var DB_Butir;
         var DB_Komponen;
 
-		$scope.goEvaluasi = function(prodi) {
-			if ($scope.prodi_current == false) {
-				$scope.prodi_current = parseInt(prodi);
-				$('.prodi-evaluasi').addClass('hide');
+        $scope.goEvaluasi = function(prodi) {
+            if ($scope.prodi_current == false) {
+                $scope.prodi_current = parseInt(prodi);
+                $('.prodi-evaluasi').addClass('hide');
                 $('.prodi-'+prodi).removeClass('hide');
-				/**
-				 * Initialize
-				 */
-				__init_group();
-				__init_source();
+                /**
+                 * Initialize
+                 */
+                __init_group();
+                __init_source();
 
-			} else {
-				$scope.prodi_current = false;
-				$scope.butir = {};
-				$('.prodi-evaluasi').removeClass('hide');
-			}
-		}
+            } else {
+                $scope.prodi_current = false;
+                $scope.butir = {};
+                $('.prodi-evaluasi').removeClass('hide');
+            }
+        }
 
-		var __init_group = function() {
-			if (sekolah.jenjang_id == 20) {
-				if ($scope.prodi_current == 224) {   // SDLB
+        var __init_group = function() {
+            if (sekolah.jenjang_id == 20) {
+                if ($scope.prodi_current == 224) {   // SDLB
                     _group_id = { group_id : 16 };
                 } else if ($scope.prodi_current == 225) { // SMPLB
                     _group_id = { group_id : 17 };
                 } else if ($scope.prodi_current == 226) {  // SMALB
                     _group_id = { group_id : 18 };
                 }
-			} else {
-				_group_id   = getGroupIdJenjang(sekolah.jenjang_id);
-			}
-		}
+            } else {
+                _group_id   = getGroupIdJenjang(sekolah.jenjang_id);
+            }
+        }
 
-		var __init_source = function() {
+        var __init_source = function() {
             _source_bagian     = TAFFY(INSTRUMEN.BAGIAN);
             _source_instrumen  = TAFFY(INSTRUMEN.BUTIR);
             _bagian            = _source_bagian({ group_id: { is: parseInt(_group_id.group_id) }});
@@ -3177,55 +3179,55 @@ angular.module('monospaced.qrcode', [])
             AppSekolahRepository.update(sekolah);
         }
 
-	}
+    }
 
 })();
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah')
-		.controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
+    angular
+        .module('app.sekolah')
+        .controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
 
 
-	function SekolahLaporanCtrl($scope, $state, sekolah) {
+    function SekolahLaporanCtrl($scope, $state, sekolah) {
 
 
         if ( ! sekolah) {
             $state.go('sekolah-home.biodata');
         }
 
-		$scope.sekolah = sekolah;
-		$scope.program = {};
-		$scope.prodi_current = false;
+        $scope.sekolah = sekolah;
+        $scope.program = {};
+        $scope.prodi_current = false;
         $scope.biodata = false;
 
-		$scope.goEvaluasi = function(prodi) {
-			if ($scope.prodi_current == false) {
+        $scope.goEvaluasi = function(prodi) {
+            if ($scope.prodi_current == false) {
 
                 if (prodi == 'biodata') {
                     $scope.biodata = true;
                 }
 
-				$scope.prodi_current = parseInt(prodi);
-				$('.prodi-evaluasi').addClass('hide');
+                $scope.prodi_current = parseInt(prodi);
+                $('.prodi-evaluasi').addClass('hide');
                 $('.prodi-'+prodi).removeClass('hide');
 
-				var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
-            	var _program    = sekolah.program[_index];
-            	$scope.program  = _program;
+                var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
+                var _program    = sekolah.program[_index];
+                $scope.program  = _program;
 
-			} else {
+            } else {
                 if (prodi == 'biodata') {
                     $scope.biodata = false;
                 }
-				$scope.prodi_current = false;
-				$scope.butir 	= {};
-				$scope.program 	= {};
-				$('.prodi-evaluasi').removeClass('hide');
-			}
-		}
-	}
+                $scope.prodi_current = false;
+                $scope.butir    = {};
+                $scope.program  = {};
+                $('.prodi-evaluasi').removeClass('hide');
+            }
+        }
+    }
 
 })();
 (function() {

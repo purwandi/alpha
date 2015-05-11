@@ -4,14 +4,16 @@
   "homepage": "http://app.bap-sm.or.id",
   "devDependencies": {
     "gulp": "latest",
-    "gulp-concat": "latest",
+    "gulp-angular-templatecache": "^1.6.0",
+    "gulp-angular-templates": "0.0.1",
     "gulp-coffee": "latest",
+    "gulp-concat": "latest",
+    "gulp-extend": "latest",
     "gulp-flatten": "latest",
     "gulp-less": "latest",
-    "gulp-watch": "latest",
+    "gulp-ng-annotate": "latest",
     "gulp-uglify": "latest",
-    "gulp-extend": "latest",
-    "gulp-wrap": "latest",
-    "gulp-ng-annotate": "latest"
+    "gulp-watch": "latest",
+    "gulp-wrap": "latest"
   }
 }

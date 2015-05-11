@@ -1,18 +1,18 @@
 (function() {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app.sekolah', [
-			'ui.bootstrap',
-			'ui.bootstrap.tpls',
+    angular
+        .module('app.sekolah', [
+            'ui.bootstrap',
+            'ui.bootstrap.tpls',
 
-			'validation',
-			'validation.rule',
-			'app.directive.datepicker',
+            'validation',
+            'validation.rule',
+            'app.directive.datepicker',
             'monospaced.qrcode',
             'upload',
 
-			'app.sekolah.repository'
-		])
+            'app.sekolah.repository'
+        ])
 
 })();

@@ -20,6 +20,8 @@ $(document).ready(function() {
             'app.directive.affix',
             'app.app.directive.daerah',
 
+            'templates',
+
             'app.base',
             'app.sekolah',
             'app.asesor'

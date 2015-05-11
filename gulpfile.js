@@ -7,6 +7,7 @@ var gulp    = require('gulp'),
     extend  = require('gulp-extend'),
     wrap    = require('gulp-wrap'),
     ngAnnotate = require('gulp-ng-annotate'),
+    templates = require('gulp-angular-templatecache'),
     path    = './bower_components/';
 
 /* Templates Task
@@ -16,6 +17,16 @@ gulp.task('templates', function() {
     .src(['./src/js/**/*.html', './src/js/_common/**/*.html'])
     .pipe(flatten())
     .pipe(gulp.dest('./release/templates'));
+});
+
+gulp.task('html', function() {
+    return gulp.src(['./src/js/**/*.html', './src/js/_common/**/*.html'])
+        .pipe(flatten())
+        .pipe(templates({
+            root: '/templates/',
+            standalone: true
+        }))
+        .pipe(gulp.dest('./release/js/'));
 });
 
 gulp.task('app-scripts', function() {
