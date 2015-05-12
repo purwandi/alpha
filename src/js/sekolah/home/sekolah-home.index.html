@@ -2,10 +2,10 @@
 
 <!-- List group -->
 <ul class="list-group">
-	<li class="list-group-item">	
+	<li class="list-group-item">
 		<h4>Memulai baru</h4>
 	</li>
-	<li class="list-group-item">	
+	<li class="list-group-item">
 		<p>Jika anda belum memiliki token dan ingin memulai baru pengsian instrumen</p> <br />
 		<a class="btn btn-primary" ui-sref="sekolah-home.biodata">Mulai Pengisian</a>
 		<br />
@@ -20,11 +20,19 @@
 
 		<hr />
 
-		<form class="">
+		<form class="" name="Form">
 			<div class="form-group">
-				<input class="form-control no-bordered" type="text" placeholder="Token">
+                <span id="token"></span>
+				<input type="text"
+                    name="token"
+                    class="form-control no-bordered"
+                    ng-model="token"
+                    validator="required"
+                    required-error-message="Token tidak boleh kosong"
+                    placeholder="Token"
+                    message-id="token">
 			</div>
 		</form>
-		<button class="btn btn-primary">Mulai Pengisian </button><br />
+		<button type="button" class="btn btn-primary" validation-submit="Form" ng-click="getData()">Mulai Pengisian </button><br />
 	</li>
 </ul>

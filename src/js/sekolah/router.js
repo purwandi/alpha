@@ -20,7 +20,8 @@
 
             .state('sekolah-home.index', {
                 url: '/',
-                templateUrl: '/templates/sekolah-home.index.html'
+                templateUrl: '/templates/sekolah-home.index.html',
+                controller: 'SekolahHomeCtrl'
             })
 
             .state('sekolah-home.biodata', {

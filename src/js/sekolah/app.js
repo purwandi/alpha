@@ -11,6 +11,7 @@
             'app.directive.datepicker',
             'monospaced.qrcode',
             'upload',
+            'alert',
 
             'app.sekolah.repository'
         ])

@@ -22,7 +22,7 @@
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
-            konten: App.Prepare.init(sekolah),
+            konten: sekolah,
             npsn: sekolah.npsn
         }
 

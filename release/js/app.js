@@ -2856,6 +2856,7 @@ angular.module('monospaced.qrcode', [])
             'app.directive.datepicker',
             'monospaced.qrcode',
             'upload',
+            'alert',
 
             'app.sekolah.repository'
         ])
@@ -2883,7 +2884,8 @@ angular.module('monospaced.qrcode', [])
 
             .state('sekolah-home.index', {
                 url: '/',
-                templateUrl: '/templates/sekolah-home.index.html'
+                templateUrl: '/templates/sekolah-home.index.html',
+                controller: 'SekolahHomeCtrl'
             })
 
             .state('sekolah-home.biodata', {
@@ -3101,6 +3103,33 @@ angular.module('monospaced.qrcode', [])
 
     angular
         .module('app.sekolah')
+        .controller('SekolahHomeCtrl', SekolahHomeCtrl);
+
+    /* @ngInject */
+    function SekolahHomeCtrl($scope, $injector, $state, msgService, Request, AppSekolahRepository) {
+
+        // Injector
+        var $validationProvider = $injector.get('$validation');
+
+        $scope.getData = function() {
+            Request
+                .get('/pengajuan/' + $scope.token)
+                .then(function(response) {
+                    // console.log(JSON.parse(response.konten));
+                    msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                    AppSekolahRepository.update(JSON.parse(response.konten));
+                    $state.go('sekolah-home.biodata');
+                }, function(error) {
+                    msgService.notif('Informasi', 'Terjadi kesalahan, mohon reload browser anda dan coba kembali', 'alert');
+                });
+        }
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sekolah')
         .controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
 
     function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
@@ -3298,7 +3327,7 @@ angular.module('monospaced.qrcode', [])
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
-            konten: App.Prepare.init(sekolah),
+            konten: sekolah,
             npsn: sekolah.npsn
         }
 

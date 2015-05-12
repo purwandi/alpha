@@ -19,3 +19,4 @@
 - Menambahkan template chache
 - Menambahkan loading bar dan status upload file
 - Manambah fitur untuk menghapus program / paket keahlian
+- Menambahkan fitur ambil data isian instrumen dari server
