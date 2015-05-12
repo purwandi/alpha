@@ -33,9 +33,6 @@
                     post: function(scope, element, attrs) {
                         var uploader = scope.uploader;
                         uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                            setTimeout((function() {
-                                $('body').removeClass('app-loading');
-                            }), 1000);
 
                             scope.$apply(function() {
                                 scope.ngModel = response.url;
@@ -44,9 +41,12 @@
                             msgService.notif('Sukses', 'Proses upload file berhasil', 'info');
                         }
 
-                        uploader.onProgressItem = function(fileItem, progress) {
-                            $('body').addClass('app-loading');
+                        uploader.onCompleteAll = function() {
+                            setTimeout((function() {
+                                $('body').removeClass('app-loading');
+                            }), 1000);
                         };
+
                         uploader.onProgressAll = function(progress) {
                             $('body').addClass('app-loading');
                             msgService.notif('Info', 'Proses upload file');

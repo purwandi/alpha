@@ -41,10 +41,17 @@
         >
     </div>
     <br />
-    <div class="form-group">
-        <label class="control-label">Upload instrumen pengumpulan data dan informasi</label>
-        <upload-file ng-model="sekolah.dokumen" data-file="docs"></upload-file>
-        <small class="help-block">File dalam bentuk pdf</small>
+
+    <div class="control-label"
+        style="border-bottom: 1px solid #ddd;
+            padding-bottom: 10px; margin: 10px 0">
+        UPLOAD INSTRUMEN PENGUMPULAN DATA DAN INFORMASI
+    </div>
+
+    <div class="form-group" ng-repeat="program in sekolah.program">
+        <strong><prodi prodid="{{ program.id }}"></prodi></strong>
+        <upload-file ng-model="program.dokumen" data-file="docs"></upload-file>
+        <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
     </div>
 
     <br />
@@ -72,7 +79,12 @@
             <tr>
                 <td>Dokumen Pendukung</td>
                 <td>:</td>
-                <td><a href="{{ sekolah.dokumen }}">{{ sekolah.dokumen }}</a></td>
+                <td>
+                    <div ng-repeat="program in sekolah.program">
+                        <strong><prodi prodid="{{ program.id }}"></prodi></strong>
+                        <a href="{{ program.dokumen }}">{{ program.dokumen }}</a>
+                    </label>
+                </td>
             </tr>
         </tbody>
     </table>

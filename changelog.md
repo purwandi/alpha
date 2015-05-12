@@ -4,6 +4,7 @@
 
 - Memperbaiki penyimpanan komponen akreditasi apabila lebih dari satu kali perhitungan
 - Fix a bug on save non swasta
+- Memperbaiki upload file, satu program satu file upload instrumen pengumpulan data dan informasi
 
 ## Feature
 
@@ -17,3 +18,4 @@
 - Membuat template di load pertama kali ketika membuka website
 - Menambahkan template chache
 - Menambahkan loading bar dan status upload file
+- Manambah fitur untuk menghapus program / paket keahlian

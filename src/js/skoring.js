@@ -100,3 +100,34 @@ App.Skoring = (function() {
 
     return _APP;
 })();
+
+App.Prepare = (function() {
+
+    var program;
+    var db;
+
+    function init(db) {
+
+        program = db.program;
+
+        program.forEach(function(entry) {
+            entry.butir.forEach(function(butir) {
+                delete butir['instrumen'];
+                delete butir['___id'];
+                delete butir['___s'];
+            });
+
+            entry.komponen.forEach(function(komponen) {
+                delete komponen['komponen'];
+                delete komponen['___id'];
+                delete komponen['___s'];
+            });
+        });
+
+        return db;
+    }
+
+    return {
+        init: init
+    }
+})();

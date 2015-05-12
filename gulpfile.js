@@ -67,10 +67,10 @@ gulp.task('app-less', function() {
 
 gulp.task('watch', function() {
   gulp.watch('./src/less/*.less', ["app-less"]);
-  gulp.watch('./src/js/**/*.html', ["templates"]);
+  gulp.watch('./src/js/**/*.html', ["templates", "html"]);
   gulp.watch('./src/js/**/*.js', ["app-scripts"]);
 });
 
 gulp.task('app', ['app-scripts', 'app-less']);
 gulp.task('build', ['default']);
-gulp.task('default', ['templates', 'app']);
+gulp.task('default', ['templates', 'app', 'html']);

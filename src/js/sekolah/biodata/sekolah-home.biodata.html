@@ -523,8 +523,8 @@
                     <tr ng-repeat="program in sekolah.program track by $index">
                         <td>{{ program.id }}</td>
                         <td><prodi prodid="{{ program.id }}"></prodi></td>
-                        <td>{{ program.ketua.nama}}</td>
-                        <td></td>
+                        <td>{{ program.ketua_nama }}</td>
+                        <td><button type="button" ng-click="delete($index)" class="btn btn-danger btn-xs">HAPUS</button></td>
                     </tr>
                 </tbody>
             </table>

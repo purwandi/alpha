@@ -74,6 +74,11 @@
             return AppSekolahRepository.update($scope.sekolah);
         }
 
+        $scope.delete = function(index) {
+            console.log('Hapus');
+            $scope.sekolah.program.splice(index, 1);
+        }
+
 
         // -----------------------------------------------------------------------
         // WILAYAH OPT

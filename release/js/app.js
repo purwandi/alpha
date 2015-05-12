@@ -443,6 +443,37 @@ App.Skoring = (function() {
 
     return _APP;
 })();
+
+App.Prepare = (function() {
+
+    var program;
+    var db;
+
+    function init(db) {
+
+        program = db.program;
+
+        program.forEach(function(entry) {
+            entry.butir.forEach(function(butir) {
+                delete butir['instrumen'];
+                delete butir['___id'];
+                delete butir['___s'];
+            });
+
+            entry.komponen.forEach(function(komponen) {
+                delete komponen['komponen'];
+                delete komponen['___id'];
+                delete komponen['___s'];
+            });
+        });
+
+        return db;
+    }
+
+    return {
+        init: init
+    }
+})();
 /**
  * Storage Library 
  * https://github.com/humphreybc/super-simple-tasks/blob/master/public/js/app.js
@@ -2590,9 +2621,6 @@ angular.module('monospaced.qrcode', [])
                     post: function(scope, element, attrs) {
                         var uploader = scope.uploader;
                         uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                            setTimeout((function() {
-                                $('body').removeClass('app-loading');
-                            }), 1000);
 
                             scope.$apply(function() {
                                 scope.ngModel = response.url;
@@ -2601,9 +2629,12 @@ angular.module('monospaced.qrcode', [])
                             msgService.notif('Sukses', 'Proses upload file berhasil', 'info');
                         }
 
-                        uploader.onProgressItem = function(fileItem, progress) {
-                            $('body').addClass('app-loading');
+                        uploader.onCompleteAll = function() {
+                            setTimeout((function() {
+                                $('body').removeClass('app-loading');
+                            }), 1000);
                         };
+
                         uploader.onProgressAll = function(progress) {
                             $('body').addClass('app-loading');
                             msgService.notif('Info', 'Proses upload file');
@@ -2981,6 +3012,11 @@ angular.module('monospaced.qrcode', [])
             return AppSekolahRepository.update($scope.sekolah);
         }
 
+        $scope.delete = function(index) {
+            console.log('Hapus');
+            $scope.sekolah.program.splice(index, 1);
+        }
+
 
         // -----------------------------------------------------------------------
         // WILAYAH OPT
@@ -3262,7 +3298,7 @@ angular.module('monospaced.qrcode', [])
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
-            konten: sekolah,
+            konten: App.Prepare.init(sekolah),
             npsn: sekolah.npsn
         }
 
