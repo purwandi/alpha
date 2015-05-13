@@ -10,6 +10,47 @@
 
 <p>Apabila anda melakukan perubahan terhadap isian istrumen setelah melakukan pendaftaran, anda di wajibkan untuk melakukan pendaftarn kembali dengan menekan tombol "kirim".</p>
 
+<div class="panel panel-warning hidden-print">
+    <div class="panel-heading">
+        <h4 class="panel-title">INFORMASI PENDAFTARAN</h4>
+    </div>
+    <div class="panel-body">
+        <p><strong>{{ sekolah.nama }}</strong></p>
+        <p>NPSN /NSS : {{ sekolah.npsn }} / {{ sekolah.nss }}</p>
+        <p>
+            {{ sekolah.alamat }}
+            <daerah-desa daerah-id="{{ sekolah.desa_id }}"></daerah-desa>
+            <daerah-kecamatan daerah-id="{{ sekolah.kecamatan_id }}"></daerah-kecamatan> <br />
+            <daerah-kota daerah-id="{{ sekolah.kota_id }}"></daerah-kota>
+            <daerah-provinsi daerah-id="{{ sekolah.provinsi_id }}"></daerah-provinsi>
+            {{ sekolah.kode_pos }}
+        </p>
+        <p>
+            Telpon {{ sekolah.telepon }} <br />
+            Handphone {{ sekolah.handphone }} <br />
+            Fax {{ sekolah.fax }} - Email {{ sekolah.email }}
+        </p>
+    </div>
+     <div class="panel-heading">
+        Koreksi, cermati dan periksa dengan benar sebelum anda melakukan upload data ke server.
+    </div>
+</div>
+
+<div class="panel panel-default hidden-print">
+    <div class="panel-heading">
+        <h4 class="panel-title">NILAI AKREDITASI</h4>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="prodi in sekolah.program">
+            <div class="pull-right" ng-hide="prodi_current">
+                {{ prodi.hasil.peringkat }} ( {{ prodi.hasil.nilai }} )
+            </div>
+            {{ prodi.id }}
+            <prodi prodid="{{ prodi.id }}"></prodi>
+        </div>
+    </div>
+</div>
+
 <form name="Form" role="form">
 <div class="">
     <div class="form-grop">
