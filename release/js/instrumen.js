@@ -2843,11 +2843,11 @@ INSTRUMEN.BUTIR = [
     "nama": "Siswa memperoleh pengalaman belajar yang dapat menganalisis gejala alam dan sosial.",
     "bobot": 3,
     "pilihan": [
-      { "id": 1, "nilai" : 4, "nama" : "Sebanyak 91%-100% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial                                                                                                                                                                                                                                                              " },
-      { "id": 2, "nilai" : 3, "nama" : "Sebanyak 81% _                                                                                                                                                                                                                                                              90% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" },
-      { "id": 3, "nilai" : 2, "nama" : "Sebanyak 71% _                                                                                                                                                                                                                                                              80% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" },
-      { "id": 4, "nilai" : 1, "nama" : "Sebanyak 61% dan sosial                                                                                                                                                                                                                                                              70% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam" },
-      { "id": 5, "nilai" : 0, "nama" : "" }
+      { "id": 1, "nilai" : 4, "nama" : "Sebanyak 91% - 100% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" },
+      { "id": 2, "nilai" : 3, "nama" : "Sebanyak 81% - 90% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" },
+      { "id": 3, "nilai" : 2, "nama" : "Sebanyak 71% - 80% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" },
+      { "id": 4, "nilai" : 1, "nama" : "Sebanyak 61% dan sosial 70% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam" },
+      { "id": 5, "nilai" : 0, "nama" : "Kurang dari 61% silabus mata pelajaran memuat pengalaman belajar siswa dalam menganalisis gejala alam dan sosial" }
     ],
     "jawaban": 4
   },
