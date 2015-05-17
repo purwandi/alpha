@@ -13,11 +13,11 @@
 
         $scope.getData = function() {
             Request
-                .get('/pengajuan/' + $scope.token)
+                .get('pengajuan/' + $scope.token)
                 .then(function(response) {
                     // console.log(JSON.parse(response.konten));
                     msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
-                    AppSekolahRepository.update(JSON.parse(response.konten));
+                    AppSekolahRepository.update(response.konten);
                     $state.go('sekolah-home.biodata');
                 }, function(error) {
                     msgService.notif('Informasi', 'Terjadi kesalahan, mohon reload browser anda dan coba kembali', 'alert');

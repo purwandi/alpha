@@ -3113,11 +3113,11 @@ angular.module('monospaced.qrcode', [])
 
         $scope.getData = function() {
             Request
-                .get('/pengajuan/' + $scope.token)
+                .get('pengajuan/' + $scope.token)
                 .then(function(response) {
                     // console.log(JSON.parse(response.konten));
                     msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
-                    AppSekolahRepository.update(JSON.parse(response.konten));
+                    AppSekolahRepository.update(response.konten);
                     $state.go('sekolah-home.biodata');
                 }, function(error) {
                     msgService.notif('Informasi', 'Terjadi kesalahan, mohon reload browser anda dan coba kembali', 'alert');
@@ -3327,7 +3327,7 @@ angular.module('monospaced.qrcode', [])
         $scope.data = {
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
-            konten: sekolah,
+            konten: App.Prepare.init(sekolah),
             npsn: sekolah.npsn
         }
 
