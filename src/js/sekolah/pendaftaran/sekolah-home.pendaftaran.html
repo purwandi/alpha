@@ -59,88 +59,99 @@
 </div>
 
 <form name="Form" role="form">
-<div class="">
-    <div class="form-grop">
-        <span id="pemohon_nama"></span>
-        <input type="text"
-            name="pemohon_nama"
-            class="form-control no-bordered"
-            ng-model="data.pemohon_nama"
-            placeholder="Nama pendaftar"
-            validator="required"
-            valid-method="blur"
-            required-error-message="Nama pendaftar tidak boleh kosong"
-            message-id="pemohon_nama"
-        >
-    </div>
-    <div class="form-grop">
-        <span id="pemohon-nik"></span>
-        <input type="text"
-            name="pemohon_nik"
-            class="form-control no-bordered"
-            ng-model="data.pemohon_nik"
-            placeholder="Nomor induk kependudukan pendaftar"
-            validator="required, digit"
-            valid-method="blur"
-            length="16"
-            required-error-message="NIK Pendaftar tidak boleh kosong"
-            digit-error-message="Harus 16 digit"
-            message-id="pemohon-nik"
-        >
-    </div>
-    <br />
+    <div class="">
+        <div class="form-grop">
+            <span id="pemohon_nama"></span>
+            <input type="text"
+                name="pemohon_nama"
+                class="form-control no-bordered"
+                ng-model="data.pemohon_nama"
+                placeholder="Nama pendaftar"
+                validator="required"
+                valid-method="blur"
+                required-error-message="Nama pendaftar tidak boleh kosong"
+                message-id="pemohon_nama"
+            >
+        </div>
+        <div class="form-grop">
+            <span id="pemohon-nik"></span>
+            <input type="text"
+                name="pemohon_nik"
+                class="form-control no-bordered"
+                ng-model="data.pemohon_nik"
+                placeholder="Nomor induk kependudukan pendaftar"
+                validator="required, digit"
+                valid-method="blur"
+                length="16"
+                required-error-message="NIK Pendaftar tidak boleh kosong"
+                digit-error-message="Harus 16 digit"
+                message-id="pemohon-nik"
+            >
+        </div>
+        <br />
 
-    <div class="control-label"
-        style="border-bottom: 1px solid #ddd;
-            padding-bottom: 10px; margin: 10px 0">
-        UPLOAD INSTRUMEN PENGUMPULAN DATA DAN INFORMASI
+    <div class="panel panel-warning hidden-print">
+        <div class="panel-heading">
+            <h4 class="panel-title">UPLOAD INSTRUMEN PENGUMPULAN DATA DAN INFORMASI</h4>
+        </div>
+        <div class="panel-body">
+
+            <div class="alert alert-warning">Dokumen yang di upload adalah dokumen instrumen pengumpulan data dan informasi. Sofcopy dokumen tersebut dalam bentuk microfot word dapat di unduh di <a taget="_blank" href="http://goo.gl/45zYL7">download</a>. Isilah dokumen tersebut kemudian setelah selesai mengisi dokumen, simpan dalam bentuk file pdf. Petunjuk dan tata cara pengisian bisa anda lihat pada menu <a href="//jakarta.bapsm-dki.or.id/mekanisme">mekanisme</a>.</div>
+
+            <div class="form-group" ng-repeat="program in sekolah.program">
+                <strong><prodi prodid="{{ program.id }}"></prodi></strong>
+                <upload-file ng-model="program.dokumen" data-file="docs"></upload-file>
+                <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
+            </div>
+        </div>
     </div>
-
-    <div class="alert alert-warning">Dokumen yang di upload adalah dokumen instrumen pengumpulan data dan informasi. Sofcopy dokumen tersebut dalam bentuk microfot word dapat di unduh di <a taget="_blank" href="http://goo.gl/45zYL7">download</a>. Isilah dokumen tersebut kemudian setelah selesai mengisi dokumen, simpan dalam bentuk file pdf. Petunjuk dan tata cara pengisian bisa anda lihat pada menu <a href="//jakarta.bapsm-dki.or.id/mekanisme">mekanisme</a>.</div>
-
-    <div class="form-group" ng-repeat="program in sekolah.program">
-        <strong><prodi prodid="{{ program.id }}"></prodi></strong>
-        <upload-file ng-model="program.dokumen" data-file="docs"></upload-file>
-        <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
-    </div>
-
-    <br />
-    <button type="button" validation-submit="Form" ng-click="pendaftaran()" class="btn btn-primary">Kirim</button>
-</div>
+    <button type="button" validation-submit="Form" ng-click="pendaftaran()" class="btn btn-primary">
+        Kirim dan Mendaftar
+    </button>
 </form>
+<br />
+<br />
+<br />
+<br />
 <br />
 <br />
 
 <div class="" ng-show="sekolah.kode">
-    <p>Pendaftaran telah berhasil dilakukan dengan keterangan sebagai berikut : </p>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <td>Waktu Pendaftaran</td>
-                <td>:</td>
-                <td>{{ sekolah.created_at  }}</td>
-            </tr>
-            <tr>
-                <td>Kode Pendaftaran atau token</td>
-                <td>:</td>
-                <td>{{ sekolah.kode }}</td>
-            </tr>
-            <tr>
-                <td>Dokumen Pendukung</td>
-                <td>:</td>
-                <td>
-                    <div ng-repeat="program in sekolah.program">
-                        <strong><prodi prodid="{{ program.id }}"></prodi></strong>
-                        <a href="{{ program.dokumen }}">{{ program.dokumen }}</a>
-                    </label>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title">INFORMASI PENDAFTARAN</h4>
+        </div>
+        <div class="panel-body">
+            <p>Pendaftaran telah berhasil dilakukan dengan keterangan sebagai berikut : </p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Waktu Pendaftaran</td>
+                        <td>:</td>
+                        <td>{{ sekolah.created_at  }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kode Pendaftaran atau token</td>
+                        <td>:</td>
+                        <td>{{ sekolah.kode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Dokumen Pendukung</td>
+                        <td>:</td>
+                        <td>
+                            <div ng-repeat="program in sekolah.program">
+                                <strong><prodi prodid="{{ program.id }}"></prodi></strong>
+                                <a href="{{ program.dokumen }}">{{ program.dokumen }}</a>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <!-- <a ui-sref="sekolah-home.cetak" role="button" class="btn btn-primary">Lihat dalam HTML</a> -->
-    <a href="//api.bap-sm.or.id/pengajuan/{{ sekolah.kode }}/print" target="_blank" role="button" class="btn btn-primary">Lihat dalam PDF</a>
+            <!-- <a ui-sref="sekolah-home.cetak" role="button" class="btn btn-primary">Lihat dalam HTML</a> -->
+            <a href="//api.bap-sm.or.id/pengajuan/{{ sekolah.kode }}/print" target="_blank" role="button" class="btn btn-primary">Lihat bukti dalam PDF</a>
+        </div>
+    </div>
+
 </div>
-
-<hr />
