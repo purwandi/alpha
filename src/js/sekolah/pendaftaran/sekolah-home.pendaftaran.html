@@ -96,6 +96,8 @@
         UPLOAD INSTRUMEN PENGUMPULAN DATA DAN INFORMASI
     </div>
 
+    <div class="alert alert-warning">Dokumen yang di upload adalah dokumen instrumen pengumpulan data dan informasi. Sofcopy dokumen tersebut dalam bentuk microfot word dapat di unduh di <a taget="_blank" href="http://goo.gl/45zYL7">download</a>. Isilah dokumen tersebut kemudian setelah selesai mengisi dokumen, simpan dalam bentuk file pdf. Petunjuk dan tata cara pengisian bisa anda lihat pada menu <a href="//jakarta.bapsm-dki.or.id/mekanisme">mekanisme</a>.</div>
+
     <div class="form-group" ng-repeat="program in sekolah.program">
         <strong><prodi prodid="{{ program.id }}"></prodi></strong>
         <upload-file ng-model="program.dokumen" data-file="docs"></upload-file>
