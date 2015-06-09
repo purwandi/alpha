@@ -20,7 +20,7 @@
                     AppSekolahRepository.update(response.konten);
                     $state.go('sekolah-home.biodata');
                 }, function(error) {
-                    msgService.notif('Informasi', 'Terjadi kesalahan, mohon reload browser anda dan coba kembali', 'alert');
+                    msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
                 });
         }
     }

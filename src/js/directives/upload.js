@@ -11,7 +11,8 @@
         return {
             restrict: 'E',
             scope: { ngModel: '='},
-            template: '<input type="file" nv-file-select uploader="uploader" /><input type="hidden" ng-model="ngModel">',
+            template: '<input type="file" nv-file-select uploader="uploader" />'+
+                '<input type="hidden" ng-model="ngModel">',
             compile: function() {
                 return {
                     pre: function(scope, element, attrs) {
@@ -47,9 +48,13 @@
                             }), 1000);
                         };
 
-                        uploader.onProgressAll = function(progress) {
+                        uploader.onBeforeUploadItem = function(item) {
                             $('body').addClass('app-loading');
                             msgService.notif('Info', 'Proses upload file');
+                        };
+
+                        uploader.onProgressAll = function(progress) {
+
                         };
 
                         uploader.onErrorItem = function(fileItem, response, status, headers) {
@@ -69,9 +74,7 @@
                         uploader.onAfterAddingAll = function(addedFileItems) {
                             console.info('onAfterAddingAll', addedFileItems);
                         };
-                        uploader.onBeforeUploadItem = function(item) {
-                            console.info('onBeforeUploadItem', item);
-                        };
+
 
                         uploader.onCancelItem = function(fileItem, response, status, headers) {
                             console.info('onCancelItem', fileItem, response, status, headers);
