@@ -407,7 +407,10 @@ App.Skoring = (function() {
                 __komponen.insert(komponen_data);
             }
 
-            __nilai = parseInt(__nilai) + parseInt(nilai);
+            //console.log(" Nilai kompo :" + nilai)
+            //console.log(__nilai);
+
+            __nilai = parseFloat(__nilai) + parseFloat(nilai);
             if (ratusan < 40) {
                 __nilaiKomp40 = 1;
             }
@@ -415,6 +418,8 @@ App.Skoring = (function() {
                 __tidakLayak = parseInt(__tidakLayak) + 1;
             }
         });
+
+        __nilai = parseFloat(__nilai).toFixed(2);
 
         // Set hasil pengisian
         if (__nilai <= 55 || __tidakLayak > 2 || __nilaiKomp40 == 1) {
