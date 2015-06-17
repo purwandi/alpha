@@ -50,15 +50,12 @@
 
             if (_jenjang < 18) {
 
-                if ($scope.sekolah.program == undefined) {
+                if (oldValue != newValue) {
                     $scope.sekolah.program = [{
                         id: 200
                     }];
-                } else {
-                    //console.log($scope.sekolah.program);
                 }
 
-                console.log('Eksekusi');
                 $scope.form_program = true;
             } else {
                 $scope.form_program = false;
