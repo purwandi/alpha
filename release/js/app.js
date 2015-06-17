@@ -2983,6 +2983,8 @@ angular.module('monospaced.qrcode', [])
             $scope.sekolah = { program: [] };
         } else if (sekolah.program == undefined) {
             $scope.sekolah.program = [];
+        } else {
+            $scope.sekolah.program = sekolah.program;
         }
 
         $scope.$watch(function() {
@@ -2995,9 +2997,16 @@ angular.module('monospaced.qrcode', [])
             }
 
             if (_jenjang < 18) {
-                $scope.sekolah.program = [{
-                    id: 200
-                }];
+
+                if ($scope.sekolah.program == undefined) {
+                    $scope.sekolah.program = [{
+                        id: 200
+                    }];
+                } else {
+                    //console.log($scope.sekolah.program);
+                }
+
+                console.log('Eksekusi');
                 $scope.form_program = true;
             } else {
                 $scope.form_program = false;
