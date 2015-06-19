@@ -2615,6 +2615,8 @@ angular.module('monospaced.qrcode', [])
                             var url = Env.API_URL + '/upload/docs';
                         }
 
+                        $('#upload-proses').hide();
+
                         scope.uploader = new FileUploader({
                             url: url,
                             autoUpload: true,
@@ -2626,12 +2628,16 @@ angular.module('monospaced.qrcode', [])
                     // link
                     post: function(scope, element, attrs) {
                         var uploader = scope.uploader;
+
                         uploader.onSuccessItem = function(fileItem, response, status, headers) {
 
                             scope.$apply(function() {
                                 scope.ngModel = response.url;
                             });
 
+                            setTimeout((function() {
+                                $('#upload-proses').hide();
+                            }), 2000);
                             msgService.notif('Sukses', 'Proses upload file berhasil', 'info');
                         }
 
@@ -2643,6 +2649,7 @@ angular.module('monospaced.qrcode', [])
 
                         uploader.onBeforeUploadItem = function(item) {
                             $('body').addClass('app-loading');
+                            $('#upload-proses').show();
                             msgService.notif('Info', 'Proses upload file');
                         };
 
@@ -2656,6 +2663,10 @@ angular.module('monospaced.qrcode', [])
                             }), 1000);
                             msgService.modal(response.error.message, response.error.meta_message);
                         };
+
+                        //uploader.onWhenAddingFileFailed = function(item , filter, options) {
+                        //    $('#upload-proses').show();
+                        //};
 
                         // /*{File|FileLikeObject}*/
                         /* uploader.onWhenAddingFileFailed = function(item , filter, options) {
@@ -3346,6 +3357,7 @@ angular.module('monospaced.qrcode', [])
         }
 
         $scope.pendaftaran = function() {
+            $scope.upload = true;
             Request.post('pengajuan', $scope.data)
                 .then(function(response) {
                     $scope.success = true;
@@ -3353,7 +3365,6 @@ angular.module('monospaced.qrcode', [])
                     $scope.sekolah.created_at = response.created_at.date;
 
                     AppSekolahRepository.update($scope.sekolah);
-
                     console.log(response);
                 }, function(error) {
                     $scope.error = true;

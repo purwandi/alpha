@@ -27,6 +27,7 @@
         }
 
         $scope.pendaftaran = function() {
+            $scope.upload = true;
             Request.post('pengajuan', $scope.data)
                 .then(function(response) {
                     $scope.success = true;
@@ -34,7 +35,6 @@
                     $scope.sekolah.created_at = response.created_at.date;
 
                     AppSekolahRepository.update($scope.sekolah);
-
                     console.log(response);
                 }, function(error) {
                     $scope.error = true;
