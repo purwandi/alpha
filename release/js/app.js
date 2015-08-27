@@ -1,5 +1,5 @@
 var Env   = {};
-Env.API_URL        = 'http://api.bap-sm.or.id';
+Env.API_URL        = 'http://192.168.61.129:8000/api';
 Env.TIMEZONE        = [7, "WIB"];
 $(document).ready(function() {
 
@@ -34,6 +34,12 @@ $(document).ready(function() {
             // $locationProvider.html5Mode(true);
             $urlRouterProvider
                 .otherwise('/')
+        })
+
+        .filter('num', function() {
+            return function(input) {
+              return parseInt(input, 10);
+            }
         })
 }) ();
 
@@ -457,6 +463,12 @@ App.Prepare = (function() {
     function init(db) {
 
         program = db.program;
+        db.alamat_no        = parseInt(db.alamat_no);
+        db.alamat_rt        = parseInt(db.alamat_rt);
+        db.alamat_rw        = parseInt(db.alamat_rw);
+        db.nomor_telepon    = parseInt(db.nomor_telepon);
+        db.nomor_hp         = parseInt(db.nomor_hp);
+        db.nomor_fax        = parseInt(db.nomor_fax);
 
         program.forEach(function(entry) {
             entry.butir.forEach(function(butir) {
@@ -3349,16 +3361,11 @@ angular.module('monospaced.qrcode', [])
         $scope.error    = false;
         $scope.success  = false;
 
-        $scope.data = {
-            provinsi_id: sekolah.provinsi_id,
-            jenjang_id: sekolah.jenjang_id,
-            konten: App.Prepare.init(sekolah),
-            npsn: sekolah.npsn
-        }
+        $scope.data =  App.Prepare.init(sekolah);
 
         $scope.pendaftaran = function() {
             $scope.upload = true;
-            Request.post('pengajuan', $scope.data)
+            Request.post('transaksi/ajuan', $scope.data)
                 .then(function(response) {
                     $scope.success = true;
                     $scope.sekolah.kode = response.kode;

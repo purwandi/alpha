@@ -19,16 +19,11 @@
         $scope.error    = false;
         $scope.success  = false;
 
-        $scope.data = {
-            provinsi_id: sekolah.provinsi_id,
-            jenjang_id: sekolah.jenjang_id,
-            konten: App.Prepare.init(sekolah),
-            npsn: sekolah.npsn
-        }
+        $scope.data =  App.Prepare.init(sekolah);
 
         $scope.pendaftaran = function() {
             $scope.upload = true;
-            Request.post('pengajuan', $scope.data)
+            Request.post('transaksi/ajuan', $scope.data)
                 .then(function(response) {
                     $scope.success = true;
                     $scope.sekolah.kode = response.kode;

@@ -32,4 +32,10 @@ $(document).ready(function() {
             $urlRouterProvider
                 .otherwise('/')
         })
+
+        .filter('num', function() {
+            return function(input) {
+              return parseInt(input, 10);
+            }
+        })
 }) ();

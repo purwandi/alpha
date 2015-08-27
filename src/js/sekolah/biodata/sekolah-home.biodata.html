@@ -264,7 +264,7 @@
                     <input type="text"
                         name="sekolah-telepon"
                         class="form-control no-bordered"
-                        ng-model="sekolah.telepon"
+                        ng-model="sekolah.nomor_telepon"
                         placeholder="Nomor telepon"
                         validator="required, number"
                         required-error-message="Nomor telpon harus di isi"
@@ -280,7 +280,7 @@
                     <input type="text"
                         name="sekolah-hp"
                         class="form-control no-bordered"
-                        ng-model="sekolah.handphone"
+                        ng-model="sekolah.nomor_hp"
                         placeholder="Nomor handphone"
                         validator="required, number"
                         required-error-message="Nomor handhpone harus di isi"
@@ -296,7 +296,7 @@
                     <input type="text"
                         name="sekolah-fax"
                         class="form-control no-bordered"
-                        ng-model="sekolah.fax"
+                        ng-model="sekolah.nomor_fax"
                         placeholder="Nomor fax"
                         validator="number"
                         number-error-message="Harus di isi dengan angka"
@@ -344,7 +344,7 @@
                         <input type="text"
                             name="yayasan-nama"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.nama"
+                            ng-model="sekolah.yayasan_nama"
                             placeholder="Nama yayasan"
                             required-error-message="Harus di isi"
                             valid-method="blur"
@@ -361,7 +361,7 @@
                         <textarea
                             name="yayasan-alamat"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.alamat"
+                            ng-model="sekolah.yayasan_alamat"
                             rows="5"
                             placeholder="Alamat yayasan"
                             required-error-message="Harus di isi"
@@ -378,7 +378,7 @@
                         <input type="text"
                             name="yayasan-akte-nomor"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.akte_no"
+                            ng-model="sekolah.yayasan_akte_no"
                             required-error-message="Harus di isi"
                             placeholder="Nomor akte yayasan"
                             message-id="yayasan-akte-nomor"
@@ -392,7 +392,7 @@
                             data-field="date"
                             readonly="readonly"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.akte_tanggal"
+                            ng-model="sekolah.yayasan_akte_tanggal"
                             placeholder="Tanggal akte yayasan"
                             >
                     </div>
@@ -403,7 +403,7 @@
                         <input type="text"
                             name="yayasan-akte-notaris"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.akte_notaris"
+                            ng-model="sekolah.yayasan_akte_notaris"
                             placeholder="Nama notaris"
                             required-error-message="Harus di isi"
                             valid-method="blur"
@@ -420,7 +420,7 @@
                         <input type="text"
                             name="yayasan-telepon"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.telepon"
+                            ng-model="sekolah.yayasan_telepon"
                             placeholder="Telepon yayasan"
                             validator="numeric"
                             required-error-message="Harus di isi"
@@ -435,7 +435,7 @@
                         <input type="text"
                             name="yayasan-email"
                             class="form-control no-bordered"
-                            ng-model="sekolah.yayasan.email"
+                            ng-model="sekolah.yayasan_email"
                             placeholder="Email yayasan"
                             validator="validemail"
                             validemail-error-message="Harus email yang valid"
@@ -460,7 +460,7 @@
                 <input type="text"
                     name="sekolah-si-nomor"
                     class="form-control no-bordered"
-                    ng-model="sekolah.surat.pendirian.nomor"
+                    ng-model="sekolah.si_pendirian"
                     placeholder="Nomor surat izin pendirian"
                     >
 
@@ -471,7 +471,7 @@
                     data-field="date"
                     readonly="readonly"
                     class="form-control no-bordered"
-                    ng-model="sekolah.surat.pendirian.tanggal"
+                    ng-model="sekolah.si_pendirian_tanggal"
                     placeholder="Tanggal surat izin pendirian"
                     >
             </div>
@@ -481,7 +481,7 @@
                 <input type="text"
                     name="sekolah-si-nomor"
                     class="form-control no-bordered"
-                    ng-model="sekolah.surat.operasional.nomor"
+                    ng-model="sekolah.si_operasional"
                     placeholder="Nomor surat izin operasional"
                     >
 
@@ -492,7 +492,7 @@
                     data-field="date"
                     readonly="readonly"
                     class="form-control no-bordered"
-                    ng-model="sekolah.surat.operasional.tanggal"
+                    ng-model="sekolah.si_operasional_tanggal"
                     placeholder="Tanggal surat izin operasional"
                     >
             </div>

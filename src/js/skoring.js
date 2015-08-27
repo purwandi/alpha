@@ -114,6 +114,12 @@ App.Prepare = (function() {
     function init(db) {
 
         program = db.program;
+        db.alamat_no        = parseInt(db.alamat_no);
+        db.alamat_rt        = parseInt(db.alamat_rt);
+        db.alamat_rw        = parseInt(db.alamat_rw);
+        db.nomor_telepon    = parseInt(db.nomor_telepon);
+        db.nomor_hp         = parseInt(db.nomor_hp);
+        db.nomor_fax        = parseInt(db.nomor_fax);
 
         program.forEach(function(entry) {
             entry.butir.forEach(function(butir) {
