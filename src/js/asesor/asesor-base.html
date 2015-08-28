@@ -21,14 +21,72 @@
 
 <p class="lead">Siapkan hasil visitasi sekolah. Pilih satuan pendidikan yang akan laporkan hasil visitasinya. Kemudian pindahkan hasil visitasi tersebut ke dalam aplikasi skoring pada langkah selanjutnya. </p>
 
-<div class="list-group" ng-repeat="sekolah in vm.data.data">
-	<div class="list-group-item relax" >
+<table class="table" ng-repeat="asesor in vm.data.asesor">
+    <tbody>
+        <tr>
+            <th class="col-md-2">Nama</th>
+            <td width="1%">:</td>
+            <td>{{ asesor.nama }}</td>
+        </tr>
+        <tr>
+            <th>NIK</th>
+            <td>:</td>
+            <td>{{ asesor.nik }}</td>
+        </tr>
+        <tr>
+            <th>Pekerjaan</th>
+            <td>:</td>
+            <td>{{ asesor.pekerjaan }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="list-group" >
+	<div class="list-group-item relax" ng-repeat="sekolah in vm.data.data">
 		<div class="text-danger"><p>{{ sekolah.nama }}</p></div>
+        <div>{{ sekolah.prodi.nama }}</div>
 		<div class="">{{ sekolah.alamat }}</div>
+        <div><span class="octicon octicon-device-mobile"></span> {{ sekolah.nomor_telepon }} - {{ sekolah.nomor_hp}}</div>
+        <hr />
+        <div class="pull-right">
+            <div class="ui mini statistics">
+                <div class="statistic">
+                    <div class="value">
+                        {{ sekolah.prodi.hasil.evaluasi.peringkat }} ( {{ sekolah.prodi.hasil.evaluasi.nilai }} )
+                    </div>
+                    <div class="label">
+                        Evaluasi diri
+                    </div>
+                </div>
+                <div class="statistic">
+                    <div class="value">
+                        -
+                    </div>
+                    <div class="label">
+                        Visitasi
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{{ sekolah.prodi.hasil.evaluasi.dokumen }}" target="_blank" class="btn btn-success"><span class="octicon octicon-file-pdf"></span></a>
+        <a ui-sref="asesor.visitasi({npsn:sekolah.npsn, prodi: sekolah.prodi.id})" class="btn btn-default">Mulai visitasi <span class="octicon octicon-repo-force-push"></span> </a>
+        <a href="" class="btn btn-primary">Download hasil <span class="octicon octicon-desktop-download"></span> </a>
 	</div>
-	<a ui-sref="asesor.visitasi({npsn:sekolah.npsn, prodi: prodi.kode})" class="list-group-item" ng-repeat="prodi in sekolah.data">
-		<span class="pull-right">Mulai laporan</span>
-		{{ prodi.kode }} {{ prodi.nama }}
-	</a>
-	
 </div>
+
+<div class="list-group well">
+    <div class="list-group-item relax">
+        <div class="text-danger"><p>RESET DATA UNTUK MENGGANTI TOKEN</p></div>
+        <div>APABILA DATA VISTASI DI ATAS TIDAK SESUAI DENGAN TOKEN YANG ANDA GUNAKAN ANDA DAPAT MELAKUKAN INPUT TOKEN ULANG DENGAN MENGKLIK TOMBOL DI BAWAH INI.</div>
+        <hr />
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-danger"><span class="octicon octicon-alert"></span> Reset data</button>
+            </div>
+            <div class="col-md-10">
+                Apabila anda mengklik tombol di samping maka akan menghapus data memori yang digunakan untuk penyimpanan sementara hasil visitasi pada browser anda.
+            </div>
+        </div>
+    </div>
+</div>
+

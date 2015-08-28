@@ -10,7 +10,7 @@
 </style>
 <p>
 	<span class="pull-right">{{ vm.prodi.nama }}</span>
-	{{ vm.sekolah.nama }} 
+	{{ vm.sekolah.nama }}
 </p>
 <hr />
 
@@ -48,7 +48,7 @@
     	<h4 class="media-heading">{{ butir.nama }}</h4>
     	<div class="radio" ng-repeat="opsi in butir.pilihan">
             <label ng-click="vm.onSelectButir()">
-                <input type="radio" ng-model="vm.visitasi.id" name="pilihan_{{ butir.nomor }}" value="{{ opsi.nilai}}" > 
+                <input type="radio" ng-model="vm.visitasi.id" name="pilihan_{{ butir.nomor }}" value="{{ opsi.nilai}}" >
                 {{ opsi.nama }}
             </label>
         </div>
