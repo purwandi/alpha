@@ -11,4 +11,4 @@ yang sebelumnya memerlukan koneksi internet secara terus menerus dapat di minima
 
 # Kontribusi
 
-Apabila anda menemukan bugs anda dapat membuat [Composer](https://github.com/bapsm/alpha/issues)
+Apabila anda menemukan bugs anda dapat membuat [issue](https://github.com/bapsm/alpha/issues)

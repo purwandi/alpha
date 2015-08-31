@@ -1,21 +1,5 @@
 <style type="text/css">
-	.list-group-item.relax {
-		padding: 25px 35px;
-	}
-	.list-group-item a {
-		color: #000;
-	}
-	.list-group-item a:hover {
-		text-decoration: none;
-	}
-	.list-group-item p {
-		margin: 0;
-	}
-	.text-danger p {
-		font-size: 20px;
-		font-weight: 400;
-		color: #d92231;
-	}
+
 </style>
 
 
@@ -81,7 +65,7 @@
         <hr />
         <div class="row">
             <div class="col-md-2">
-                <button class="btn btn-danger"><span class="octicon octicon-alert"></span> Reset data</button>
+                <button class="btn btn-danger" ng-click="vm.reset()"><span class="octicon octicon-alert"></span> Reset data</button>
             </div>
             <div class="col-md-10">
                 Apabila anda mengklik tombol di samping maka akan menghapus data memori yang digunakan untuk penyimpanan sementara hasil visitasi pada browser anda.

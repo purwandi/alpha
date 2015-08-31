@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 });
 
-(function() {
+( function() {
     angular
         .module('app', [
             'ui.router',
@@ -32,4 +32,34 @@ $(document).ready(function() {
             $urlRouterProvider
                 .otherwise('/')
         })
-}) ();
+        .filter('toAlpa', function() {
+            return function(input) {
+                if (input == 4) {
+                    return 'A';
+                } else if (input == 3) {
+                    return 'B';
+                } else if (input == 2) {
+                    return 'C';
+                } else if (input == 1) {
+                    return 'D';
+                } else {
+                    return 'E';
+                }
+            }
+        })
+        .filter('toNumber', function() {
+            return function(input) {
+                if (input == 'A' || input == 'a') {
+                    return 4;
+                } else if (input == 'B' || input == 'b') {
+                    return 3;
+                } else if (input == 'C' || input == 'c') {
+                    return 2;
+                } else if (input == 'D' || input == 'd') {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        })
+} )();

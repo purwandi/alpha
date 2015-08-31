@@ -3,6 +3,8 @@
 ## Feature
 
 - Melakukan improvisasi ui
+- Add github button
+- Add aplikasi skoring asesor
 
 #0.0.3
 
