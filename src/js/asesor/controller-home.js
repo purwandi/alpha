@@ -10,7 +10,7 @@
     function AppAsesorIndexCtrl($state, msgService, storage) {
         var vm = this;
         var request = window.superagent;
-        var url = 'http://192.168.61.129:8000';
+        var url = 'http://opr2.bap-sm.or.id';
 
         storage
             .get('visitasi')
@@ -250,7 +250,7 @@
                 //alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             }
 
-            var url = 'http://192.168.61.129:8000';
+            var url = 'http://opr2.bap-sm.or.id';
             var request = window.superagent;
             var data = {
                 token: vm.token,
@@ -296,7 +296,7 @@
                         saveToStorage();
                         console.log(vm.sekolah.prodi.hasil);
                         // storage.set('visitasi', resp.body);
-                        msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                        msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info');
                         // $state.go('asesor.base');
                     }
 
