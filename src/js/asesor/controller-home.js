@@ -247,7 +247,7 @@
         function syncFunction() {
 
             if (vm.sekolah.prodi.hasil.visitasi.dokumen == '') {
-                //alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
+                alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             }
 
             var url = 'http://opr2.bap-sm.or.id';
