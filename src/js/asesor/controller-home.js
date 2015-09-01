@@ -24,20 +24,22 @@
         vm.verifikasi = verifikasi;
 
         function verifikasi() {
-            var target = url + '/api/visitasi/' + vm.credentials.token;
-
-            request
-                .get(target)
-                .end(function(err, resp) {
-                    if (err) {
-                        msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
-                    } else {
-                        storage.set('visitasi', resp.body);
-                        msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
-                        $state.go('asesor.base');
-                    }
-
-                });
+            if (!vm.credentials.token) {
+                alert('Mohon masukkan token tim visitasi.');
+            } else {
+                var target = url + '/api/visitasi/' + vm.credentials.token;
+                request
+                    .get(target)
+                    .end(function(err, resp) {
+                        if (err) {
+                            msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
+                        } else {
+                            storage.set('visitasi', resp.body);
+                            msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                            $state.go('asesor.base');
+                        }
+                    });
+            }
         }
     }
 
