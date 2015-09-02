@@ -67,7 +67,7 @@ $(document).ready(function() {
         })
 } )();
 
-(function() {
+( function() {
 
     'use strict';
 
@@ -82,9 +82,9 @@ $(document).ready(function() {
 
     function msgService($modal) {
 
-        var modal,
-            compileMessages = compileMessages,
-            openModal = openModal;
+        var modal;
+        var compileMessages = compileMessages;
+        var openModal = openModal;
 
         return {
             modal: openModal,
@@ -93,12 +93,12 @@ $(document).ready(function() {
         }
 
         function compileMessages(messages) {
-            var msg   = TAFFY();
+            var msg = TAFFY();
 
             for (var index in messages) {
                 msg.insert({
-                  'key'    : index,
-                  'value'  : messages[index][0]
+                    'key': index,
+                    'value': messages[index][0]
                 });
             }
 
@@ -115,9 +115,7 @@ $(document).ready(function() {
                         modal.close();
                     }
 
-                    $scope.ok = function() {
-
-                    }
+                    $scope.ok = function() {}
                 }
             });
         }
@@ -138,43 +136,48 @@ $(document).ready(function() {
             })
         }
 
-        function openNotif(title, message, type) {
-            var _template, _title;
+        function openNotif(title, message, type, dup) {
+            var _template;
+            var _title;
 
             if (type === 'danger') {
-                _template = '<div class="notify alert alert-danger fade in">';
+                _template = '<div class="notify alert alert-danger animated slideInRight">';
             //_title = 'Oh snap! You got an error!';
             } else if (type === 'success') {
-                _template = '<div class="notify alert alert-success fade in">';
+                _template = '<div class="notify alert alert-success animated slideInRight">';
             //_title = 'Great, you have successful!';
             } else if (type === 'info') {
-                _template = '<div class="notify alert alert-info fade in">';
+                _template = '<div class="notify alert alert-info animated slideInRight">';
             //_title = 'Great, you have successful!';
             } else {
-                _template = '<div class="notify alert alert-warning fade in">';
-            //_title = 'Oh snap! You got an error!';
+                _template = '<div class="notify alert alert-warning animated slideInRight">';
+                //_title = 'Oh snap! You got an error!';
             }
 
             _template += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
             _template += '<strong>' + title + '</strong>';
-            _template += '<hr class="message-inner-separator">';
+            // _template += '<hr class="message-inner-separator">';
             _template += '<div class="notify-content">';
             _template += message;
             _template += '</div>';
             _template += '</div>';
 
-            $('.message-bar').html(_template);
+            if (dup) {
+                $('.message-bar').append(_template);
+            } else {
+                $('.message-bar').html(_template);
+            }
+
 
             // $('.message-bar').prepend(_template);
 
             return setTimeout((function() {
-                $('.message-bar .alert').last().fadeOut(1000);
                 $('.message-bar .alert').last().remove();
-            }), 3000);
+            }), 4000);
         }
     }
 
-})();
+} )();
 /**
  * Get group id
  *
@@ -2857,6 +2860,7 @@ angular.module('monospaced.qrcode', [])
         var vm = this;
         var request = window.superagent;
         var url = 'http://opr2.bap-sm.or.id';
+        // var url = 'http://192.168.61.129:8000';
 
         storage
             .get('visitasi')
@@ -2871,7 +2875,7 @@ angular.module('monospaced.qrcode', [])
 
         function verifikasi() {
             if (!vm.credentials.token) {
-                alert('Mohon masukkan token tim visitasi.');
+                msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert');
             } else {
                 var target = url + '/api/visitasi/' + vm.credentials.token;
                 request
@@ -2894,13 +2898,30 @@ angular.module('monospaced.qrcode', [])
         vm.data = dataVisitasi;
         vm.reset = reset;
 
+        storage
+            .get('visitasi')
+            .then(function(data) {
+                if (!data) {
+                    $state.go('asesor.home');
+                }
+            });
+
         function reset() {
             storage.remove('visitasi');
             $state.go('asesor.home')
         }
     }
 
-    function AppAsesorVisitasiCtrl($stateParams, $scope, storage, msgService, dataVisitasi) {
+    function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService, dataVisitasi) {
+
+        storage
+            .get('visitasi')
+            .then(function(data) {
+                if (!data) {
+                    $state.go('asesor.home');
+                }
+            });
+
         var vm = this;
         vm.data = TAFFY(dataVisitasi.data);
         vm.sekolah = vm.data({
@@ -2950,8 +2971,8 @@ angular.module('monospaced.qrcode', [])
                     instrumen: inst
                 });
 
-                console.log(inst.nomor);
-                console.log('update instrumen');
+                //console.log(inst.nomor);
+                //console.log('update instrumen');
             }
         });
 
@@ -3017,24 +3038,38 @@ angular.module('monospaced.qrcode', [])
 
         function validateButir() {
 
-            console.log(vm.instrumen.visitasi.jawabanHuruf);
+            // console.log(vm.instrumen.visitasi.jawabanHuruf);
             var status = true;
 
             if (vm.instrumen.visitasi.asesor1Huruf == undefined) {
+                msgService.notif('Error', 'Pernyataan asesor I tidak boleh kosong.', 'alert', true);
                 status = false;
             }
             if (vm.instrumen.visitasi.asesor2Huruf == undefined) {
+                msgService.notif('Error', 'Pernyataan asesor II tidak boleh kosong.', 'alert', true);
                 status = false;
             }
             if (vm.instrumen.visitasi.jawabanHuruf == undefined) {
-                status = false;
-            }
-            if (vm.instrumen.visitasi.ket == '') {
+                msgService.notif('Error', 'Pernyataan tim tidak boleh kosong.', 'alert', true);
                 status = false;
             }
 
+            // console.log('Evaluasi : ' + vm.instrumen.evaluasi.jawaban);
+            // console.log('Visitasi : ' + vm.instrumen.visitasi.jawaban);
+
+            if (vm.instrumen.visitasi.jawaban != vm.instrumen.evaluasi.jawaban) {
+                if (vm.instrumen.visitasi.ket == '') {
+                    msgService.notif('Error', 'Terdapat perbedaan antara pernyataan sekolah dengan pernyataan hasil visitasi, mohon untuk mengisi keterangan perbedaan tersebut', 'alert', true);
+                    status = false;
+                } else {
+                    if (vm.instrumen.visitasi.ket.length <= 100) {
+                        msgService.notif('Error', 'Catatan yang di isi minimal 100 karakter', 'alert', true);
+                        status = false;
+                    }
+                }
+            }
+
             if (status == false) {
-                alert('Mohon lengkapi form terlebih dahulu.');
                 return false;
             } else {
                 return true;
@@ -3059,7 +3094,8 @@ angular.module('monospaced.qrcode', [])
 
         function saveFunction() {
             saveToStorage;
-            alert('Butir telah berhasil di simpan.');
+            msgService.notif('Success', 'Pengisian butir visitasi berhasil disimpan', 'info');
+            // alert('Butir telah berhasil di simpan.');
         }
 
         function saveRekomendasiFunction() {
@@ -3067,13 +3103,14 @@ angular.module('monospaced.qrcode', [])
             vm.sekolah.prodi.komponen.forEach(function(entry) {
                 if (entry.visitasi.ket == '' || entry.visitasi.ket == undefined) {
                     if (status == true) {
-                        alert('Rekomendasi : ' + entry.instrumen.nama + ' : harus di isi');
+                        msgService.notif('Error', 'Rekomendasi : ' + entry.instrumen.nama + ' : harus di isi', 'alert', true);
                         status = false;
                     }
                 } else {
                     if (entry.visitasi.ket.length <= 400) {
                         if (status == true) {
-                            alert('Rekomendasi : ' + entry.instrumen.nama + ' : minimal 400 huruf.');
+                            msgService.notif('Error', 'Rekomendasi : ' + entry.instrumen.nama + ' : harus di isi minimal 400 huruf', 'alert', true);
+                            // alert('Rekomendasi : ' + entry.instrumen.nama + ' : minimal 400 huruf.');
                             status = false;
                         }
                     } else {
@@ -3083,7 +3120,8 @@ angular.module('monospaced.qrcode', [])
             });
 
             if (status == true) {
-                alert('Simpan rekomendasi telah berhasil di lakukan.')
+                msgService.notif('Success', 'Simpan rekomendasi telah berhasil di lakukan.', 'info');
+                // alert('Simpan rekomendasi telah berhasil di lakukan.')
             }
         }
 
@@ -3095,62 +3133,62 @@ angular.module('monospaced.qrcode', [])
         function syncFunction() {
 
             if (vm.sekolah.prodi.hasil.visitasi.dokumen == '') {
-                alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
+                msgService.notif('Error', 'Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi', 'alert');
+            // alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
+            } else {
+                var url = 'http://opr2.bap-sm.or.id';
+                // var url = 'http://192.168.61.129:8000';
+                var request = window.superagent;
+                var data = {
+                    token: vm.token,
+                    program_id: vm.sekolah.prodi.kode,
+                    sekolah_prodi_id: vm.sekolah.prodi.id,
+                    butir: [],
+                    komponen: [],
+                    hasil: vm.sekolah.prodi.hasil.visitasi
+                };
+
+                vm.sekolah.prodi.butir.forEach(function(record) {
+                    data.butir.push({
+                        soal_id: record.soal_id,
+                        tahun: record.tahun,
+                        asesor1: record.visitasi.asesor1,
+                        asesor2: record.visitasi.asesor2,
+                        jawaban: record.visitasi.jawaban,
+                        hasil: record.visitasi.hasil,
+                        notes: record.visitasi.ket
+                    });
+                });
+
+                vm.sekolah.prodi.komponen.forEach(function(record) {
+                    data.komponen.push({
+                        komponen_id: record.komponen_id,
+                        skor: record.visitasi.skor,
+                        nilai: record.visitasi.nilai,
+                        ratusan: record.visitasi.nilai_ratusan,
+                        layak: record.visitasi.kelayakan,
+                        rekomendasi: record.visitasi.ket
+                    });
+                })
+
+                request
+                    .post(url + '/api/v-lapor/')
+                    .send(data)
+                    .end(function(err, resp) {
+                        if (err) {
+                            msgService.notif('Informasi', err.error, 'alert');
+                        } else {
+                            // console.log(resp.body);
+                            vm.sekolah.prodi.hasil.last_sync = resp.body.date;
+                            saveToStorage();
+                            // console.log(vm.sekolah.prodi.hasil);
+                            // storage.set('visitasi', resp.body);
+                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info');
+                            // $state.go('asesor.base');
+                        }
+
+                    });
             }
-
-            var url = 'http://opr2.bap-sm.or.id';
-            var request = window.superagent;
-            var data = {
-                token: vm.token,
-                program_id: vm.sekolah.prodi.kode,
-                sekolah_prodi_id: vm.sekolah.prodi.id,
-                butir: [],
-                komponen: [],
-                hasil: vm.sekolah.prodi.hasil.visitasi
-            };
-
-            vm.sekolah.prodi.butir.forEach(function(record) {
-                data.butir.push({
-                    soal_id: record.soal_id,
-                    tahun: record.tahun,
-                    asesor1: record.visitasi.asesor1,
-                    asesor2: record.visitasi.asesor2,
-                    jawaban: record.visitasi.jawaban,
-                    hasil: record.visitasi.hasil,
-                    notes: record.visitasi.ket
-                });
-            });
-
-            vm.sekolah.prodi.komponen.forEach(function(record) {
-                data.komponen.push({
-                    komponen_id: record.komponen_id,
-                    skor: record.visitasi.skor,
-                    nilai: record.visitasi.nilai,
-                    ratusan: record.visitasi.nilai_ratusan,
-                    layak: record.visitasi.kelayakan,
-                    rekomendasi: record.visitasi.ket
-                });
-            })
-
-            request
-                .post(url + '/api/v-lapor/')
-                .send(data)
-                .end(function(err, resp) {
-                    if (err) {
-                        msgService.notif('Informasi', err.error, 'alert');
-                    } else {
-                        console.log(resp.body);
-                        vm.sekolah.prodi.hasil.last_sync = resp.body.date;
-                        saveToStorage();
-                        console.log(vm.sekolah.prodi.hasil);
-                        // storage.set('visitasi', resp.body);
-                        msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info');
-                        // $state.go('asesor.base');
-                    }
-
-                });
-
-            console.log(data);
         }
     }
 

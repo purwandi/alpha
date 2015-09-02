@@ -1,4 +1,4 @@
-(function() {
+( function() {
 
     'use strict';
 
@@ -13,9 +13,9 @@
 
     function msgService($modal) {
 
-        var modal,
-            compileMessages = compileMessages,
-            openModal = openModal;
+        var modal;
+        var compileMessages = compileMessages;
+        var openModal = openModal;
 
         return {
             modal: openModal,
@@ -24,12 +24,12 @@
         }
 
         function compileMessages(messages) {
-            var msg   = TAFFY();
+            var msg = TAFFY();
 
             for (var index in messages) {
                 msg.insert({
-                  'key'    : index,
-                  'value'  : messages[index][0]
+                    'key': index,
+                    'value': messages[index][0]
                 });
             }
 
@@ -46,9 +46,7 @@
                         modal.close();
                     }
 
-                    $scope.ok = function() {
-
-                    }
+                    $scope.ok = function() {}
                 }
             });
         }
@@ -69,40 +67,45 @@
             })
         }
 
-        function openNotif(title, message, type) {
-            var _template, _title;
+        function openNotif(title, message, type, dup) {
+            var _template;
+            var _title;
 
             if (type === 'danger') {
-                _template = '<div class="notify alert alert-danger fade in">';
+                _template = '<div class="notify alert alert-danger animated slideInRight">';
             //_title = 'Oh snap! You got an error!';
             } else if (type === 'success') {
-                _template = '<div class="notify alert alert-success fade in">';
+                _template = '<div class="notify alert alert-success animated slideInRight">';
             //_title = 'Great, you have successful!';
             } else if (type === 'info') {
-                _template = '<div class="notify alert alert-info fade in">';
+                _template = '<div class="notify alert alert-info animated slideInRight">';
             //_title = 'Great, you have successful!';
             } else {
-                _template = '<div class="notify alert alert-warning fade in">';
-            //_title = 'Oh snap! You got an error!';
+                _template = '<div class="notify alert alert-warning animated slideInRight">';
+                //_title = 'Oh snap! You got an error!';
             }
 
             _template += '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
             _template += '<strong>' + title + '</strong>';
-            _template += '<hr class="message-inner-separator">';
+            // _template += '<hr class="message-inner-separator">';
             _template += '<div class="notify-content">';
             _template += message;
             _template += '</div>';
             _template += '</div>';
 
-            $('.message-bar').html(_template);
+            if (dup) {
+                $('.message-bar').append(_template);
+            } else {
+                $('.message-bar').html(_template);
+            }
+
 
             // $('.message-bar').prepend(_template);
 
             return setTimeout((function() {
-                $('.message-bar .alert').last().fadeOut(1000);
                 $('.message-bar .alert').last().remove();
-            }), 3000);
+            }), 4000);
         }
     }
 
-})();
+} )();

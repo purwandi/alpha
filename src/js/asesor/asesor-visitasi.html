@@ -135,9 +135,10 @@
                 </tbody>
             </table>
 
-            <textarea class="form-control" rows="4" required ng-model="vm.instrumen.visitasi.ket" placeholder="Catatan butir"></textarea>
+            <textarea class="form-control" rows="4" ng-model="vm.instrumen.visitasi.ket" placeholder="Catatan butir"></textarea>
 
             <div class="hide">
+                {{ vm.instrumen.evaluasi.jawabanHuruf =  vm.instrumen.evaluasi.jawaban | toAlpa }}
                 {{ vm.instrumen.visitasi.hasil = vm.instrumen.visitasi.jawaban * vm.instrumen.instrumen.bobot }}
             </div>
 
