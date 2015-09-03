@@ -2889,19 +2889,20 @@ angular.module('monospaced.qrcode', [])
 
         function verifikasi() {
             loaderUp();
+            msgService.notif('Informasi', 'Harap menunggu, proses pengambilan data sedang berjalan', 'alert', true);
 
             if (!vm.credentials.token) {
-                msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert');
+                msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert', true);
             } else {
                 var target = url + '/api/visitasi/' + vm.credentials.token;
                 request
                     .get(target)
                     .end(function(err, resp) {
                         if (err) {
-                            msgService.notif('Error', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
+                            msgService.notif('Error', 'Terjadi kesalahan, token tidak ditemukan', 'alert', true);
                         } else {
                             storage.set('visitasi', resp.body);
-                            msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                            msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info', true);
                             $state.go('asesor.base');
                         }
                         loaderClose();
@@ -2962,6 +2963,7 @@ angular.module('monospaced.qrcode', [])
         vm.saveRekomendasi = saveRekomendasiFunction;
         vm.save = saveFunction;
         vm.sinkronisasi = syncFunction;
+        vm.toTT = toTTFunction;
 
 
         var src_bagian = TAFFY(INSTRUMEN.BAGIAN);
@@ -3051,9 +3053,9 @@ angular.module('monospaced.qrcode', [])
 
         function prevFunction() {
             if (vm.nomor != 1) {
-                if (validateButir()) {
-                    vm.nomor = parseInt(vm.nomor) - 1;
-                }
+                // if (validateButir()) {
+                vm.nomor = parseInt(vm.nomor) - 1;
+                //}
             }
             saveToStorage();
         }
@@ -3153,69 +3155,82 @@ angular.module('monospaced.qrcode', [])
         }
 
         function syncFunction() {
-
-            if (vm.sekolah.prodi.hasil.visitasi.dokumen == '') {
+            if (vm.sekolah.prodi.hasil.visitasi.dokumen == '' || vm.sekolah.prodi.hasil.visitasi.dokumen == undefined) {
                 msgService.notif('Error', 'Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi', 'alert');
             // alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             } else {
-                // var url = 'http://opr2.bap-sm.or.id';
-                // var url = 'http://192.168.61.129:8000';
-                var request = window.superagent;
-                var data = {
-                    token: vm.token,
-                    program_id: vm.sekolah.prodi.kode,
-                    sekolah_prodi_id: vm.sekolah.prodi.id,
-                    butir: [],
-                    komponen: [],
-                    hasil: vm.sekolah.prodi.hasil.visitasi
-                };
-
-                vm.sekolah.prodi.butir.forEach(function(record) {
-                    data.butir.push({
-                        soal_id: record.soal_id,
-                        tahun: record.tahun,
-                        asesor1: record.visitasi.asesor1,
-                        asesor2: record.visitasi.asesor2,
-                        jawaban: record.visitasi.jawaban,
-                        hasil: record.visitasi.hasil,
-                        notes: record.visitasi.ket
-                    });
-                });
-
-                vm.sekolah.prodi.komponen.forEach(function(record) {
-                    data.komponen.push({
-                        komponen_id: record.komponen_id,
-                        skor: record.visitasi.skor,
-                        nilai: record.visitasi.nilai,
-                        ratusan: record.visitasi.nilai_ratusan,
-                        layak: record.visitasi.kelayakan,
-                        rekomendasi: record.visitasi.ket
-                    });
-                });
-
-                loaderUp();
-                msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
-
-                request
-                    .post(url + '/api/v-lapor/')
-                    .send(data)
-                    .end(function(err, resp) {
-                        if (err) {
-                            msgService.notif('Error', err.error, 'alert', true);
-                        } else {
-                            console.log(resp.body);
-                            vm.sekolah.prodi.hasil.last_sync = resp.body.date;
-                            console.log(vm.sekolah.prodi.hasil.last_sync);
-                            saveToStorage();
-                            // console.log(vm.sekolah.prodi.hasil);
-                            // storage.set('visitasi', resp.body);
-                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
-                            // $state.go('asesor.base');
-                        }
-                        loaderClose();
-
-                    });
+                vm.sekolah.prodi.hasil.visitasi.notes = '';
+                syncronization();
             }
+        }
+
+        function toTTFunction() {
+
+            // alert(vm.sekolah.prodi.hasil.visitasi.notes);
+            if (vm.sekolah.prodi.hasil.visitasi.notes == '' || vm.sekolah.prodi.hasil.visitasi.notes == undefined) {
+                msgService.notif('Error', 'Keterangan tidak boleh kosong', 'alert');
+            } else {
+                vm.sekolah.prodi.hasil.visitasi.dokumen = '';
+                syncronization();
+            }
+        }
+
+        function syncronization() {
+            var request = window.superagent;
+            var data = {
+                token: vm.token,
+                program_id: vm.sekolah.prodi.kode,
+                sekolah_prodi_id: vm.sekolah.prodi.id,
+                butir: [],
+                komponen: [],
+                hasil: vm.sekolah.prodi.hasil.visitasi
+            };
+
+            vm.sekolah.prodi.butir.forEach(function(record) {
+                data.butir.push({
+                    soal_id: record.soal_id,
+                    tahun: record.tahun,
+                    asesor1: record.visitasi.asesor1,
+                    asesor2: record.visitasi.asesor2,
+                    jawaban: record.visitasi.jawaban,
+                    hasil: record.visitasi.hasil,
+                    notes: record.visitasi.ket
+                });
+            });
+
+            vm.sekolah.prodi.komponen.forEach(function(record) {
+                data.komponen.push({
+                    komponen_id: record.komponen_id,
+                    skor: record.visitasi.skor,
+                    nilai: record.visitasi.nilai,
+                    ratusan: record.visitasi.nilai_ratusan,
+                    layak: record.visitasi.kelayakan,
+                    rekomendasi: record.visitasi.ket
+                });
+            });
+
+            loaderUp();
+            msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
+
+            request
+                .post(url + '/api/v-lapor/')
+                .send(data)
+                .end(function(err, resp) {
+                    if (err) {
+                        msgService.notif('Error', err.error, 'alert', true);
+                    } else {
+                        console.log(resp.body);
+                        vm.sekolah.prodi.hasil.last_sync = resp.body.date;
+                        console.log(vm.sekolah.prodi.hasil.last_sync);
+                        saveToStorage();
+                        // console.log(vm.sekolah.prodi.hasil);
+                        // storage.set('visitasi', resp.body);
+                        msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
+                        // $state.go('asesor.base');
+                    }
+                    loaderClose();
+
+                });
         }
     }
 
@@ -3560,54 +3575,6 @@ angular.module('monospaced.qrcode', [])
 
     angular
         .module('app.sekolah')
-        .controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
-
-
-    function SekolahLaporanCtrl($scope, $state, sekolah) {
-
-
-        if ( ! sekolah) {
-            $state.go('sekolah-home.biodata');
-        }
-
-        $scope.sekolah = sekolah;
-        $scope.program = {};
-        $scope.prodi_current = false;
-        $scope.biodata = false;
-
-        $scope.goEvaluasi = function(prodi) {
-            if ($scope.prodi_current == false) {
-
-                if (prodi == 'biodata') {
-                    $scope.biodata = true;
-                }
-
-                $scope.prodi_current = parseInt(prodi);
-                $('.prodi-evaluasi').addClass('hide');
-                $('.prodi-'+prodi).removeClass('hide');
-
-                var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
-                var _program    = sekolah.program[_index];
-                $scope.program  = _program;
-
-            } else {
-                if (prodi == 'biodata') {
-                    $scope.biodata = false;
-                }
-                $scope.prodi_current = false;
-                $scope.butir    = {};
-                $scope.program  = {};
-                $('.prodi-evaluasi').removeClass('hide');
-            }
-        }
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.sekolah')
         .controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
 
     function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
@@ -3730,6 +3697,54 @@ angular.module('monospaced.qrcode', [])
             AppSekolahRepository.update(sekolah);
         }
 
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sekolah')
+        .controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
+
+
+    function SekolahLaporanCtrl($scope, $state, sekolah) {
+
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
+
+        $scope.sekolah = sekolah;
+        $scope.program = {};
+        $scope.prodi_current = false;
+        $scope.biodata = false;
+
+        $scope.goEvaluasi = function(prodi) {
+            if ($scope.prodi_current == false) {
+
+                if (prodi == 'biodata') {
+                    $scope.biodata = true;
+                }
+
+                $scope.prodi_current = parseInt(prodi);
+                $('.prodi-evaluasi').addClass('hide');
+                $('.prodi-'+prodi).removeClass('hide');
+
+                var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
+                var _program    = sekolah.program[_index];
+                $scope.program  = _program;
+
+            } else {
+                if (prodi == 'biodata') {
+                    $scope.biodata = false;
+                }
+                $scope.prodi_current = false;
+                $scope.butir    = {};
+                $scope.program  = {};
+                $('.prodi-evaluasi').removeClass('hide');
+            }
+        }
     }
 
 })();

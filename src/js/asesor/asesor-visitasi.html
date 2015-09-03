@@ -32,6 +32,9 @@
 
         <div style="margin: 30px 0">
             <ul class="nav nav-tabs">
+                <li role="presentation" class="pull-right {{ vm.tab == 'laporanTT' ? 'active': '' }}">
+                    <a href="javascript:void(0)" ng-click="vm.switchTab('laporanTT')">Laporkan TT</a>
+                </li>
                 <li role="presentation" class="{{ vm.tab == 'instrumen' ? 'active': '' }}">
                     <a href="javascript:void(0)" ng-click="vm.switchTab('instrumen')">Instumen</a>
                 </li>
@@ -45,6 +48,33 @@
                     <a href="javascript:void(0)" ng-click="vm.switchTab('sinkronisasi')">Sinkronisasi</a>
                 </li>
             </ul>
+        </div>
+
+        <!-- TAB INSTRUMEN -->
+        <div ng-show="vm.tab == 'laporanTT'">
+            <p class="lead" style="margin-bottom: 20px">Apakah anda yakin untuk melaporkan sekolah/madrasah ini untuk tidak terakreditasi</p>
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">Area berbahaya </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label">Kenapa anda menyatakan sekolah/madrasah ini tidak layak untuk di akreditasi </label>
+                        <textarea class="form-control" ng-model="vm.sekolah.prodi.hasil.visitasi.notes" rows="10"></textarea>
+                    </div>
+
+                    <hr />
+
+                    <div class="pull-right">
+                        <a
+                            href="{{ vm.url }}/api/v-cetak/{{ vm.token }}/{{ vm.sekolah.prodi.id}}"
+                            class="btn btn-default btn-sm" target="_blank" ng-disabled="!vm.sekolah.prodi.hasil.last_sync">
+                            <span class="octicon octicon-desktop-download"></span> Download hasil
+                        </a>
+                    </div>
+                    <button class="btn btn-danger" ng-click="vm.toTT()"><span class="octicon octicon-alert"></span> Laporkan TT</button>
+                </div>
+            </div>
+
         </div>
 
         <!-- TAB INSTRUMEN -->
