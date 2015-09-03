@@ -10,6 +10,17 @@
         .controller('AppAsesorBaseCtrl', AppAsesorBaseCtrl)
         .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl)
 
+
+    function loaderUp() {
+        $('body').addClass('app-loading');
+    }
+
+    function loaderClose() {
+        setTimeout((function() {
+            $('body').removeClass('app-loading');
+        }), 1000);
+    }
+
     function AppAsesorIndexCtrl($state, msgService, storage) {
         var vm = this;
         var request = window.superagent;
@@ -28,6 +39,8 @@
         vm.verifikasi = verifikasi;
 
         function verifikasi() {
+            loaderUp();
+
             if (!vm.credentials.token) {
                 msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert');
             } else {
@@ -42,6 +55,7 @@
                             msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
                             $state.go('asesor.base');
                         }
+                        loaderClose();
                     });
             }
         }
@@ -328,14 +342,17 @@
                         layak: record.visitasi.kelayakan,
                         rekomendasi: record.visitasi.ket
                     });
-                })
+                });
+
+                loaderUp();
+                msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
 
                 request
                     .post(url + '/api/v-lapor/')
                     .send(data)
                     .end(function(err, resp) {
                         if (err) {
-                            msgService.notif('Informasi', err.error, 'alert');
+                            msgService.notif('Error', err.error, 'alert', true);
                         } else {
                             console.log(resp.body);
                             vm.sekolah.prodi.hasil.last_sync = resp.body.date;
@@ -343,9 +360,10 @@
                             saveToStorage();
                             // console.log(vm.sekolah.prodi.hasil);
                             // storage.set('visitasi', resp.body);
-                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info');
+                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
                             // $state.go('asesor.base');
                         }
+                        loaderClose();
 
                     });
             }

@@ -172,7 +172,7 @@ $(document).ready(function() {
             // $('.message-bar').prepend(_template);
 
             return setTimeout((function() {
-                $('.message-bar .alert').last().remove();
+                $('.message-bar .alert').first().remove();
             }), 4000);
         }
     }
@@ -2859,6 +2859,17 @@ angular.module('monospaced.qrcode', [])
         .controller('AppAsesorBaseCtrl', AppAsesorBaseCtrl)
         .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl)
 
+
+    function loaderUp() {
+        $('body').addClass('app-loading');
+    }
+
+    function loaderClose() {
+        setTimeout((function() {
+            $('body').removeClass('app-loading');
+        }), 1000);
+    }
+
     function AppAsesorIndexCtrl($state, msgService, storage) {
         var vm = this;
         var request = window.superagent;
@@ -2877,6 +2888,8 @@ angular.module('monospaced.qrcode', [])
         vm.verifikasi = verifikasi;
 
         function verifikasi() {
+            loaderUp();
+
             if (!vm.credentials.token) {
                 msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert');
             } else {
@@ -2891,6 +2904,7 @@ angular.module('monospaced.qrcode', [])
                             msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
                             $state.go('asesor.base');
                         }
+                        loaderClose();
                     });
             }
         }
@@ -3177,14 +3191,17 @@ angular.module('monospaced.qrcode', [])
                         layak: record.visitasi.kelayakan,
                         rekomendasi: record.visitasi.ket
                     });
-                })
+                });
+
+                loaderUp();
+                msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
 
                 request
                     .post(url + '/api/v-lapor/')
                     .send(data)
                     .end(function(err, resp) {
                         if (err) {
-                            msgService.notif('Informasi', err.error, 'alert');
+                            msgService.notif('Error', err.error, 'alert', true);
                         } else {
                             console.log(resp.body);
                             vm.sekolah.prodi.hasil.last_sync = resp.body.date;
@@ -3192,9 +3209,10 @@ angular.module('monospaced.qrcode', [])
                             saveToStorage();
                             // console.log(vm.sekolah.prodi.hasil);
                             // storage.set('visitasi', resp.body);
-                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info');
+                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
                             // $state.go('asesor.base');
                         }
+                        loaderClose();
 
                     });
             }
@@ -3542,6 +3560,54 @@ angular.module('monospaced.qrcode', [])
 
     angular
         .module('app.sekolah')
+        .controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
+
+
+    function SekolahLaporanCtrl($scope, $state, sekolah) {
+
+
+        if ( ! sekolah) {
+            $state.go('sekolah-home.biodata');
+        }
+
+        $scope.sekolah = sekolah;
+        $scope.program = {};
+        $scope.prodi_current = false;
+        $scope.biodata = false;
+
+        $scope.goEvaluasi = function(prodi) {
+            if ($scope.prodi_current == false) {
+
+                if (prodi == 'biodata') {
+                    $scope.biodata = true;
+                }
+
+                $scope.prodi_current = parseInt(prodi);
+                $('.prodi-evaluasi').addClass('hide');
+                $('.prodi-'+prodi).removeClass('hide');
+
+                var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
+                var _program    = sekolah.program[_index];
+                $scope.program  = _program;
+
+            } else {
+                if (prodi == 'biodata') {
+                    $scope.biodata = false;
+                }
+                $scope.prodi_current = false;
+                $scope.butir    = {};
+                $scope.program  = {};
+                $('.prodi-evaluasi').removeClass('hide');
+            }
+        }
+    }
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sekolah')
         .controller('SekolahInstrumenCtrl', SekolahInstrumenCtrl)
 
     function SekolahInstrumenCtrl($scope, $state, sekolah, AppSekolahRepository) {
@@ -3664,54 +3730,6 @@ angular.module('monospaced.qrcode', [])
             AppSekolahRepository.update(sekolah);
         }
 
-    }
-
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.sekolah')
-        .controller('SekolahLaporanCtrl', SekolahLaporanCtrl)
-
-
-    function SekolahLaporanCtrl($scope, $state, sekolah) {
-
-
-        if ( ! sekolah) {
-            $state.go('sekolah-home.biodata');
-        }
-
-        $scope.sekolah = sekolah;
-        $scope.program = {};
-        $scope.prodi_current = false;
-        $scope.biodata = false;
-
-        $scope.goEvaluasi = function(prodi) {
-            if ($scope.prodi_current == false) {
-
-                if (prodi == 'biodata') {
-                    $scope.biodata = true;
-                }
-
-                $scope.prodi_current = parseInt(prodi);
-                $('.prodi-evaluasi').addClass('hide');
-                $('.prodi-'+prodi).removeClass('hide');
-
-                var _index      = findIndexByKeyValue(sekolah.program, 'id', $scope.prodi_current);
-                var _program    = sekolah.program[_index];
-                $scope.program  = _program;
-
-            } else {
-                if (prodi == 'biodata') {
-                    $scope.biodata = false;
-                }
-                $scope.prodi_current = false;
-                $scope.butir    = {};
-                $scope.program  = {};
-                $('.prodi-evaluasi').removeClass('hide');
-            }
-        }
     }
 
 })();

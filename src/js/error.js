@@ -103,7 +103,7 @@
             // $('.message-bar').prepend(_template);
 
             return setTimeout((function() {
-                $('.message-bar .alert').last().remove();
+                $('.message-bar .alert').first().remove();
             }), 4000);
         }
     }
