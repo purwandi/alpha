@@ -2885,7 +2885,7 @@ angular.module('monospaced.qrcode', [])
                     .get(target)
                     .end(function(err, resp) {
                         if (err) {
-                            msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
+                            msgService.notif('Error', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
                         } else {
                             storage.set('visitasi', resp.body);
                             msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
@@ -3015,10 +3015,11 @@ angular.module('monospaced.qrcode', [])
 
         function keyPressFunction(event) {
             if (event.keyCode < 65) {
-                alert('Hanya bisa di isi huruf : A, B, C, D dan E');
+                msgService.notif('Error', 'Hanya bisa di isi huruf : A, B, C, D dan E', 'alert');
             } else if (event.keyCode > 69) {
                 if (event.keyCode < 97 || event.keyCode > 101) {
-                    alert('Hanya bisa di isi huruf : A, B, C, D dan E');
+                    // alert('Hanya bisa di isi huruf : A, B, C, D dan E');
+                    msgService.notif('Error', 'Hanya bisa di isi huruf : A, B, C, D dan E', 'alert');
                 }
             }
         }

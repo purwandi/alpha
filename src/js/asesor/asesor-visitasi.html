@@ -15,7 +15,7 @@
                 </div>
                 <div class="statistic">
                     <div class="value">
-                        {{ vm.sekolah.prodi.hasil.visitasi.peringkat }} ( {{ vm.sekolah.prodi.hasil.visitasi.nilai }} )
+                        {{ vm.sekolah.prodi.hasil.visitasi.peringkat_akhir }} ( {{ vm.sekolah.prodi.hasil.visitasi.nilai_akhir }} )
                     </div>
                     <div class="label">
                         Visitasi
@@ -135,13 +135,14 @@
                 </tbody>
             </table>
 
-            <textarea class="form-control" rows="4" ng-model="vm.instrumen.visitasi.ket" placeholder="Catatan butir"></textarea>
+            <label class="control-label">Catatan butir</label>
+            <input type="text" class="form-control" ng-model="vm.instrumen.visitasi.ket" placeholder="Catatan butir apabila terjadi perbedaan antara evaluasi diri dan kelompok, catatan minimal 100 karakter.">
+            <span class="help-block"> Anda mengetik sejumlah {{ vm.instrumen.visitasi.ket.length ? vm.instrumen.visitasi.ket.length : '0' }} karakter.</span>
 
             <div class="hide">
                 {{ vm.instrumen.evaluasi.jawabanHuruf =  vm.instrumen.evaluasi.jawaban | toAlpa }}
                 {{ vm.instrumen.visitasi.hasil = vm.instrumen.visitasi.jawaban * vm.instrumen.instrumen.bobot }}
             </div>
-
             <hr />
 
             <div class="pull-right" ng-show="vm.nomor == vm.total ">
