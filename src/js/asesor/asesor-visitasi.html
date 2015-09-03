@@ -233,61 +233,114 @@
         <!-- TAB SINKRONISASI -->
         <div ng-show="vm.tab == 'sinkronisasi'">
 
-            <div class="alert alert-danger" id="upload-proses">
-                <h4>Perhatian</h4>
-                Mohon tunggu sebentar, proses upload sedang berlangsung ... <br /> JANGAN KLIK TOMBOL KIRIM DAN MENDAFTARAN APABILA PROSES UPLOAD BELUM SELESAI.
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div style="border-right: 1px solid #ddd;">
-                        <p>Untuk mendukung pelaksanaan visitasi yang tim anda lakukan, uploadlah dokumen instrumen pengumpulan data dan informasi pendukung sekolah/madrasah sebagai alat bukti pendukung kondisi real sekolah/madrasah.</p>
-                        <br />
 
-                        {{ vm.sekolah.prodi.hasil.visitasi.dokumen }}
-                        <upload-file ng-model="vm.sekolah.prodi.hasil.visitasi.dokumen" data-file="docs"></upload-file>
-                        <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
+
+            <p class="lead" style="margin-bottom: 30px;">
+                Untuk melakukan sinkronisasi ikuti langkah - langkah berikut ini :
+            </p>
+
+            <div class="list-group" >
+                <div class="list-group-item relax">
+                    <div class="ui horizontal statistics">
+                        <div class="statistic">
+                            <div class="value">
+                                LANGKAH 1
+                            </div>
+                            <div class="label">Upload instrumen pengumpulan data dan informasi</div>
+                        </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <ol style="padding: 20px;">
+                                <li>Mintalah instrumen pengumpulan data dan informasi pendukung yang telah mengalami perbaikan ketika pelaksanaan visitasi kepada sekolah/madrasah yang bersangkutan. Dokumen yang di minta sudah dalam bentuk PDF.</li>
+                                <li>Untuk mendukung pelaksanaan visitasi yang tim anda lakukan, upload kembali dokumen instrumen pengumpulan data dan informasi pendukung sekolah/madrasah sebagai alat bukti pendukung kondisi real sekolah/madrasah.</li>
+                                <li>Apabila tim anda sudah menerima dokumen instrumen pengumpulan data dan informasi sebagaimana dimaksud point 1 (satu), upload dokumen tersebut dengan mengklik tombol choose file di bawah ini.  </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger" id="upload-proses">
+                        <h4>Perhatian</h4>
+                        Mohon tunggu sebentar, proses upload sedang berlangsung ... <br /> JANGAN KLIK TOMBOL SINKRONISASI APABILA PROSES UPLOAD BELUM SELESAI.
+                    </div>
+
+                    {{ vm.sekolah.prodi.hasil.visitasi.dokumen }}
+                    <upload-file ng-model="vm.sekolah.prodi.hasil.visitasi.dokumen" data-file="docs"></upload-file>
+                    <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
+
                 </div>
-                <div class="col-md-6 text-center">
+
+                <hr />
+
+                <div class="list-group-item relax">
+                    <div class="ui horizontal statistics">
+                        <div class="statistic">
+                            <div class="value">
+                                LANGKAH 2
+                            </div>
+                            <div class="label">Sinkronisasi</div>
+                        </div>
+                    </div>
+
                     <p>Tekan tombol di bawah ini untuk melakukan sinkronisasi data pengisian hasil visitasi.</p> <br />
                     <button class="btn btn-primary btn-lg" ng-click="vm.sinkronisasi()">
                         <span class="octicon octicon-sync"></span> Sinkronisasi
                     </button>
+
+                </div>
+
+                <hr />
+
+                <div class="list-group-item relax">
+                     <div class="ui horizontal statistics">
+                        <div class="statistic">
+                            <div class="value">
+                                LANGKAH 3
+                            </div>
+                            <div class="label">Download hasil</div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Heads up.</strong> Download hasil baru dapat dilakukan ketika anda selesai melakukan sinkronisasi data.
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="border-top: 1px solid #DDD">Terakhir sinkronisasi</th>
+                                <th style="border-top: 1px solid #DDD">Dokumen pendukung</th>
+                                <th style="border-top: 1px solid #DDD">Hasil visitasi</th>
+                                <th style="border-top: 1px solid #DDD">Cetak</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{ vm.sekolah.prodi.hasil.last_sync }}
+                                </td>
+                                <td>
+                                    <a href="{{ vm.sekolah.prodi.hasil.visitasi.dokumen }}">
+                                        {{ vm.sekolah.prodi.hasil.visitasi.dokumen }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ vm.sekolah.prodi.hasil.visitasi.peringkat_akhir }}
+                                    ( {{ vm.sekolah.prodi.hasil.visitasi.nilai_akhir }} )
+                                </td>
+                                <td>
+                                    <a
+                                        href="{{ vm.url }}/api/v-cetak/{{ vm.token }}/{{ vm.sekolah.prodi.id}}"
+                                        class="btn btn-default btn-sm" target="_blank" ng-disabled="!vm.sekolah.prodi.hasil.last_sync">
+                                        <span class="octicon octicon-desktop-download"></span> Download hasil
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="border-top: 1px solid #DDD">Terakhir sinkronisasi</th>
-                        <th style="border-top: 1px solid #DDD">Dokumen pendukung</th>
-                        <th style="border-top: 1px solid #DDD">Hasil visitasi</th>
-                        <th style="border-top: 1px solid #DDD">Cetak</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            {{ vm.sekolah.prodi.hasil.last_sync }}
-                        </td>
-                        <td>
-                            <a href="{{ vm.sekolah.prodi.hasil.visitasi.dokumen }}">
-                                {{ vm.sekolah.prodi.hasil.visitasi.dokumen }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ vm.sekolah.prodi.hasil.visitasi.peringkat_akhir }}
-                            ( {{ vm.sekolah.prodi.hasil.visitasi.nilai_akhir }} )
-                        </td>
-                        <td>
-                            <a
-                                href="{{ vm.url }}/api/v-cetak/{{ vm.token }}/{{ vm.sekolah.prodi.id}}"
-                                class="btn btn-default btn-sm" ng-disabled="!vm.sekolah.prodi.hasil.last_sync">
-                                <span class="octicon octicon-desktop-download"></span> Download hasil
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
         <!-- END TAB SINKRONISASI -->
 

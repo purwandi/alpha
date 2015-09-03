@@ -86,9 +86,11 @@
             }
         }).first();
 
+        vm.sekolah.prodi.hasil.last_sync = vm.sekolah.prodi.hasil.last_sync ? vm.sekolah.prodi.hasil.last_sync : '';
         vm.total = 0;
         vm.tab = 'instrumen';
         vm.token = dataVisitasi.token;
+        vm.url = url;
 
         vm.next = nextFunction;
         vm.prev = prevFunction;
@@ -245,14 +247,14 @@
 
             storage.set('visitasi', {
                 token: dataVisitasi.token,
-                data: vm.data().get()
+                data: vm.data().get(),
+                asesor: dataVisitasi.asesor
             });
         }
 
         function saveFunction() {
-            saveToStorage;
+            saveToStorage();
             msgService.notif('Success', 'Pengisian butir visitasi berhasil disimpan', 'info');
-            // alert('Butir telah berhasil di simpan.');
         }
 
         function saveRekomendasiFunction() {
@@ -335,8 +337,9 @@
                         if (err) {
                             msgService.notif('Informasi', err.error, 'alert');
                         } else {
-                            // console.log(resp.body);
+                            console.log(resp.body);
                             vm.sekolah.prodi.hasil.last_sync = resp.body.date;
+                            console.log(vm.sekolah.prodi.hasil.last_sync);
                             saveToStorage();
                             // console.log(vm.sekolah.prodi.hasil);
                             // storage.set('visitasi', resp.body);
