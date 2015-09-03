@@ -1,6 +1,9 @@
 ( function() {
     'use strict';
 
+    // var url = 'http://192.168.61.129:8000';
+    var url = 'http://opr2.bap-sm.or.id';
+
     angular
         .module('app.asesor')
         .controller('AppAsesorIndexCtrl', AppAsesorIndexCtrl)
@@ -10,8 +13,8 @@
     function AppAsesorIndexCtrl($state, msgService, storage) {
         var vm = this;
         var request = window.superagent;
-        var url = 'http://opr2.bap-sm.or.id';
-        // var url = 'http://192.168.61.129:8000';
+
+        vm.url = url;
 
         storage
             .get('visitasi')
@@ -48,6 +51,8 @@
         var vm = this;
         vm.data = dataVisitasi;
         vm.reset = reset;
+        vm.url = url;
+        vm.token = dataVisitasi.token;
 
         storage
             .get('visitasi')
@@ -287,7 +292,7 @@
                 msgService.notif('Error', 'Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi', 'alert');
             // alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             } else {
-                var url = 'http://opr2.bap-sm.or.id';
+                // var url = 'http://opr2.bap-sm.or.id';
                 // var url = 'http://192.168.61.129:8000';
                 var request = window.superagent;
                 var data = {

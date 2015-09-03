@@ -27,11 +27,6 @@
 
 <div class="list-group" >
 	<div class="list-group-item relax" ng-repeat="sekolah in vm.data.data">
-		<div class="text-danger"><p>{{ sekolah.nama }}</p></div>
-        <div>{{ sekolah.prodi.nama }}</div>
-		<div class="">{{ sekolah.alamat }}</div>
-        <div><span class="octicon octicon-device-mobile"></span> {{ sekolah.nomor_telepon }} - {{ sekolah.nomor_hp}}</div>
-        <hr />
         <div class="pull-right">
             <div class="ui mini statistics">
                 <div class="statistic">
@@ -52,9 +47,38 @@
                 </div>
             </div>
         </div>
-        <a href="{{ sekolah.prodi.hasil.evaluasi.dokumen }}" target="_blank" class="btn btn-success"><span class="octicon octicon-file-pdf"></span></a>
-        <a ui-sref="asesor.visitasi({npsn:sekolah.npsn, prodi: sekolah.prodi.id})" class="btn btn-default">Mulai visitasi <span class="octicon octicon-repo-force-push"></span> </a>
-        <a href="" class="btn btn-primary">Download hasil <span class="octicon octicon-desktop-download"></span> </a>
+
+
+		<div class="text-danger"><p>{{ sekolah.nama }}</p></div>
+        <div>{{ sekolah.prodi.nama }}</div>
+		<div class="">{{ sekolah.alamat }}</div>
+        <div><span class="octicon octicon-device-mobile"></span> {{ sekolah.nomor_telepon }} - {{ sekolah.nomor_hp}}</div>
+        <hr />
+        <!-- Single button -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="octicon octicon-desktop-download"></span> Download berkas <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+                <a href="{{ vm.url }}/api/v-evaluasi/{{ vm.token }}/{{ sekolah.prodi.id }}">
+                    <span class="octicon octicon-file-text"></span> Evaluasi diri
+                </a>
+            </li>
+            <li>
+                <a href="{{ sekolah.prodi.hasil.evaluasi.dokumen }}" target="_blank">
+                    <span class="octicon octicon-file-pdf"></span> Dokumen pendukung
+                </a>
+            </li>
+          </ul>
+        </div>
+
+        <a ui-sref="asesor.visitasi({npsn:sekolah.npsn, prodi: sekolah.prodi.id})" class="btn btn-default">
+            Mulai visitasi <span class="octicon octicon-repo-force-push"></span>
+        </a>
+        <!-- <a href="" class="btn btn-primary">Download hasil
+            <span class="octicon octicon-desktop-download"></span>
+        </a>-->
 	</div>
 </div>
 

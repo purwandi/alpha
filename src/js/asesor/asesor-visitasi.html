@@ -276,7 +276,7 @@
                         </td>
                         <td>
                             <a
-                                href="http://opr2.bap-sm.or.id/api/v-cetak/{{ vm.token }}/{{ vm.sekolah.prodi.id}}"
+                                href="{{ vm.url }}/api/v-cetak/{{ vm.token }}/{{ vm.sekolah.prodi.id}}"
                                 class="btn btn-default btn-sm" ng-disabled="!vm.sekolah.prodi.hasil.last_sync">
                                 <span class="octicon octicon-desktop-download"></span> Download hasil
                             </a>
