@@ -2717,20 +2717,57 @@ angular.module('monospaced.qrcode', [])
       }
     };
   }]);
-(function() {
+( function() {
     'use strict';
 
     angular
         .module('upload', ['angularFileUpload', 'alert'])
-        .directive('uploadFile', uploadFile);
+        .directive('uploadFile', uploadFile)
+        .directive('uploadCanvas', uploadCanvas);
 
+    function uploadCanvas() {
+        return {
+            restrict: 'A',
+            scope: {
+                ngModel: '='
+            },
+            template: '<div class="image-editor">' +
+                '<input type="file" class="cropit-image-input">' +
+                '<!-- .cropit-image-preview-container is needed for background image to work -->' +
+                '<div class="cropit-image-preview-container">' +
+                '<div class="cropit-image-preview"></div>' +
+                '</div>' +
+                '<div class="image-size-label">Resize image</div>' +
+                '<input type="range" class="cropit-image-zoom-input">' +
+                '<button class="export btn btn-default" ng-click="export()">Export</button>' +
+                '</div>',
+            link: function(scope, element, attr) {
+                $(element).cropit({
+                    exportZoom: 1.25,
+                    imageBackground: true,
+                    imageBackgroundBorderWidth: 20,
+                    // imageState: {
+                    //    src: 'http://lorempixel.com/500/400/',
+                    //},
+                });
+
+                scope.export = function() {
+                    var imageData = $(element).cropit('export');
+                    scope.ngModel = imageData;
+                    console.log('Load  data');
+                }
+            }
+        }
+    }
 
     /* @ngInject */
     function uploadFile(FileUploader, msgService) {
         return {
             restrict: 'E',
-            scope: { ngModel: '='},
-            template: '<input type="file" nv-file-select uploader="uploader" />'+
+            scope: {
+                ngModel: '='
+            },
+            template: '<input type="file" nv-file-select uploader="uploader" />' +
                 '<input type="hidden" ng-model="ngModel">',
             compile: function() {
                 return {
@@ -2779,9 +2816,7 @@ angular.module('monospaced.qrcode', [])
                             msgService.notif('Info', 'Proses upload file');
                         };
 
-                        uploader.onProgressAll = function(progress) {
-
-                        };
+                        uploader.onProgressAll = function(progress) {};
 
                         uploader.onErrorItem = function(fileItem, response, status, headers) {
                             setTimeout((function() {
@@ -2824,7 +2859,7 @@ angular.module('monospaced.qrcode', [])
         }
     }
 
-})();
+} )();
 (function() {
     angular
         .module('app.base', [])
@@ -2838,15 +2873,16 @@ angular.module('monospaced.qrcode', [])
             })
     }
 })();
-(function() {
-	'use strict';
+( function() {
+    'use strict';
 
-	angular
-		.module('app.asesor', [
-			'service.request',
-			'storage'
-		])
-})();
+    angular
+        .module('app.asesor', [
+            'upload',
+            'service.request',
+            'storage'
+        ])
+} )();
 ( function() {
     'use strict';
 
@@ -2857,7 +2893,7 @@ angular.module('monospaced.qrcode', [])
         .module('app.asesor')
         .controller('AppAsesorIndexCtrl', AppAsesorIndexCtrl)
         .controller('AppAsesorBaseCtrl', AppAsesorBaseCtrl)
-        .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl)
+        .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl);
 
 
     function loaderUp() {
@@ -2934,6 +2970,7 @@ angular.module('monospaced.qrcode', [])
 
     function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService, dataVisitasi) {
 
+
         storage
             .get('visitasi')
             .then(function(data) {
@@ -2951,6 +2988,7 @@ angular.module('monospaced.qrcode', [])
         }).first();
 
         vm.sekolah.prodi.hasil.last_sync = vm.sekolah.prodi.hasil.last_sync ? vm.sekolah.prodi.hasil.last_sync : '';
+        vm.sekolah.prodi.hasil.visitasi.dokumentasi = vm.sekolah.prodi.hasil.visitasi.dokumentasi ? vm.sekolah.prodi.hasil.visitasi.dokumentasi : [];
         vm.total = 0;
         vm.tab = 'instrumen';
         vm.token = dataVisitasi.token;
@@ -2964,6 +3002,9 @@ angular.module('monospaced.qrcode', [])
         vm.save = saveFunction;
         vm.sinkronisasi = syncFunction;
         vm.toTT = toTTFunction;
+        vm.openCropit = openCropitFunction;
+        vm.closeCropit = closeCropitFunction;
+        vm.removeFoto = removeFotoFunction;
 
 
         var src_bagian = TAFFY(INSTRUMEN.BAGIAN);
@@ -3159,8 +3200,12 @@ angular.module('monospaced.qrcode', [])
                 msgService.notif('Error', 'Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi', 'alert');
             // alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             } else {
-                vm.sekolah.prodi.hasil.visitasi.notes = '';
-                syncronization();
+                if (vm.sekolah.prodi.hasil.visitasi.dokumentasi.length == 0) {
+                    msgService.notif('Error', 'Dokumentasi foto masih kosong, mohon untuk melakukan upload dokumentasi terlebih dahulu', 'alert');
+                } else {
+                    vm.sekolah.prodi.hasil.visitasi.notes = '';
+                    syncronization();
+                }
             }
         }
 
@@ -3217,7 +3262,8 @@ angular.module('monospaced.qrcode', [])
                 .send(data)
                 .end(function(err, resp) {
                     if (err) {
-                        msgService.notif('Error', err.error, 'alert', true);
+                        console.log(err);
+                        msgService.notif('Error', resp.body.error, 'alert', true);
                     } else {
                         console.log(resp.body);
                         vm.sekolah.prodi.hasil.last_sync = resp.body.date;
@@ -3232,6 +3278,71 @@ angular.module('monospaced.qrcode', [])
 
                 });
         }
+
+        function openCropitFunction() {
+
+            $('.image-editor').cropit({
+                type: 'image/jpeg',
+                quality: .5,
+                exportZoom: 1.25,
+                imageBackground: true,
+                imageBackgroundBorderWidth: 20,
+                onImageLoading: function() {
+                    $('.spinner').removeClass('hide');
+                },
+                onImageLoaded: function() {
+                    $('.spinner').addClass('hide');
+                },
+                onImageError: function() {
+                    msgService.notif('Error', 'Tidak dapat melakukan upload foto', 'alert', true);
+                }
+            });
+
+
+            $('#upload-canvas').modal('show');
+        }
+
+        function removeFotoFunction(index) {
+            vm.sekolah.prodi.hasil.visitasi.dokumentasi.splice(index, 1);
+            saveToStorage();
+        }
+
+        function closeCropitFunction() {
+            // console.log('Crop sedang berlangsung');
+            var imageData = $('.image-editor').cropit('export');
+            var request = window.superagent;
+
+            loaderUp();
+            msgService.notif('Informasi', 'Harap menunggu, proses upload foto sedang berjalan', 'alert', true);
+
+            request
+                .post(url + '/api/v-dokumentasi')
+                .send({
+                    file: imageData
+                })
+                .end(function(err, resp) {
+                    if (err) {
+                        msgService.notif('Error', resp.body.error, 'alert', true);
+                    } else {
+                        vm.sekolah.prodi.hasil.visitasi.dokumentasi.push({
+                            image: resp.body.url,
+                            notes: $('#notes').val()
+                        });
+
+                        saveToStorage();
+                        $scope.$apply();
+                        $('.cropit-image-preview')
+                            .removeClass('cropit-image-loaded')
+                            .css('background-image', '');
+                        $('#notes').val('');
+                        msgService.notif('Informasi', 'Proses upload foto berhasil', 'info', true);
+                        $('#upload-canvas').modal('hide');
+                    }
+
+                    loaderClose();
+                })
+        }
+
     }
 
 } )();

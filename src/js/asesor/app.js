@@ -1,9 +1,10 @@
-(function() {
-	'use strict';
+( function() {
+    'use strict';
 
-	angular
-		.module('app.asesor', [
-			'service.request',
-			'storage'
-		])
-})();
+    angular
+        .module('app.asesor', [
+            'upload',
+            'service.request',
+            'storage'
+        ])
+} )();

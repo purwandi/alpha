@@ -8,7 +8,7 @@
         .module('app.asesor')
         .controller('AppAsesorIndexCtrl', AppAsesorIndexCtrl)
         .controller('AppAsesorBaseCtrl', AppAsesorBaseCtrl)
-        .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl)
+        .controller('AppAsesorVisitasiCtrl', AppAsesorVisitasiCtrl);
 
 
     function loaderUp() {
@@ -85,6 +85,7 @@
 
     function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService, dataVisitasi) {
 
+
         storage
             .get('visitasi')
             .then(function(data) {
@@ -102,6 +103,7 @@
         }).first();
 
         vm.sekolah.prodi.hasil.last_sync = vm.sekolah.prodi.hasil.last_sync ? vm.sekolah.prodi.hasil.last_sync : '';
+        vm.sekolah.prodi.hasil.visitasi.dokumentasi = vm.sekolah.prodi.hasil.visitasi.dokumentasi ? vm.sekolah.prodi.hasil.visitasi.dokumentasi : [];
         vm.total = 0;
         vm.tab = 'instrumen';
         vm.token = dataVisitasi.token;
@@ -115,6 +117,9 @@
         vm.save = saveFunction;
         vm.sinkronisasi = syncFunction;
         vm.toTT = toTTFunction;
+        vm.openCropit = openCropitFunction;
+        vm.closeCropit = closeCropitFunction;
+        vm.removeFoto = removeFotoFunction;
 
 
         var src_bagian = TAFFY(INSTRUMEN.BAGIAN);
@@ -310,8 +315,12 @@
                 msgService.notif('Error', 'Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi', 'alert');
             // alert('Mohon upload terlebih dahulu instrumen pengumpulan data dan informasi');
             } else {
-                vm.sekolah.prodi.hasil.visitasi.notes = '';
-                syncronization();
+                if (vm.sekolah.prodi.hasil.visitasi.dokumentasi.length == 0) {
+                    msgService.notif('Error', 'Dokumentasi foto masih kosong, mohon untuk melakukan upload dokumentasi terlebih dahulu', 'alert');
+                } else {
+                    vm.sekolah.prodi.hasil.visitasi.notes = '';
+                    syncronization();
+                }
             }
         }
 
@@ -368,7 +377,8 @@
                 .send(data)
                 .end(function(err, resp) {
                     if (err) {
-                        msgService.notif('Error', err.error, 'alert', true);
+                        console.log(err);
+                        msgService.notif('Error', resp.body.error, 'alert', true);
                     } else {
                         console.log(resp.body);
                         vm.sekolah.prodi.hasil.last_sync = resp.body.date;
@@ -383,6 +393,71 @@
 
                 });
         }
+
+        function openCropitFunction() {
+
+            $('.image-editor').cropit({
+                type: 'image/jpeg',
+                quality: .5,
+                exportZoom: 1.25,
+                imageBackground: true,
+                imageBackgroundBorderWidth: 20,
+                onImageLoading: function() {
+                    $('.spinner').removeClass('hide');
+                },
+                onImageLoaded: function() {
+                    $('.spinner').addClass('hide');
+                },
+                onImageError: function() {
+                    msgService.notif('Error', 'Tidak dapat melakukan upload foto', 'alert', true);
+                }
+            });
+
+
+            $('#upload-canvas').modal('show');
+        }
+
+        function removeFotoFunction(index) {
+            vm.sekolah.prodi.hasil.visitasi.dokumentasi.splice(index, 1);
+            saveToStorage();
+        }
+
+        function closeCropitFunction() {
+            // console.log('Crop sedang berlangsung');
+            var imageData = $('.image-editor').cropit('export');
+            var request = window.superagent;
+
+            loaderUp();
+            msgService.notif('Informasi', 'Harap menunggu, proses upload foto sedang berjalan', 'alert', true);
+
+            request
+                .post(url + '/api/v-dokumentasi')
+                .send({
+                    file: imageData
+                })
+                .end(function(err, resp) {
+                    if (err) {
+                        msgService.notif('Error', resp.body.error, 'alert', true);
+                    } else {
+                        vm.sekolah.prodi.hasil.visitasi.dokumentasi.push({
+                            image: resp.body.url,
+                            notes: $('#notes').val()
+                        });
+
+                        saveToStorage();
+                        $scope.$apply();
+                        $('.cropit-image-preview')
+                            .removeClass('cropit-image-loaded')
+                            .css('background-image', '');
+                        $('#notes').val('');
+                        msgService.notif('Informasi', 'Proses upload foto berhasil', 'info', true);
+                        $('#upload-canvas').modal('hide');
+                    }
+
+                    loaderClose();
+                })
+        }
+
     }
 
 } )();

@@ -1,17 +1,54 @@
-(function() {
+( function() {
     'use strict';
 
     angular
         .module('upload', ['angularFileUpload', 'alert'])
-        .directive('uploadFile', uploadFile);
+        .directive('uploadFile', uploadFile)
+        .directive('uploadCanvas', uploadCanvas);
 
+    function uploadCanvas() {
+        return {
+            restrict: 'A',
+            scope: {
+                ngModel: '='
+            },
+            template: '<div class="image-editor">' +
+                '<input type="file" class="cropit-image-input">' +
+                '<!-- .cropit-image-preview-container is needed for background image to work -->' +
+                '<div class="cropit-image-preview-container">' +
+                '<div class="cropit-image-preview"></div>' +
+                '</div>' +
+                '<div class="image-size-label">Resize image</div>' +
+                '<input type="range" class="cropit-image-zoom-input">' +
+                '<button class="export btn btn-default" ng-click="export()">Export</button>' +
+                '</div>',
+            link: function(scope, element, attr) {
+                $(element).cropit({
+                    exportZoom: 1.25,
+                    imageBackground: true,
+                    imageBackgroundBorderWidth: 20,
+                    // imageState: {
+                    //    src: 'http://lorempixel.com/500/400/',
+                    //},
+                });
+
+                scope.export = function() {
+                    var imageData = $(element).cropit('export');
+                    scope.ngModel = imageData;
+                    console.log('Load  data');
+                }
+            }
+        }
+    }
 
     /* @ngInject */
     function uploadFile(FileUploader, msgService) {
         return {
             restrict: 'E',
-            scope: { ngModel: '='},
-            template: '<input type="file" nv-file-select uploader="uploader" />'+
+            scope: {
+                ngModel: '='
+            },
+            template: '<input type="file" nv-file-select uploader="uploader" />' +
                 '<input type="hidden" ng-model="ngModel">',
             compile: function() {
                 return {
@@ -60,9 +97,7 @@
                             msgService.notif('Info', 'Proses upload file');
                         };
 
-                        uploader.onProgressAll = function(progress) {
-
-                        };
+                        uploader.onProgressAll = function(progress) {};
 
                         uploader.onErrorItem = function(fileItem, response, status, headers) {
                             setTimeout((function() {
@@ -105,4 +140,4 @@
         }
     }
 
-})();
+} )();

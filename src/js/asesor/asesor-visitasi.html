@@ -44,13 +44,89 @@
                 <li role="presentation" class="{{ vm.tab == 'hasil' ? 'active': '' }}">
                     <a href="javascript:void(0)" ng-click="vm.switchTab('hasil')">Hasil pengisian</a>
                 </li>
+                <li role="presentation" class="{{ vm.tab == 'dokumentasi' ? 'active': '' }}">
+                    <a href="javascript:void(0)" ng-click="vm.switchTab('dokumentasi')">Foto dokumentasi</a>
+                </li>
                 <li role="presentation" class="{{ vm.tab == 'sinkronisasi' ? 'active': '' }}">
                     <a href="javascript:void(0)" ng-click="vm.switchTab('sinkronisasi')">Sinkronisasi</a>
                 </li>
             </ul>
         </div>
 
-        <!-- TAB INSTRUMEN -->
+        <div ng-show="vm.tab == 'dokumentasi'">
+            <!-- Modal -->
+            <div class="modal fade" id="upload-canvas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Tambahkan foto dokumentasi</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-info">
+                        <strong>Heads up.</strong> Tidak ada batasan ukuran foto dokumentasi.
+                    </div>
+                    <div class="cropit">
+                        <div class="image-editor">
+                            <input type="file" class="cropit-image-input">
+                              <!-- .cropit-image-preview-container is needed for background image to work -->
+                            <div class="cropit-image-preview-container">
+                                <div class="cropit-image-preview">
+                                    <div class="spinner hide">
+                                        <div class="bounce1"></div>
+                                        <div class="bounce2"></div>
+                                        <div class="bounce3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="image-size-label">
+                              Resize image
+                            </div>
+                            <input type="range" class="cropit-image-zoom-input">
+                            <input type="hidden" name="image-data" class="hidden-image-data" />
+
+                            <!-- <div class="image-size-label">
+                                Resize image
+                            </div> -->
+                            <!-- <input type="range" class="cropit-image-zoom-input"> -->
+                            <label class="control-label image-size-label">Keterangan foto</label>
+                            <textarea class="form-control" id="notes" placeholder="Keterangan foto" rows="3"></textarea>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="vm.closeCropit()">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pull-right">
+                <button class="btn btn-default" ng-click="vm.openCropit()">
+                    <span class="octicon octicon-file-media"></span> Upload foto
+                </button>
+            </div>
+            <p class="lead">
+                Tambahkan foto dokumentasi pelaksanaan visitasi tim anda.
+            </p>
+            <p>Foto dokumentasi yang di upload harus menggambarkan pelaksanaan visitasi selama 2 (dua) hari kerja. </p>
+            <hr />
+
+            <div class="alert alert-info"><strong>Heads up.</strong> Jangan lupa melakukan sinkronisasi setelah melakukan upload foto dokumentasi.</div>
+
+            <div ng-repeat="dokumentasi in vm.sekolah.prodi.hasil.visitasi.dokumentasi track by $index">
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-danger" ng-click="vm.removeFoto($index)">Hapus foto</button>
+                </div>
+
+                <image ng-src="{{ dokumentasi.image }}" alt="{{ dokumentasi.notes }}" class="img-responsive">
+                <span class="help-block" style="margin: 15px 0 40px 0">{{ dokumentasi.notes ? dokumentasi.notes : ' - '  }}</span>
+            </div>
+        </div>
+
+        <!-- TAB LAPORAN TT -->
         <div ng-show="vm.tab == 'laporanTT'">
             <p class="lead" style="margin-bottom: 20px">Apakah anda yakin untuk melaporkan sekolah/madrasah ini untuk tidak terakreditasi</p>
 
