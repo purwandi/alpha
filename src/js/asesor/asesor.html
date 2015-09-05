@@ -1,5 +1,11 @@
-<div class="pagehead pagehead-bordered">
+<div class="pagehead pagehead-bordered {{ online ? 'connected' : 'disconnected'}}">
     <div class="container">
+        <div class="pull-right">
+            <div style="padding: 6px 12px">
+                <span ng-show="online">Online</span>
+                <span ng-hide="online" class="text-danger">Offline</span>
+            </div>
+        </div>
         <h1>Aplikasi Asesor</h1>
   </div>
 </div>
@@ -7,15 +13,15 @@
 <div class="container">
 
     <div ui-view></div>
-    
+
     <div class="row">
         <div class="col-sm-9">
-            
+
         </div>
         <div class="col-sm-3">
-            
+
         </div>
-        
+
     </div>
 
 </div>

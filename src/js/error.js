@@ -20,7 +20,8 @@
         return {
             modal: openModal,
             confirm: openConfirmModal,
-            notif: openNotif
+            notif: openNotif,
+            close: closeNotif
         }
 
         function compileMessages(messages) {
@@ -67,7 +68,7 @@
             })
         }
 
-        function openNotif(title, message, type, dup) {
+        function openNotif(title, message, type, dup, blok) {
             var _template;
             var _title;
 
@@ -101,10 +102,15 @@
 
 
             // $('.message-bar').prepend(_template);
+            if (!blok) {
+                closeNotif();
+            }
+        }
 
+        function closeNotif() {
             return setTimeout((function() {
                 $('.message-bar .alert').first().remove();
-            }), 4000);
+            }), 6000);
         }
     }
 

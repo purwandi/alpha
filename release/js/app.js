@@ -50,6 +50,19 @@ $(document).ready(function() {
                 }
             }
         })
+        .run(function($window, $rootScope) {
+            $rootScope.online = navigator.onLine;
+            $window.addEventListener('offline', function() {
+                $rootScope.$apply(function() {
+                    $rootScope.online = false;
+                })
+            }, false);
+            $window.addEventListener('online', function() {
+                $rootScope.$apply(function() {
+                    $rootScope.online = true;
+                })
+            }, false);
+        })
         .filter('toNumber', function() {
             return function(input) {
                 if (input == 'A' || input == 'a') {
@@ -89,7 +102,8 @@ $(document).ready(function() {
         return {
             modal: openModal,
             confirm: openConfirmModal,
-            notif: openNotif
+            notif: openNotif,
+            close: closeNotif
         }
 
         function compileMessages(messages) {
@@ -136,7 +150,7 @@ $(document).ready(function() {
             })
         }
 
-        function openNotif(title, message, type, dup) {
+        function openNotif(title, message, type, dup, blok) {
             var _template;
             var _title;
 
@@ -170,10 +184,15 @@ $(document).ready(function() {
 
 
             // $('.message-bar').prepend(_template);
+            if (!blok) {
+                closeNotif();
+            }
+        }
 
+        function closeNotif() {
             return setTimeout((function() {
                 $('.message-bar .alert').first().remove();
-            }), 4000);
+            }), 6000);
         }
     }
 
@@ -3221,69 +3240,74 @@ angular.module('monospaced.qrcode', [])
         }
 
         function syncronization() {
-            var request = window.superagent;
-            var data = {
-                token: vm.token,
-                program_id: vm.sekolah.prodi.kode,
-                sekolah_prodi_id: vm.sekolah.prodi.id,
-                butir: [],
-                komponen: [],
-                hasil: vm.sekolah.prodi.hasil.visitasi
-            };
 
-            vm.sekolah.prodi.butir.forEach(function(record) {
-                data.butir.push({
-                    soal_id: record.soal_id,
-                    tahun: record.tahun,
-                    asesor1: record.visitasi.asesor1,
-                    asesor2: record.visitasi.asesor2,
-                    jawaban: record.visitasi.jawaban,
-                    hasil: record.visitasi.hasil,
-                    notes: record.visitasi.ket
+            if ($scope.online == true) {
+                var request = window.superagent;
+                var data = {
+                    token: vm.token,
+                    program_id: vm.sekolah.prodi.kode,
+                    sekolah_prodi_id: vm.sekolah.prodi.id,
+                    butir: [],
+                    komponen: [],
+                    hasil: vm.sekolah.prodi.hasil.visitasi
+                };
+
+                vm.sekolah.prodi.butir.forEach(function(record) {
+                    data.butir.push({
+                        soal_id: record.soal_id,
+                        tahun: record.tahun,
+                        asesor1: record.visitasi.asesor1,
+                        asesor2: record.visitasi.asesor2,
+                        jawaban: record.visitasi.jawaban,
+                        hasil: record.visitasi.hasil,
+                        notes: record.visitasi.ket
+                    });
                 });
-            });
 
-            vm.sekolah.prodi.komponen.forEach(function(record) {
-                data.komponen.push({
-                    komponen_id: record.komponen_id,
-                    skor: record.visitasi.skor,
-                    nilai: record.visitasi.nilai,
-                    ratusan: record.visitasi.nilai_ratusan,
-                    layak: record.visitasi.kelayakan,
-                    rekomendasi: record.visitasi.ket
+                vm.sekolah.prodi.komponen.forEach(function(record) {
+                    data.komponen.push({
+                        komponen_id: record.komponen_id,
+                        skor: record.visitasi.skor,
+                        nilai: record.visitasi.nilai,
+                        ratusan: record.visitasi.nilai_ratusan,
+                        layak: record.visitasi.kelayakan,
+                        rekomendasi: record.visitasi.ket
+                    });
                 });
-            });
 
-            loaderUp();
-            msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
+                loaderUp();
+                msgService.notif('Informasi', 'Harap menunggu, proses sinkronisasi sedang berjalan', 'alert', true);
 
-            request
-                .post(url + '/api/v-lapor/')
-                .send(data)
-                .end(function(err, resp) {
-                    if (err) {
-                        console.log(err);
-                        msgService.notif('Error', resp.body.error, 'alert', true);
-                    } else {
-                        console.log(resp.body);
-                        vm.sekolah.prodi.hasil.last_sync = resp.body.date;
-                        console.log(vm.sekolah.prodi.hasil.last_sync);
-                        saveToStorage();
-                        // console.log(vm.sekolah.prodi.hasil);
-                        // storage.set('visitasi', resp.body);
-                        msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
-                        // $state.go('asesor.base');
-                    }
-                    loaderClose();
+                request
+                    .post(url + '/api/v-lapor/')
+                    .send(data)
+                    .end(function(err, resp) {
+                        if (err) {
+                            console.log(err);
+                            msgService.notif('Error', resp.body.error, 'alert', true);
+                        } else {
+                            console.log(resp.body);
+                            vm.sekolah.prodi.hasil.last_sync = resp.body.date;
+                            console.log(vm.sekolah.prodi.hasil.last_sync);
+                            saveToStorage();
+                            // console.log(vm.sekolah.prodi.hasil);
+                            // storage.set('visitasi', resp.body);
+                            msgService.notif('Informasi', 'Proses sinkronisasi server berhasil', 'info', true);
+                            // $state.go('asesor.base');
+                        }
+                        loaderClose();
 
-                });
+                    });
+            } else {
+                msgService.notif('Error', 'Tidak dapat melakukan sinkronisasi. Koneksi internet terputus', 'alert', true);
+            }
         }
 
         function openCropitFunction() {
 
             $('.image-editor').cropit({
                 type: 'image/jpeg',
-                quality: .5,
+                quality: 0.5,
                 exportZoom: 1.25,
                 imageBackground: true,
                 imageBackgroundBorderWidth: 20,
@@ -3294,7 +3318,7 @@ angular.module('monospaced.qrcode', [])
                     $('.spinner').addClass('hide');
                 },
                 onImageError: function() {
-                    msgService.notif('Error', 'Tidak dapat melakukan upload foto', 'alert', true);
+                    msgService.notif('Error', 'Tidak dapat melakukan upload foto, coba ganti foto dengan yang lain.', 'alert', true);
                 }
             });
 
@@ -3308,41 +3332,50 @@ angular.module('monospaced.qrcode', [])
         }
 
         function closeCropitFunction() {
-            // console.log('Crop sedang berlangsung');
-            var imageData = $('.image-editor').cropit('export');
-            var request = window.superagent;
 
-            loaderUp();
-            msgService.notif('Informasi', 'Harap menunggu, proses upload foto sedang berjalan', 'alert', true);
+            if ($scope.online == true) {
+                // console.log('Crop sedang berlangsung');
+                var imageData = $('.image-editor').cropit('export');
 
-            request
-                .post(url + '/api/v-dokumentasi')
-                .send({
-                    file: imageData
-                })
-                .end(function(err, resp) {
-                    if (err) {
-                        msgService.notif('Error', resp.body.error, 'alert', true);
-                    } else {
-                        vm.sekolah.prodi.hasil.visitasi.dokumentasi.push({
-                            image: resp.body.url,
-                            notes: $('#notes').val()
-                        });
+                if (imageData) {
+                    var request = window.superagent;
 
-                        saveToStorage();
-                        $scope.$apply();
-                        $('.cropit-image-preview')
-                            .removeClass('cropit-image-loaded')
-                            .css('background-image', '');
-                        $('#notes').val('');
-                        msgService.notif('Informasi', 'Proses upload foto berhasil', 'info', true);
-                        $('#upload-canvas').modal('hide');
-                    }
+                    loaderUp();
+                    msgService.notif('Informasi', 'Harap menunggu, proses upload foto sedang berjalan', 'alert', true, true);
 
-                    loaderClose();
-                })
+                    request
+                        .post(url + '/api/v-dokumentasi')
+                        .send({
+                            file: imageData
+                        })
+                        .end(function(err, resp) {
+                            if (err) {
+                                msgService.notif('Error', resp.body.error, 'alert', true);
+                            } else {
+                                vm.sekolah.prodi.hasil.visitasi.dokumentasi.push({
+                                    image: resp.body.url,
+                                    notes: $('#notes').val()
+                                });
+
+                                saveToStorage();
+                                $scope.$apply();
+                                $('.cropit-image-preview')
+                                    .removeClass('cropit-image-loaded')
+                                    .css('background-image', '');
+                                $('#notes').val('');
+                                msgService.notif('Informasi', 'Proses upload foto berhasil', 'info', true);
+                                $('#upload-canvas').modal('hide');
+                            }
+
+                            loaderClose();
+                        })
+                } else {
+                    msgService.notif('Error', 'Foto yang di upload belum dipilih', 'alert', true);
+                }
+            } else {
+                msgService.notif('Error', 'Tidak dapat melakukan upload foto. Koneksi internet terputus', 'alert', true);
+            }
         }
-
     }
 
 } )();
