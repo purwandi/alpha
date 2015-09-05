@@ -2943,12 +2943,10 @@ angular.module('monospaced.qrcode', [])
         vm.verifikasi = verifikasi;
 
         function verifikasi() {
-
-            msgService.notif('Informasi', 'Harap menunggu, proses pengambilan data sedang berjalan', 'alert', true);
-
             if (!vm.credentials.token) {
                 msgService.notif('Error', 'Mohon masukkan token tim visitasi', 'alert', true);
             } else {
+                msgService.notif('Informasi', 'Harap menunggu, proses pengambilan data sedang berjalan', 'alert', true);
                 var target = url + '/api/visitasi/' + vm.credentials.token;
                 loaderUp();
                 request
