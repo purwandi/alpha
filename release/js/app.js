@@ -2905,8 +2905,8 @@ angular.module('monospaced.qrcode', [])
 ( function() {
     'use strict';
 
-    // var url = 'http://192.168.61.129:8000';
-    var url = 'http://opr2.bap-sm.or.id';
+    var url = 'http://192.168.61.129:8000';
+    // var url = 'http://opr2.bap-sm.or.id';
 
     angular
         .module('app.asesor')
@@ -2988,7 +2988,6 @@ angular.module('monospaced.qrcode', [])
 
     function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService, dataVisitasi) {
 
-
         storage
             .get('visitasi')
             .then(function(data) {
@@ -2999,11 +2998,26 @@ angular.module('monospaced.qrcode', [])
 
         var vm = this;
         vm.data = TAFFY(dataVisitasi.data);
-        vm.sekolah = vm.data({
+        /* vm.sekolah = vm.data({
             npsn: {
-                is: $stateParams.npsn
+                is: $stateParams.npsn,
+            },
+            prodi_id: {
+                is: $stateParams.prodi,
             }
+        }).first();*/
+        vm.sekolah = vm.data({
+            npsn: $stateParams.npsn,
+            prodi_id: parseInt($stateParams.prodi)
         }).first();
+
+        console.log(vm.sekolah);
+
+        if (!vm.sekolah) {
+            msgService.notif('Error', 'Terdapat perbaikan aplikasi, data program tidak ditemukan. Mohon melakukan reset token dan memasukkan token ulang.', 'alert');
+            $state.go('asesor.home');
+            return;
+        }
 
         vm.sekolah.prodi.hasil.last_sync = vm.sekolah.prodi.hasil.last_sync ? vm.sekolah.prodi.hasil.last_sync : '';
         vm.sekolah.prodi.hasil.visitasi.dokumentasi = vm.sekolah.prodi.hasil.visitasi.dokumentasi ? vm.sekolah.prodi.hasil.visitasi.dokumentasi : [];
