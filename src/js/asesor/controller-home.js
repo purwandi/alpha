@@ -1,8 +1,8 @@
 ( function() {
     'use strict';
 
-    var url = 'http://192.168.61.129:8000';
-    // var url = 'http://opr2.bap-sm.or.id';
+    // var url = 'http://192.168.61.129:8000';
+    var url = 'http://opr2.bap-sm.or.id';
 
     angular
         .module('app.asesor')
