@@ -67,6 +67,8 @@
         vm.reset = reset;
         vm.url = url;
         vm.token = dataVisitasi.token;
+        vm.visitasi = visitasi;
+        vm.stateProdiIsFalse = false;
 
         storage
             .get('visitasi')
@@ -79,6 +81,14 @@
         function reset() {
             storage.remove('visitasi');
             $state.go('asesor.home')
+        }
+
+        function visitasi(npsn, prodi) {
+            storage.set('visitasi', vm.data);
+            $state.go('asesor.visitasi', {
+                npsn: npsn,
+                prodi: prodi
+            })
         }
     }
 
@@ -106,8 +116,6 @@
             npsn: $stateParams.npsn,
             prodi_id: parseInt($stateParams.prodi)
         }).first();
-
-        console.log(vm.sekolah);
 
         if (!vm.sekolah) {
             msgService.notif('Error', 'Terdapat perbaikan aplikasi, data program tidak ditemukan. Mohon melakukan reset token dan memasukkan token ulang.', 'alert');
