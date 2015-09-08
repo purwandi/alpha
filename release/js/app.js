@@ -3232,6 +3232,7 @@ angular.module('monospaced.qrcode', [])
 
         function switchTabFunction(tab) {
             vm.tab = tab;
+            saveToStorage();
             return false;
         }
 
