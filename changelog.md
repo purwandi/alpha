@@ -5,6 +5,7 @@
 - Melakukan improvisasi ui
 - Add github button
 - Add aplikasi skoring asesor
+- Enable small image to upload
 
 #0.0.3
 

@@ -273,6 +273,7 @@
             <br />
             <div class="panel panel-default" ng-repeat="komponen in vm.sekolah.prodi.komponen">
                 <div class="panel-heading">{{ komponen.instrumen.nama }}</div>
+                <!-- must be change to komponen.visitasi.notes on next year -->
                 <textarea class="form-control" ng-model="komponen.visitasi.ket" rows="10" style="border: none" placeholder="Tuliskan rekomendasi minimal 400 karakter ..." required></textarea>
                 <div style="border-top: 1px solid #ddd; padding: 2px 5px 0px 15px;">
                     <span class="help-block"> Anda mengetik sejumlah {{ komponen.visitasi.ket.length ? komponen.visitasi.ket.length : '0' }} karakter.</span>
