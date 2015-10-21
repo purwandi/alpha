@@ -2905,8 +2905,8 @@ angular.module('monospaced.qrcode', [])
 ( function() {
 'use strict';
 
-var url = 'http://192.168.61.129:8000';
-// var url = 'http://opr2.bap-sm.or.id';
+// var url = 'http://192.168.61.129:8000';
+var url = 'http://opr2.bap-sm.or.id';
 
 angular
     .module('app.asesor')
@@ -3549,6 +3549,33 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
 
     angular
         .module('app.sekolah')
+        .controller('SekolahHomeCtrl', SekolahHomeCtrl);
+
+    /* @ngInject */
+    function SekolahHomeCtrl($scope, $injector, $state, msgService, Request, AppSekolahRepository) {
+
+        // Injector
+        var $validationProvider = $injector.get('$validation');
+
+        $scope.getData = function() {
+            Request
+                .get('pengajuan/' + $scope.token)
+                .then(function(response) {
+                    // console.log(JSON.parse(response.konten));
+                    msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                    AppSekolahRepository.update(response.konten);
+                    $state.go('sekolah-home.biodata');
+                }, function(error) {
+                    msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
+                });
+        }
+    }
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sekolah')
         .controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
         .controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
 
@@ -3709,33 +3736,6 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
         }
     }
 
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.sekolah')
-        .controller('SekolahHomeCtrl', SekolahHomeCtrl);
-
-    /* @ngInject */
-    function SekolahHomeCtrl($scope, $injector, $state, msgService, Request, AppSekolahRepository) {
-
-        // Injector
-        var $validationProvider = $injector.get('$validation');
-
-        $scope.getData = function() {
-            Request
-                .get('pengajuan/' + $scope.token)
-                .then(function(response) {
-                    // console.log(JSON.parse(response.konten));
-                    msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
-                    AppSekolahRepository.update(response.konten);
-                    $state.go('sekolah-home.biodata');
-                }, function(error) {
-                    msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
-                });
-        }
-    }
 })();
 (function() {
     'use strict';
