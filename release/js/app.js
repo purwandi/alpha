@@ -1,5 +1,6 @@
 var Env   = {};
 Env.API_URL        = 'http://api.bap-sm.or.id';
+// Env.API_URL         = 'http://api.bap-sm.lo';
 Env.TIMEZONE        = [7, "WIB"];
 $(document).ready(function() {
 
@@ -2793,6 +2794,8 @@ angular.module('monospaced.qrcode', [])
                     pre: function(scope, element, attrs) {
                         if (attrs.file == 'image') {
                             var url = Env.API_URL + '/upload/image';
+                        } else if (attrs.file == 'doc') {
+                            var url = Env.API_URL + '/upload/doc';
                         } else {
                             var url = Env.API_URL + '/upload/docs';
                         }
@@ -2905,8 +2908,8 @@ angular.module('monospaced.qrcode', [])
 ( function() {
 'use strict';
 
-// var url = 'http://192.168.61.129:8000';
-var url = 'http://opr2.bap-sm.or.id';
+var url = 'http://opr.bap-sm.lo';
+//var url = 'http://opr2.bap-sm.or.id';
 
 angular
     .module('app.asesor')
@@ -3549,33 +3552,6 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
 
     angular
         .module('app.sekolah')
-        .controller('SekolahHomeCtrl', SekolahHomeCtrl);
-
-    /* @ngInject */
-    function SekolahHomeCtrl($scope, $injector, $state, msgService, Request, AppSekolahRepository) {
-
-        // Injector
-        var $validationProvider = $injector.get('$validation');
-
-        $scope.getData = function() {
-            Request
-                .get('pengajuan/' + $scope.token)
-                .then(function(response) {
-                    // console.log(JSON.parse(response.konten));
-                    msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
-                    AppSekolahRepository.update(response.konten);
-                    $state.go('sekolah-home.biodata');
-                }, function(error) {
-                    msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
-                });
-        }
-    }
-})();
-(function() {
-    'use strict';
-
-    angular
-        .module('app.sekolah')
         .controller('SekolahBiodataCtrl', SekolahBiodataCtrl)
         .controller('SekolahBiodataProgramCtrl', SekolahBiodataProgramCtrl);
 
@@ -3736,6 +3712,33 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
         }
     }
 
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.sekolah')
+        .controller('SekolahHomeCtrl', SekolahHomeCtrl);
+
+    /* @ngInject */
+    function SekolahHomeCtrl($scope, $injector, $state, msgService, Request, AppSekolahRepository) {
+
+        // Injector
+        var $validationProvider = $injector.get('$validation');
+
+        $scope.getData = function() {
+            Request
+                .get('pengajuan/' + $scope.token)
+                .then(function(response) {
+                    // console.log(JSON.parse(response.konten));
+                    msgService.notif('Informasi', 'Pengambilan data dari server berhasil', 'info');
+                    AppSekolahRepository.update(response.konten);
+                    $state.go('sekolah-home.biodata');
+                }, function(error) {
+                    msgService.notif('Informasi', 'Terjadi kesalahan, token tidak ditemukan', 'alert');
+                });
+        }
+    }
 })();
 (function() {
     'use strict';
@@ -3940,6 +3943,7 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
             konten: App.Prepare.init(sekolah),
+            token: sekolah.kode,
             npsn: sekolah.npsn
         }
 
@@ -3950,12 +3954,12 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
                     $scope.success = true;
                     $scope.sekolah.kode = response.kode;
                     $scope.sekolah.created_at = response.created_at.date;
-
                     AppSekolahRepository.update($scope.sekolah);
-                    console.log(response);
+                    window.location.reload();
+                    //console.log(response);
                 }, function(error) {
                     $scope.error = true;
-                    console.log(error);
+                    //console.log(error);
                 });
         }
 
@@ -3971,16 +3975,16 @@ function AppAsesorVisitasiCtrl($state, $stateParams, $scope, storage, msgService
 
         /* @ngInject */
         .factory('AppSekolahRepository', function(storage) {
-            
+
             var sekolah = {};
-            
+
             return {
                 sekolah: sekolah,
                 init: function() {
-                    return storage.get('sekolah');
+                    return storage.get('school');
                 },
                 update: function(value) {
-                    return storage.set('sekolah', value);
+                    return storage.set('school', value);
                 }
             }
 

@@ -23,6 +23,7 @@
             provinsi_id: sekolah.provinsi_id,
             jenjang_id: sekolah.jenjang_id,
             konten: App.Prepare.init(sekolah),
+            token: sekolah.kode,
             npsn: sekolah.npsn
         }
 
@@ -33,12 +34,12 @@
                     $scope.success = true;
                     $scope.sekolah.kode = response.kode;
                     $scope.sekolah.created_at = response.created_at.date;
-
                     AppSekolahRepository.update($scope.sekolah);
-                    console.log(response);
+                    window.location.reload();
+                    //console.log(response);
                 }, function(error) {
                     $scope.error = true;
-                    console.log(error);
+                    //console.log(error);
                 });
         }
 

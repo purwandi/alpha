@@ -4,16 +4,16 @@
 
         /* @ngInject */
         .factory('AppSekolahRepository', function(storage) {
-            
+
             var sekolah = {};
-            
+
             return {
                 sekolah: sekolah,
                 init: function() {
-                    return storage.get('sekolah');
+                    return storage.get('school');
                 },
                 update: function(value) {
-                    return storage.set('sekolah', value);
+                    return storage.set('school', value);
                 }
             }
 

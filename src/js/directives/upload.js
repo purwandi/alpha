@@ -55,6 +55,8 @@
                     pre: function(scope, element, attrs) {
                         if (attrs.file == 'image') {
                             var url = Env.API_URL + '/upload/image';
+                        } else if (attrs.file == 'doc') {
+                            var url = Env.API_URL + '/upload/doc';
                         } else {
                             var url = Env.API_URL + '/upload/docs';
                         }

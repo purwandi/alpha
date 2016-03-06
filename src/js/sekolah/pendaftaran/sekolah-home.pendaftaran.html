@@ -10,7 +10,7 @@
 
 <p>Apabila anda melakukan perubahan terhadap isian istrumen setelah melakukan pendaftaran, anda di wajibkan untuk melakukan pendaftarn kembali dengan menekan tombol "kirim".</p>
 
-<div class="panel panel-warning hidden-print">
+<div class="panel panel-default hidden-print">
     <div class="panel-heading">
         <h4 class="panel-title">INFORMASI PENDAFTARAN</h4>
     </div>
@@ -90,18 +90,18 @@
         </div>
         <br />
 
-    <div class="panel panel-warning hidden-print">
+    <div class="panel panel-default hidden-print">
         <div class="panel-heading">
             <h4 class="panel-title">UPLOAD INSTRUMEN PENGUMPULAN DATA DAN INFORMASI</h4>
         </div>
         <div class="panel-body">
 
-            <div class="alert alert-warning">Dokumen yang di upload adalah dokumen instrumen pengumpulan data dan informasi. Sofcopy dokumen tersebut dalam bentuk microfot word dapat di unduh di <a taget="_blank" href="http://goo.gl/45zYL7">download</a>. Isilah dokumen tersebut kemudian setelah selesai mengisi dokumen, simpan dalam bentuk file pdf. Petunjuk dan tata cara pengisian bisa anda lihat pada menu <a href="//jakarta.bapsm-dki.or.id/mekanisme">mekanisme</a>.</div>
+            <div class="alert alert-warning">Dokumen yang di upload adalah dokumen instrumen pengumpulan data dan informasi. Sofcopy dokumen tersebut dalam bentuk microsoft word dapat di unduh di <a taget="_blank" href="http://goo.gl/45zYL7">download</a>. Isilah dokumen tersebut kemudian setelah selesai mengisi dokumen. Petunjuk dan tata cara pengisian bisa anda lihat pada menu <a href="//jakarta.bapsm-dki.or.id/mekanisme">mekanisme</a>.</div>
 
             <div class="form-group" ng-repeat="program in sekolah.program">
                 <strong><prodi prodid="{{ program.id }}"></prodi></strong>
-                <upload-file ng-model="program.dokumen" data-file="docs"></upload-file>
-                <small class="help-block">File dalam bentuk pdf, maksimum file 2M</small>
+                <upload-file ng-model="program.dokumen" data-file="doc"></upload-file>
+                <small class="help-block">File dalam bentuk doc atau docx, maksimum file 2M</small>
             </div>
         </div>
     </div>
