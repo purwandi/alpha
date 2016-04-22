@@ -2908,8 +2908,8 @@ angular.module('monospaced.qrcode', [])
 ( function() {
 'use strict';
 
-var url = 'http://opr.bap-sm.lo';
-//var url = 'http://opr2.bap-sm.or.id';
+// var url = 'http://opr.bap-sm.lo';
+var url = 'http://opr2.bap-sm.or.id';
 
 angular
     .module('app.asesor')
